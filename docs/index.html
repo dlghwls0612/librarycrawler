@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>서울·경기 도서관 채용공고</title>
+<style>
+  :root{
+    --ground:#FBFCFC; --surface:#FFFFFF; --surface-2:#F3F7F5;
+    --ink:#16211F; --muted:#586964; --faint:#8B9995;
+    --border:#E4EAE8; --border-strong:#CFD9D5;
+    --accent:#0E7C6B; --accent-ink:#0A5A4E; --accent-soft:#DCEEE9; --on-accent:#FFFFFF;
+    --new:#D6453B; --new-soft:#FBE4E2;
+    --shadow:0 1px 2px rgba(20,40,36,.05),0 6px 22px rgba(20,40,36,.06);
+    --radius:14px;
+    --font:"Pretendard Variable","Pretendard","Apple SD Gothic Neo","Malgun Gothic",system-ui,-apple-system,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --ground:#0E1413; --surface:#141C1A; --surface-2:#18211F; --ink:#E9EFED; --muted:#9EABA7; --faint:#6E7C78;
+    --border:#25302D; --border-strong:#33423C; --accent:#3FBEA6; --accent-ink:#8FE0D1; --accent-soft:#173029; --on-accent:#08110F;
+    --new:#F0766B; --new-soft:#2E1A18; --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 22px rgba(0,0,0,.35);}}
+  :root[data-theme="dark"]{
+    --ground:#0E1413; --surface:#141C1A; --surface-2:#18211F; --ink:#E9EFED; --muted:#9EABA7; --faint:#6E7C78;
+    --border:#25302D; --border-strong:#33423C; --accent:#3FBEA6; --accent-ink:#8FE0D1; --accent-soft:#173029; --on-accent:#08110F;
+    --new:#F0766B; --new-soft:#2E1A18;}
+  :root[data-theme="light"]{
+    --ground:#FBFCFC; --surface:#FFFFFF; --surface-2:#F3F7F5; --ink:#16211F; --muted:#586964; --faint:#8B9995;
+    --border:#E4EAE8; --border-strong:#CFD9D5; --accent:#0E7C6B; --accent-ink:#0A5A4E; --accent-soft:#DCEEE9; --on-accent:#FFFFFF;
+    --new:#D6453B; --new-soft:#FBE4E2;}
+  *{box-sizing:border-box} body{margin:0}
+  .wrap{font-family:var(--font);background:var(--ground);color:var(--ink);min-height:100vh;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .container{max-width:1000px;margin:0 auto;padding:0 20px}
+  header.site{border-bottom:1px solid var(--border);background:var(--surface)}
+  header.site .container{padding:24px 20px 20px}
+  .mark{font-size:1.4rem;font-weight:800;letter-spacing:-.02em;margin:0}
+  .mark .dot{color:var(--accent)}
+  .tagline{color:var(--muted);font-size:.92rem;margin:8px 0 0}
+  .counts{margin-top:12px;font-size:.82rem;color:var(--faint)}
+  .counts b{color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums}
+  .controls{position:sticky;top:0;z-index:20;background:var(--ground);border-bottom:1px solid var(--border)}
+  .controls .container{padding:13px 20px;display:flex;flex-direction:column;gap:12px}
+  .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  .label{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);font-weight:700;min-width:44px}
+  .seg{display:inline-flex;background:var(--surface-2);border:1px solid var(--border);border-radius:999px;padding:4px;gap:4px}
+  .seg button{position:relative;border:0;background:transparent;color:var(--muted);font-family:inherit;font-size:1rem;font-weight:700;padding:8px 22px;border-radius:999px;cursor:pointer;transition:all .15s}
+  .seg button:hover{color:var(--ink)}
+  .seg button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
+  .seg .ndot{position:absolute;top:6px;right:10px;width:8px;height:8px;border-radius:50%;background:var(--new)}
+  .chips{display:flex;gap:7px;flex-wrap:wrap}
+  .chip{position:relative;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font-family:inherit;font-size:.84rem;font-weight:600;padding:5px 12px;border-radius:999px;cursor:pointer;transition:all .13s}
+  .chip:hover{border-color:var(--accent);color:var(--accent-ink)}
+  .chip[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-ink)}
+  .chip .ndot{position:absolute;top:-3px;right:-3px;width:9px;height:9px;border-radius:50%;background:var(--new);box-shadow:0 0 0 2px var(--ground)}
+  .toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  .search{flex:1;min-width:170px;display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border-strong);border-radius:10px;padding:7px 12px}
+  .search input{border:0;background:transparent;color:var(--ink);font-family:inherit;font-size:.9rem;width:100%;outline:none}
+  .search svg{flex:none;color:var(--faint)}
+  .sortsel{font-family:inherit;font-size:.82rem;color:var(--ink);background:var(--surface);border:1px solid var(--border-strong);border-radius:8px;padding:6px 10px}
+  .result-line{font-size:.82rem;color:var(--muted);font-variant-numeric:tabular-nums}
+  main{padding:18px 0 60px}
+  .list{display:flex;flex-direction:column;gap:11px}
+  .job{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:15px 17px;display:flex;flex-direction:column;gap:9px;box-shadow:var(--shadow);transition:all .13s}
+  .job:hover{border-color:var(--border-strong);transform:translateY(-1px)}
+  .job-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+  .job h3{margin:0;font-size:1.02rem;font-weight:700;letter-spacing:-.01em;line-height:1.4;text-wrap:balance}
+  .badge-new{flex:none;background:var(--new-soft);color:var(--new);font-size:.66rem;font-weight:800;letter-spacing:.06em;padding:3px 8px;border-radius:6px;margin-top:2px}
+  .job-meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:.82rem;color:var(--muted)}
+  .src{font-weight:700;color:var(--ink)} .dist{color:var(--accent-ink);font-weight:600} .dot-sep{color:var(--faint)}
+  .jt{font-size:.71rem;font-weight:700;padding:2px 8px;border-radius:999px;border:1px solid transparent}
+  .jt.정규{color:#0A5A4E;background:#DCEEE9;border-color:#B9DED5}
+  .jt.계약{color:#8A5A00;background:#FBEFD6;border-color:#EAD9AE}
+  .jt.알바{color:#7A3E86;background:#F1E4F3;border-color:#E0CBE3}
+  @media (prefers-color-scheme:dark){.jt.정규{color:#8FE0D1;background:#173029;border-color:#245046}.jt.계약{color:#E8C77E;background:#2A2210;border-color:#463A1C}.jt.알바{color:#DDA9E4;background:#291A2C;border-color:#452C49}}
+  :root[data-theme="dark"] .jt.정규{color:#8FE0D1;background:#173029}
+  :root[data-theme="dark"] .jt.계약{color:#E8C77E;background:#2A2210}
+  :root[data-theme="dark"] .jt.알바{color:#DDA9E4;background:#291A2C}
+  .job-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  .dates{font-size:.8rem;color:var(--muted);font-variant-numeric:tabular-nums}
+  .dates .dl{color:var(--new);font-weight:700}
+  .cta{display:inline-flex;align-items:center;gap:6px;background:var(--accent);color:var(--on-accent);text-decoration:none;font-weight:750;font-size:.86rem;padding:8px 14px;border-radius:9px;transition:background .13s;white-space:nowrap}
+  .cta:hover{background:var(--accent-ink)}
+  .empty{text-align:center;color:var(--muted);padding:48px 20px}
+  footer{border-top:1px solid var(--border);background:var(--surface);color:var(--muted);font-size:.82rem;line-height:1.7}
+  footer .container{padding:22px 20px 40px}
+  footer h4{color:var(--ink);font-size:.86rem;margin:0 0 8px}
+  .disc{color:var(--faint);font-size:.78rem;border-top:1px dashed var(--border);padding-top:14px;margin-top:12px}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="site">
+    <div class="container">
+      <h1 class="mark">서울·경기 도서관 <span class="dot">채용공고</span></h1>
+      <p class="tagline">지역을 고르면 도서관/사서 채용공고가 바로 목록으로. 매일 리스트가 최신화됩니다.</p>
+      <div class="counts" id="counts"></div>
+    </div>
+  </header>
+  <div class="controls">
+    <div class="container">
+      <div class="row" role="group" aria-label="지역 선택">
+        <span class="label">지역</span>
+        <div class="seg" id="regionSeg">
+          <button type="button" data-region="서울" aria-pressed="true">서울<span class="ndot" hidden></span></button>
+          <button type="button" data-region="경기" aria-pressed="false">경기<span class="ndot" hidden></span></button>
+          <button type="button" data-region="사서교사" aria-pressed="false">사서교사<span class="ndot" hidden></span></button>
+        </div>
+      </div>
+      <div class="row" role="group" aria-label="시·구 선택"><span class="label">시·구</span><div class="chips" id="districtChips"></div></div>
+      <div class="toolbar">
+        <div class="search" role="search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <input id="q" type="search" placeholder="공고·기관 검색 (예: 사서, 개관연장, 성북)" aria-label="검색">
+        </div>
+        <div class="row" style="gap:10px">
+          <select class="sortsel" id="sort"><option value="new">최신 게시순</option><option value="deadline">마감 임박순</option></select>
+          <span class="result-line" id="resultLine"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <main><div class="container"><div class="list" id="list"></div><div class="empty" id="empty" hidden></div></div></main>
+  <footer><div class="container">
+    <h4>안내</h4>
+    매일 새벽 크롤러가 서울·경기 도서관 채용게시판을 돌며 <b>현재 접수 중인 공고만</b> 모아 이 목록을 자동 갱신합니다. 공고를 누르면 원문으로 바로 이동해요.
+    <p class="disc" id="disc"></p>
+  </div></footer>
+</div>
+
+<script>
+// 배포 시 data/jobs.json 을 불러오고, 실패하면(아티팩트 미리보기 등) 내장 스냅샷 사용
+var EMBEDDED = {"meta":{"collected_at":"2026-09-04 12:58","job_count":38,"note":"httpx 부분수집 스냅샷(경기·SPA·사서교사는 GitHub playwright 가동 시 채워짐)"},"jobs":[
+{"region":"서울","district":"구로구","source":"구로문화원(구로구립도서관)","title":"구로문화원 구립도서관 직원 채용 재공고","jobType":"계약","posted":"2026-09-03","deadline":null,"url":"https://www.gurocc.or.kr/board/board.php?code=notice&mode=view&bbs_idx=12369"},
+{"region":"경기","district":"성남시","source":"성남시도서관사업소","title":"해오름도서관 기간제근로자(대체인력) 채용 공고","jobType":"계약","posted":"2026-09-01","deadline":null,"url":"https://www.snlib.go.kr/intro/menu/10048/bbs/20001/bbsPostList.do?manageCd=ALL&searchCondition=title&searchKeyword=%EC%B1%84%EC%9A%A9"},
+{"region":"경기","district":"광명시","source":"광명시립도서관","title":"광명도서관 메이커스페이스(평일연장) 기간제근로자 공개 채용 공고","jobType":"계약","posted":"2026-08-31","deadline":null,"url":"https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&what=채용&wd=85&bvLib=91"},
+{"region":"서울","district":"강북구","source":"강북구도시관리공단","title":"강북문화정보도서관 자료실 주말 보조인력 채용 모집 공고","jobType":"알바","posted":"2026-08-27","deadline":null,"url":"https://www.gbcmc.or.kr/fmcs/138?action=read&action-value=9b934a1e370777ef5e5534c1571c3431"},
+{"region":"서울","district":"성북구","source":"성북문화재단","title":"글빛도서관 2026년 주말 아르바이트(사서보조) 모집 공고","jobType":"알바","posted":"2026-08-27","deadline":null,"url":"https://www.sbculture.or.kr/culture/bbs/BMSR00034/view.do?boardId=35697&menuNo=500348"},
+{"region":"서울","district":"성북구","source":"성북문화재단","title":"아리랑도서관 단기 아르바이트(환경미화) 모집 공고","jobType":"알바","posted":"2026-08-27","deadline":null,"url":"https://www.sbculture.or.kr/culture/bbs/BMSR00034/view.do?boardId=35695&menuNo=500348"},
+{"region":"서울","district":"성북구","source":"성북문화재단","title":"아리랑어린이도서관 휴직자 대체 단기 아르바이트(사서보조) 모집 공고","jobType":"알바","posted":"2026-08-26","deadline":null,"url":"https://www.sbculture.or.kr/culture/bbs/BMSR00034/view.do?boardId=35691&menuNo=500348"},
+{"region":"서울","district":"성북구","source":"성북문화재단","title":"(제26-25호) 성북문화재단 정규직 채용 공고(8급-사서-전산사서)","jobType":"정규","posted":"2026-08-26","deadline":"2026-09-09","url":"https://www.sbculture.or.kr/culture/bbs/BMSR00034/view.do?boardId=35689&menuNo=500348"},
+{"region":"서울","district":"성북구","source":"성북문화재단","title":"(제26-24호) 성북문화재단 정규직 채용 공고(8급-사서)","jobType":"정규","posted":"2026-08-26","deadline":"2026-09-09","url":"https://www.sbculture.or.kr/culture/bbs/BMSR00034/view.do?boardId=35688&menuNo=500348"},
+{"region":"서울","district":"관악구","source":"관악문화재단","title":"직원채용 계약직(사서) 지원페이지(2명 채용)","jobType":"계약","posted":"2026-08-10","deadline":null,"url":"https://gfac.or.kr/site/main/recruit/965/view"},
+{"region":"서울","district":"관악구","source":"관악문화재단","title":"직원채용 기간제(주39시간) 사서 지원페이지","jobType":"계약","posted":"2026-08-10","deadline":null,"url":"https://gfac.or.kr/site/main/recruit/966/view"},
+{"region":"서울","district":"영등포구","source":"영등포문화재단","title":"영등포구립도서관 보조인력 블라인드 채용 공고(26.10.04. 임용)","jobType":"알바","posted":null,"deadline":null,"url":"https://www.ydpcf.or.kr/postview.do?bid=3&pid=2663"},
+{"region":"서울","district":"영등포구","source":"영등포문화재단","title":"영등포구립도서관 보조인력 블라인드 채용 공고(26.09.05. 임용)","jobType":"알바","posted":null,"deadline":null,"url":"https://www.ydpcf.or.kr/postview.do?bid=3&pid=2613"},
+{"region":"서울","district":"은평구","source":"은평구공공도서관(직영)","title":"2026-023호 구립 은뜨락도서관 직원 채용 공고(기간제 사서)","jobType":"계약","posted":null,"deadline":null,"url":"https://www.eplib.or.kr/intro/menu/10041/bbs/20002/bbsPostList.do"},
+{"region":"서울","district":"종로구","source":"종로구립도서관 통합","title":"종로구 작은도서관 순회사서 기간제근로자 채용 공고","jobType":"계약","posted":null,"deadline":null,"url":"https://lib.jongno.go.kr/bbs/board.php?bo_table=Notice&wr_id=1235&sfl=wr_subject&stx=%EC%B1%84%EC%9A%A9"},
+{"region":"서울","district":"전역·통합","source":"통합포털(사람인)","title":"[인하대학교] 사서 사무원 채용 공고","jobType":"계약","posted":null,"deadline":null,"url":"https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54935134"},
+{"region":"서울","district":"전역·통합","source":"통합포털(사람인)","title":"서울 강서구 (가칭)열린도서관 사서 채용 공고(이메일 접수)","jobType":"계약","posted":null,"deadline":null,"url":"https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54932267"},
+{"region":"서울","district":"전역·통합","source":"통합포털(사람인)","title":"송곡대학교 도서관 사서직원 채용","jobType":"계약","posted":null,"deadline":null,"url":"https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54923252"},
+{"region":"서울","district":"전역·통합","source":"통합포털(사람인)","title":"[부천세종병원] 연구지원실 사서/사무원 채용공고(계약직)","jobType":"계약","posted":null,"deadline":null,"url":"https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54919477"},
+{"region":"서울","district":"전역·통합","source":"통합포털(사람인)","title":"수원대학교 중앙도서관 사서직 채용 공고","jobType":"계약","posted":null,"deadline":null,"url":"https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54807193"},
+{"region":"서울","district":"전역·통합","source":"통합포털(사람인)","title":"국립중앙도서관 국제교류홍보팀 기간제근로자(휴직대체, 장애인제한경쟁) 채용 공고","jobType":"계약","posted":null,"deadline":null,"url":"https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54935394"},
+{"region":"서울","district":"전역·통합","source":"통합포털(사람인)","title":"서초청소년도서관 개관시간연장 지원사업 계약직 직원(사서) 채용","jobType":"계약","posted":null,"deadline":null,"url":"https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54847055"},
+{"region":"경기","district":"용인시","source":"용인시도서관사업소","title":"남사도서관 기간제 근로자(주말자료실) 채용 재공고","jobType":"알바","posted":null,"deadline":null,"url":"https://lib.yongin.go.kr/intro/menu/10095/bbs/21108/bbsPostList.do"},
+{"region":"경기","district":"구리시","source":"구리시립도서관","title":"[토평도서관] 2026년 구리시 순회사서 채용공고","jobType":"계약","posted":null,"deadline":null,"url":"https://www.gurilib.go.kr/inlib/menu/10059/bbs/20001/bbsPostList.do?manageCd=ALL&searchCondition=title&searchKeyword=%EC%B1%84%EC%9A%A9"},
+{"region":"경기","district":"과천시","source":"과천시 정보과학도서관","title":"2026년 하반기 과천시정보과학도서관 기간제근로자 채용 공고","jobType":"계약","posted":null,"deadline":null,"url":"https://www.gclib.go.kr/lib/menu/10099/bbs/20001/bbsPostList.do?manageCd=ALL&searchCondition=title&searchKeyword=%EC%B1%84%EC%9A%A9"}
+]};
+
+var JOBS = [], META = {};
+var JOBLABEL = {정규:"정규", 계약:"계약", 알바:"알바"};
+var NEW_DAYS = 14, SAFE_DAYS = 25;
+var state = {region:"서울", district:"전체", q:"", sort:"new"};
+
+function todayMs(){var d=new Date();return new Date(d.getFullYear(),d.getMonth(),d.getDate()).getTime();}
+function ms(s){if(!s)return null;var p=s.split("-");return new Date(+p[0],+p[1]-1,+p[2]).getTime();}
+function isNew(j){var t=ms(j.posted);return t!==null&&(todayMs()-t)<=NEW_DAYS*864e5&&(todayMs()-t)>=0;}
+function isExpired(j){var t=ms(j.deadline);if(t!==null)return t<todayMs();var p=ms(j.posted);if(p!==null)return (todayMs()-p)>SAFE_DAYS*864e5;return false;}
+function daysLeft(j){var t=ms(j.deadline);if(t===null)return null;return Math.round((t-todayMs())/864e5);}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+function fmt(s){if(!s)return null;var p=s.split("-");return p[1]+"."+p[2];}
+
+var grid=document.getElementById("list"),empty=document.getElementById("empty"),chips=document.getElementById("districtChips");
+var resultLine=document.getElementById("resultLine"),qIn=document.getElementById("q"),sortSel=document.getElementById("sort");
+
+function open(){return JOBS.filter(function(j){return !isExpired(j);});}
+function districts(region){var o=[];open().forEach(function(j){if(j.region===region&&o.indexOf(j.district)<0)o.push(j.district);});
+  o.sort(function(a,b){if(a==="전역·통합")return 1;if(b==="전역·통합")return -1;return a.localeCompare(b,"ko");});return o;}
+function matches(j){
+  if(isExpired(j))return false;
+  if(j.region!==state.region)return false;
+  if(state.district!=="전체"&&j.district!==state.district)return false;
+  if(state.q){var h=(j.title+" "+j.source+" "+j.district).toLowerCase();if(h.indexOf(state.q.toLowerCase())<0)return false;}
+  return true;
+}
+function regionDots(){document.querySelectorAll("#regionSeg button").forEach(function(b){
+  var reg=b.getAttribute("data-region");var has=open().some(function(j){return j.region===reg&&isNew(j);});
+  b.querySelector(".ndot").hidden=!has;});}
+function renderChips(){
+  chips.innerHTML="";
+  ["전체"].concat(districts(state.region)).forEach(function(d){
+    var b=document.createElement("button");b.className="chip";b.type="button";
+    b.setAttribute("aria-pressed",state.district===d?"true":"false");
+    var hasNew=d!=="전체"&&open().some(function(j){return j.region===state.region&&j.district===d&&isNew(j);});
+    b.innerHTML=esc(d==="전역·통합"?(state.region+" 전역"):d)+(hasNew?'<span class="ndot"></span>':'');
+    b.addEventListener("click",function(){state.district=d;renderChips();render();});
+    chips.appendChild(b);
+  });
+}
+function render(){
+  var items=JOBS.filter(matches);
+  items.sort(function(a,b){if(state.sort==="deadline"){var da=ms(a.deadline)||8e15,db=ms(b.deadline)||8e15;return da-db;}return (ms(b.posted)||0)-(ms(a.posted)||0);});
+  grid.innerHTML="";
+  empty.hidden=items.length>0;
+  if(!items.length)empty.textContent=state.region==="사서교사"?"현재 열린 사서교사 공고가 없어요. (전체 자동수집 가동 시 표시)":"조건에 맞는 공고가 없어요. 시·구를 바꿔보세요.";
+  resultLine.textContent=state.region+" · "+(state.district==="전체"?"전체":(state.district==="전역·통합"?"전역":state.district))+" · "+items.length+"건";
+  items.forEach(function(j){
+    var el=document.createElement("article");el.className="job";
+    var dl=daysLeft(j);var dlTxt=dl===null?"":(dl===0?"오늘 마감":(dl>0?"D-"+dl:""));
+    var datePart=(j.posted?("게시 "+fmt(j.posted)+" · "):"")+"마감 "+(j.deadline?fmt(j.deadline):"공고문 확인")+(dlTxt?' <span class="dl">'+dlTxt+"</span>":"");
+    el.innerHTML=
+      '<div class="job-top"><h3>'+esc(j.title)+'</h3>'+(isNew(j)?'<span class="badge-new">NEW</span>':'')+'</div>'+
+      '<div class="job-meta"><span class="src">'+esc(j.source)+'</span><span class="dot-sep">·</span><span class="dist">'+esc(j.district==="전역·통합"?(j.region+" 전역"):j.district)+'</span><span class="jt '+j.jobType+'">'+esc(JOBLABEL[j.jobType]||j.jobType)+'</span></div>'+
+      '<div class="job-foot"><span class="dates">'+datePart+'</span>'+
+      '<a class="cta" href="'+esc(j.url)+'" target="_blank" rel="noopener">원문 보기<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17 17 7M9 7h8v8"/></svg></a></div>';
+    grid.appendChild(el);
+  });
+}
+function renderCounts(){
+  var o=open();
+  document.getElementById("counts").innerHTML="현재 열린 공고 <b>"+o.length+"</b>건 · 최근 14일 새 공고 <b style='color:var(--new)'>"+o.filter(isNew).length+"</b>건 <span style='color:var(--faint)'>· "+(META.collected_at||"")+" 수집</span>";
+  document.getElementById("disc").innerHTML="수집 기준 "+esc(META.collected_at||"")+" · 마감된 공고는 자동 숨김 · NEW=게시 14일 이내 · '원문 보기'는 실제 공고/게시판으로 연결."+(META.note?("<br>· "+esc(META.note)):"");
+}
+document.querySelectorAll("#regionSeg button").forEach(function(btn){
+  btn.addEventListener("click",function(){
+    state.region=btn.getAttribute("data-region");state.district="전체";
+    document.querySelectorAll("#regionSeg button").forEach(function(b){b.setAttribute("aria-pressed",b===btn?"true":"false");});
+    renderChips();render();});});
+qIn.addEventListener("input",function(){state.q=qIn.value.trim();render();});
+sortSel.addEventListener("change",function(){state.sort=sortSel.value;render();});
+
+function boot(data){JOBS=data.jobs||[];META=data.meta||{};renderCounts();regionDots();renderChips();render();}
+fetch("data/jobs.json",{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.json();}).then(boot).catch(function(){boot(EMBEDDED);});
+</script>
+</body>
+</html>

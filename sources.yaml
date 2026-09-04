@@ -1,0 +1,157 @@
+# =====================================================================
+# 서울·경기 도서관 채용 크롤러 — 소스 설정
+# 기준일 2026-09-04 · 파서는 코드가 아니라 이 파일의 데이터로 관리
+# region: 서울 | 경기 | 사서교사   (교육청 공공도서관은 지역에 편입 + 이름에 "(교육청)")
+# parser: egov | gnuboard | sen | asp | incruit | saramin | fairyhr | spa | custom
+# engine: httpx (가벼움) | playwright (봇우회·SPA·JS)
+# =====================================================================
+
+meta:
+  project: 서울·경기 도서관 채용 크롤러
+  version: 0.1
+  source_date: "2026-09-04"
+
+settings:
+  # 도서관 공고 판별 키워드 (혼합 게시판에서 필터). 전용 채용게시판은 전부 수집 후 2차 선별.
+  keywords_include: [사서, 도서관, 개관연장, "개관시간 연장", 순회사서, 자료실, 열람실, 작은도서관, 북큐레이터, 독서지도, 정보봉사, 상호대차, 이동도서관]
+  # 제목 키워드 → 고용형태 태깅
+  jobtype_rules:
+    정규: [공무원, 정규직, 공개채용, 일반직, 임기제, 공채, "8급", "7급", "9급"]
+    계약: [기간제, 계약직, 대체, 육아휴직, 휴직대체, 대체인력]
+    알바: [단시간, 초단시간, 주말, 시간선택제, 아르바이트, 보조인력, 지원인력, 야간]
+  # 마감(종료) 판정
+  closure:
+    safety_expire_days: 25            # ④ 안전만료(20~30 권장)
+    result_keywords: [합격자, "서류전형 합격", "면접 대상", "최종 합격", "합격자 발표", "전형 결과", "채용 결과"]  # ② 결과공고 매칭
+  # 예의 크롤링
+  request:
+    delay_seconds: 2
+    timeout_seconds: 20
+    retries: 2
+    user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36 (library-jobs-crawler; respectful)"
+
+# 파서 유형별 기본 선택자 — 2단계에서 사이트별 검증하며 정밀 튜닝(placeholder)
+parsers:
+  egov:      { engine: httpx,       list_row: "table.board-list tbody tr, .bbs_list tbody tr", title_link: "td.subject a, td.title a, td.p-subject a", date: "td.date, td.reg-date", detail_deadline: "접수기간|접수마감|마감일|~" }
+  gnuboard:  { engine: httpx,       list_row: "table.board_list tbody tr, .tbl_wrap tbody tr", title_link: "td.td_subject a, .bo_tit a", date: ".td_date, .date", detail_deadline: "접수기간|마감" }
+  sen:       { engine: httpx,       list_row: ".board-list tbody tr, table tbody tr", title_link: "td.subject a, a.subject", date: "td.date", detail_deadline: "접수기간|마감" }
+  asp:       { engine: httpx,       list_row: "table tbody tr", title_link: "td a", date: "td", detail_deadline: "접수기간|마감" }
+  incruit:   { engine: httpx,       list_row: ".jobList li, .list_job li", title_link: "a", date: ".date, .period", detail_deadline: "마감|접수" }
+  saramin:   { engine: playwright,  list_row: ".item_recruit", title_link: ".job_tit a", date: ".job_date .date", detail_deadline: "마감|접수" }
+  fairyhr:   { engine: playwright,  list_row: ".list li, table tbody tr", title_link: "a", date: ".date", detail_deadline: "마감|접수" }
+  spa:       { engine: playwright,  list_row: "TODO", title_link: "TODO", date: "TODO", detail_deadline: "접수기간|마감" }
+  custom:    { engine: playwright,  list_row: "TODO", title_link: "TODO", date: "TODO", detail_deadline: "접수기간|마감" }
+
+# =====================================================================
+sources:
+
+# ---------- 서울 자치구 ----------
+- {id: sel-gangnam-gfac,     region: 서울, district: 강남구,   name: 강남문화재단 직원채용,               parser: egov,     engine: httpx,      url: "https://www.gangnam.go.kr/office/gfac/board/gfac_staffrec/list.do?mid=gfac_staffRec"}
+- {id: sel-gangnam-gnlib-hub,region: 서울, district: 강남구,   name: 강남구립도서관 통합포털(직영),        parser: egov,     engine: httpx,      url: "https://library.gangnam.go.kr/yllib/menu/12451/bbs/20301/bbsPostList.do", note: "각 관 서브사이트 개별 게시(2단계에서 관별 확장)"}
+- {id: sel-gangdong-gdfac,   region: 서울, district: 강동구,   name: 강동문화재단,                        parser: incruit,  engine: httpx,      url: "https://recruit.incruit.com/gdfac/job/"}
+- {id: sel-gangbuk-gbcmc,    region: 서울, district: 강북구,   name: 강북구도시관리공단,                  parser: custom,   engine: playwright, url: "https://www.gbcmc.or.kr/fmcs/138"}
+- {id: sel-gangseo-lib,      region: 서울, district: 강서구,   name: 강서구립도서관 통합(민간위탁),        parser: spa,      engine: playwright, url: "https://lib.gangseo.seoul.kr/NoticeInfo?libCode=TOL"}
+- {id: sel-gwanak-gfac,      region: 서울, district: 관악구,   name: 관악문화재단,                        parser: spa,      engine: playwright, url: "https://gfac.or.kr/site/main/recruit/list"}
+- {id: sel-gwangjin-fmc,     region: 서울, district: 광진구,   name: 광진구시설관리공단,                  parser: fairyhr,  engine: playwright, url: "https://gwangjin.fairyhr.com/announcement"}
+- {id: sel-guro-cc,          region: 서울, district: 구로구,   name: 구로문화원(구로구립도서관),          parser: gnuboard, engine: httpx,      url: "https://www.gurocc.or.kr/board/board.php?code=notice"}
+- {id: sel-geumcheon-gcfac,  region: 서울, district: 금천구,   name: 금천문화재단,                        parser: custom,   engine: httpx,      url: "https://gcfac.or.kr/board/recruit"}
+- {id: sel-nowon-arts,       region: 서울, district: 노원구,   name: 노원문화재단,                        parser: incruit,  engine: httpx,      url: "https://recruit.incruit.com/nowonarts/job/"}
+- {id: sel-dobong-dbfac,     region: 서울, district: 도봉구,   name: 도봉문화재단,                        parser: custom,   engine: httpx,      url: "https://www.dbfac.or.kr/front/board/boardContentsListPage.do?board_id=7"}
+- {id: sel-ddm-dfmc,         region: 서울, district: 동대문구, name: 동대문구시설관리공단(구립도서관 5개관), parser: asp,    engine: httpx,      url: "https://www.dfmc.kr/course/announce/recruit_li.asp?board_id=RECRUIT&field=subject&value="}
+- {id: sel-dongjak-idfac,    region: 서울, district: 동작구,   name: 동작문화재단,                        parser: gnuboard, engine: httpx,      url: "https://www.idfac.or.kr/bbs/board.php?bo_table=job"}
+- {id: sel-mapo-lib,         region: 서울, district: 마포구,   name: 마포구립도서관 통합(구청 직영),       parser: egov,     engine: httpx,      url: "https://mplib.mapo.go.kr/mcl/MENU1082/BBS2001/bbsArticleList.do?searchCnd=1&searchWrd=%EC%B1%84%EC%9A%A9"}
+- {id: sel-sdm-gu,           region: 서울, district: 서대문구, name: 서대문구청(서대문구립도서관),         parser: egov,     engine: httpx,      url: "https://www.sdm.go.kr/genre/economic/jobinfo/jobs.do"}
+- {id: sel-seocho-cf,        region: 서울, district: 서초구,   name: 서초문화재단,                        parser: spa,      engine: playwright, url: "https://www.seochocf.or.kr/site/main/archive/post/category/공지사항?metaCode1=RECRUIT"}
+- {id: sel-seongdong-sdfac,  region: 서울, district: 성동구,   name: 성동문화재단,                        parser: custom,   engine: httpx,      url: "https://www.sdfac.or.kr/kor/recruit/app/empmn_list.do"}
+- {id: sel-seongbuk-sbc,     region: 서울, district: 성북구,   name: 성북문화재단,                        parser: egov,     engine: httpx,      url: "https://www.sbculture.or.kr/culture/bbs/BMSR00034/list.do?menuNo=500348&searchCnd=1&searchWrd=%EC%B1%84%EC%9A%A9"}
+- {id: sel-songpa-fac,       region: 서울, district: 송파구,   name: 송파문화재단 도서관지원팀,            parser: incruit,  engine: httpx,      url: "https://recruit.incruit.com/songpafac/job/"}
+- {id: sel-yangcheon-yfac,   region: 서울, district: 양천구,   name: 양천문화재단,                        parser: custom,   engine: httpx,      url: "https://yfac.kr/main/contents.do?a_num=78696582"}
+- {id: sel-ydp-ydpcf,        region: 서울, district: 영등포구, name: 영등포문화재단,                      parser: custom,   engine: httpx,      url: "https://www.ydpcf.or.kr/board.do?bid=3&category=17"}
+- {id: sel-yongsan-fmc,      region: 서울, district: 용산구,   name: 용산구시설관리공단,                  parser: spa,      engine: playwright, url: "https://yong-san.or.kr/site/main/archive/post/category/%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0"}
+- {id: sel-yongsan-gu,       region: 서울, district: 용산구,   name: 용산구청 교육지원과(작은도서관 연장사서), parser: egov,   engine: httpx,      url: "https://www.yongsan.go.kr/portal/bbs/B0000095/list.do?menuNo=200233&searchCnd=1&searchWrd=%EC%B1%84%EC%9A%A9"}
+- {id: sel-eunpyeong-eplib,  region: 서울, district: 은평구,   name: 은평구공공도서관(직영),               parser: egov,     engine: httpx,      url: "https://www.eplib.or.kr/intro/menu/10041/bbs/20002/bbsPostList.do"}
+- {id: sel-jongno-jfac,      region: 서울, district: 종로구,   name: 종로문화재단,                        parser: spa,      engine: playwright, url: "https://www.jfac.or.kr/site/main/archive/post/category/채용정보"}
+- {id: sel-jongno-lib,       region: 서울, district: 종로구,   name: 종로구립도서관 통합(순회·기간제),      parser: gnuboard, engine: httpx,      url: "https://lib.jongno.go.kr/bbs/board.php?bo_table=Notice&sfl=wr_subject&stx=%EC%B1%84%EC%9A%A9"}
+- {id: sel-junggu-caci,      region: 서울, district: 중구,     name: 중구문화재단(충무아트센터),          parser: spa,      engine: playwright, url: "https://www.caci.or.kr/community/notice?q=M2FiYzY0MGNjOWQxNGM4NDlkY2MyNDZmZDFhM2UxOWE%3d"}
+- {id: sel-jungnang-jnfac,   region: 서울, district: 중랑구,   name: 중랑문화재단,                        parser: spa,      engine: playwright, url: "https://www.jnfac.or.kr/board/7"}
+
+# ---------- 서울 전역·통합 ----------
+- {id: sel-seoullib,         region: 서울, district: 전역·통합, name: 서울도서관(서울시립),                parser: egov,     engine: httpx,      scope: library, url: "https://culture.seoul.go.kr/culture/bbs/B0000002/list.do?menuNo=200052&searchWrd=%EC%82%AC%EC%84%9C"}
+- {id: sel-portal-saramin,   region: 서울, district: 전역·통합, name: 통합포털 도서관/사서(사람인),         parser: saramin,  engine: playwright, url: "https://www.saramin.co.kr/zf_user/jobs/list/job-category?cat_kewd=1929"}
+- {id: sel-nl,               region: 서울, district: 전역·통합, name: 국립중앙도서관,                      parser: custom,   engine: httpx,      scope: library, url: "https://www.nl.go.kr/NL/contents/N50602000000.do"}
+- {id: sel-nlcy,             region: 서울, district: 전역·통합, name: 국립어린이청소년도서관,              parser: custom,   engine: httpx,      scope: library, url: "https://nlcy.go.kr/NLCY/contents/C40403000000.do"}
+- {id: sel-nld,              region: 서울, district: 전역·통합, name: 국립장애인도서관,                    parser: custom,   engine: httpx,      scope: library, url: "https://www.nld.go.kr/home/notice.do"}
+- {id: sel-nanet,            region: 서울, district: 전역·통합, name: 국회도서관,                          parser: custom,   engine: playwright, scope: library, url: "https://gosi.assembly.go.kr/"}
+
+# ---------- 서울 교육청 공공도서관 (지역 편입 + "(교육청)") · parser: sen ----------
+- {id: sel-edu-gnlib,   region: 서울, district: 강남구,   name: 강남도서관(교육청),           parser: sen, engine: httpx, url: "https://gnlib.sen.go.kr/gnlib/board/index.do?search_type=title%2Bcontent&search_text=%EC%B1%84%EC%9A%A9&searchStartDate=2025-09-04&searchEndDate=2026-09-04&menu_idx=25&manage_idx=27&board_idx=0&rowCount=10&viewPage=1"}
+- {id: sel-edu-gplib,   region: 서울, district: 강남구,   name: 개포도서관(교육청),           parser: sen, engine: httpx, url: "https://gplib.sen.go.kr/gplib/board/index.do?search_type=title%2Bcontent&search_text=%EC%B1%84%EC%9A%A9&searchStartDate=2025-09-04&searchEndDate=2026-09-04&menu_idx=25&manage_idx=145&board_idx=0&rowCount=10&viewPage=1"}
+- {id: sel-edu-gdlib,   region: 서울, district: 강동구,   name: 강동도서관(교육청),           parser: sen, engine: httpx, url: "https://gdlib.sen.go.kr/gdlib/board/index.do?search_type=title%2Bcontent&search_text=%EC%B1%84%EC%9A%A9&searchStartDate=2025-09-04&searchEndDate=2026-09-04&menu_idx=25&manage_idx=52&board_idx=0&rowCount=10&viewPage=1"}
+- {id: sel-edu-gdllc,   region: 서울, district: 강동구,   name: 고덕평생학습관(교육청),       parser: sen, engine: httpx, url: "https://gdllc.sen.go.kr/gdllc/board/index.do?search_type=title%2Bcontent&search_text=%EC%B1%84%EC%9A%A9&searchStartDate=2025-09-04&searchEndDate=2026-09-04&menu_idx=25&manage_idx=191&board_idx=0&rowCount=10&viewPage=1"}
+- {id: sel-edu-gslib,   region: 서울, district: 강서구,   name: 강서도서관(교육청),           parser: sen, engine: httpx, url: "https://gslib.sen.go.kr/gslib/board/index.do?search_type=title%2Bcontent&search_text=%EC%B1%84%EC%9A%A9&searchStartDate=2025-09-04&searchEndDate=2026-09-04&menu_idx=25&manage_idx=96&board_idx=0&rowCount=10&viewPage=1"}
+- {id: sel-edu-gclib,   region: 서울, district: 구로구,   name: 고척도서관(교육청),           parser: sen, engine: httpx, url: "https://gclib.sen.go.kr/gclib/board/index.do?search_type=title%2Bcontent&search_text=%EC%B1%84%EC%9A%A9&searchStartDate=2025-09-04&searchEndDate=2026-09-04&menu_idx=25&manage_idx=312&board_idx=0&rowCount=10&viewPage=1"}
+- {id: sel-edu-grlib,   region: 서울, district: 구로구,   name: 구로도서관(교육청),           parser: sen, engine: httpx, url: "https://grlib.sen.go.kr/grlib/board/index.do?search_type=title%2Bcontent&search_text=%EC%B1%84%EC%9A%A9&searchStartDate=2025-09-04&searchEndDate=2026-09-04&menu_idx=25&manage_idx=388&board_idx=0&rowCount=10&viewPage=1"}
+- {id: sel-edu-nslib,   region: 서울, district: 용산구,   name: 남산도서관(교육청),           parser: sen, engine: httpx, url: "https://nslib.sen.go.kr/nslib/board/index.do?search_type=title%2Bcontent&search_text=%EC%B1%84%EC%9A%A9&searchStartDate=2025-09-04&searchEndDate=2026-09-04&menu_idx=25&manage_idx=428&board_idx=0&rowCount=10&viewPage=1"}
+- {id: sel-edu-yslib,   region: 서울, district: 용산구,   name: 용산도서관(교육청),           parser: sen, engine: httpx, url: "https://yslib.sen.go.kr/yslib/board/index.do?search_type=title%2Bcontent&search_text=%EC%B1%84%EC%9A%A9&searchStartDate=2025-09-04&searchEndDate=2026-09-04&menu_idx=25&manage_idx=997&board_idx=0&rowCount=10&viewPage=1"}
+- {id: sel-edu-nwllc,   region: 서울, district: 노원구,   name: 노원평생학습관(교육청),       parser: sen, engine: httpx, url: "https://nwllc.sen.go.kr/nwllc/board/index.do?search_type=title%2Bcontent&search_text=%EC%B1%84%EC%9A%A9&searchStartDate=2025-09-04&searchEndDate=2026-09-04&menu_idx=25&manage_idx=471&board_idx=0&rowCount=10&viewPage=1"}
+- {id: sel-edu-dblib,   region: 서울, district: 도봉구,   name: 도봉도서관(교육청),           parser: sen, engine: httpx, url: "https://dblib.sen.go.kr/dblib/board/index.do?search_type=title%2Bcontent&search_text=%EC%B1%84%EC%9A%A9&searchStartDate=2025-09-04&searchEndDate=2026-09-04&menu_idx=25&manage_idx=530&board_idx=0&rowCount=10&viewPage=1"}
+- {id: sel-edu-ddmlib,  region: 서울, district: 동대문구, name: 동대문도서관(교육청),         parser: sen, engine: httpx, url: "https://ddmlib.sen.go.kr/ddmlib/board/index.do?search_type=title%2Bcontent&search_text=%EC%B1%84%EC%9A%A9&searchStartDate=2025-09-04&searchEndDate=2026-09-04&menu_idx=25&manage_idx=577&board_idx=0&rowCount=10&viewPage=1"}
+- {id: sel-edu-djlib,   region: 서울, district: 동작구,   name: 동작도서관(교육청),           parser: sen, engine: httpx, url: "https://djlib.sen.go.kr/djlib/board/index.do?search_type=title%2Bcontent&search_text=%EC%B1%84%EC%9A%A9&searchStartDate=2025-09-04&searchEndDate=2026-09-04&menu_idx=25&manage_idx=619&board_idx=0&rowCount=10&viewPage=1"}
+- {id: sel-edu-mpllc,   region: 서울, district: 마포구,   name: 마포평생학습관(교육청),       parser: sen, engine: httpx, url: "https://mpllc.sen.go.kr/mpllc/board/index.do?search_type=title%2Bcontent&search_text=%EC%B1%84%EC%9A%A9&searchStartDate=2025-09-04&searchEndDate=2026-09-04&menu_idx=25&manage_idx=699&board_idx=0&rowCount=10&viewPage=1"}
+- {id: sel-edu-ahyon,   region: 서울, district: 마포구,   name: 마포평생학습관 아현분관(교육청), parser: sen, engine: httpx, url: "https://ahyon.sen.go.kr/ahyon/board/index.do?search_type=title%2Bcontent&search_text=%EC%B1%84%EC%9A%A9&searchStartDate=2025-09-04&searchEndDate=2026-09-04&menu_idx=25&manage_idx=656&board_idx=0&rowCount=10&viewPage=1"}
+- {id: sel-edu-sdmlib,  region: 서울, district: 서대문구, name: 서대문도서관(교육청),         parser: sen, engine: httpx, url: "https://sdmlib.sen.go.kr/sdmlib/board/index.do?search_type=title%2Bcontent&search_text=%EC%B1%84%EC%9A%A9&searchStartDate=2025-09-04&searchEndDate=2026-09-04&menu_idx=25&manage_idx=749&board_idx=0&rowCount=10&viewPage=1"}
+- {id: sel-edu-splib,   region: 서울, district: 송파구,   name: 송파도서관(교육청),           parser: sen, engine: httpx, url: "https://splib.sen.go.kr/splib/board/index.do?search_type=title%2Bcontent&search_text=%EC%B1%84%EC%9A%A9&searchStartDate=2025-09-04&searchEndDate=2026-09-04&menu_idx=25&manage_idx=800&board_idx=0&rowCount=10&viewPage=1"}
+- {id: sel-edu-yclib,   region: 서울, district: 양천구,   name: 양천도서관(교육청),           parser: sen, engine: httpx, url: "https://yclib.sen.go.kr/yclib/board/index.do?search_type=title%2Bcontent&search_text=%EC%B1%84%EC%9A%A9&searchStartDate=2025-09-04&searchEndDate=2026-09-04&menu_idx=25&manage_idx=843&board_idx=0&rowCount=10&viewPage=1"}
+- {id: sel-edu-childlib, region: 서울, district: 종로구,  name: 어린이도서관(교육청),         parser: sen, engine: httpx, url: "https://childlib.sen.go.kr/childlib/board/index.do?search_type=title%2Bcontent&search_text=%EC%B1%84%EC%9A%A9&searchStartDate=2025-09-04&searchEndDate=2026-09-04&menu_idx=25&manage_idx=893&board_idx=0&rowCount=10&viewPage=1"}
+- {id: sel-edu-jdlib,   region: 서울, district: 종로구,   name: 정독도서관(교육청),           parser: sen, engine: httpx, url: "https://jdlib.sen.go.kr/jdlib/board/index.do?search_type=title%2Bcontent&search_text=%EC%B1%84%EC%9A%A9&searchStartDate=2025-09-04&searchEndDate=2026-09-04&menu_idx=25&manage_idx=1039&board_idx=0&rowCount=10&viewPage=1"}
+- {id: sel-edu-jnlib,   region: 서울, district: 종로구,   name: 종로도서관(교육청),           parser: sen, engine: httpx, url: "https://jnlib.sen.go.kr/jnlib/board/index.do?search_type=title%2Bcontent&search_text=%EC%B1%84%EC%9A%A9&searchStartDate=2025-09-04&searchEndDate=2026-09-04&menu_idx=25&manage_idx=1092&board_idx=0&rowCount=10&viewPage=1"}
+- {id: sel-edu-ydpllc,  region: 서울, district: 영등포구, name: 영등포평생학습관(교육청),     parser: sen, engine: httpx, url: "https://ydpllc.sen.go.kr/ydpllc/board/index.do?search_type=title%2Bcontent&search_text=%EC%B1%84%EC%9A%A9&searchStartDate=2025-09-04&searchEndDate=2026-09-04&menu_idx=25&manage_idx=951&board_idx=0&rowCount=10&viewPage=1"}
+
+# ---------- 경기 전역·통합 ----------
+- {id: ggi-ggl,        region: 경기, district: 전역·통합, name: 경기도서관(경기도청 직영),          parser: spa,     engine: playwright, scope: mixed, url: "https://apply.jobaba.net/bsns/bsnsListView.do?tpCd1=04", note: "잡아바=경기도 통합접수(비도서관 포함)→키워드필터"}
+- {id: ggi-ggcf,       region: 경기, district: 전역·통합, name: 경기문화재단,                       parser: spa,     engine: playwright, url: "https://www.ggcf.kr/boards/bulletinBoards/articles?category=03&searchKeyword=%EC%B1%84%EC%9A%A9"}
+- {id: ggi-portal-saramin, region: 경기, district: 전역·통합, name: 통합포털 도서관/사서(사람인),   parser: saramin, engine: playwright, url: "https://www.saramin.co.kr/zf_user/jobs/list/job-category?cat_kewd=1929"}
+
+# ---------- 경기 시·군 ----------
+- {id: ggi-suwon-lib,  region: 경기, district: 수원시,   name: 수원시 도서관사업소,                parser: asp,     engine: httpx,      url: "https://www.suwonlib.go.kr/ct/html/05_news/news0102.asp?process_type=list&keyword=b_title&keyfield=%EC%B1%84%EC%9A%A9"}
+- {id: ggi-suwon-city, region: 경기, district: 수원시,   name: 수원시청(사서직·임기제),            parser: egov,    engine: httpx,      url: "https://www.suwon.go.kr/web/board/BD_board.list.do?bbsCd=1048"}
+- {id: ggi-seongnam-lib, region: 경기, district: 성남시, name: 성남시도서관사업소,                 parser: egov,    engine: httpx,      url: "https://www.snlib.go.kr/intro/menu/10048/bbs/20001/bbsPostList.do?manageCd=ALL&searchCondition=title&searchKeyword=%EC%B1%84%EC%9A%A9"}
+- {id: ggi-seongnam-city, region: 경기, district: 성남시, name: 성남시청(사서 공무원·기간제),        parser: custom,  engine: playwright, url: "https://www.seongnam.go.kr/pm010401?curPage=1&cntPerPage=10&sortType=1&srchKey=sj&srchText="}
+- {id: ggi-goyang-lib, region: 경기, district: 고양시,   name: 고양시도서관센터,                   parser: egov,    engine: httpx,      url: "https://www.goyanglib.or.kr/center/menu/130332/bbs/20005/bbsPostList.do"}
+- {id: ggi-goyang-city, region: 경기, district: 고양시,  name: 고양특례시청 채용공고,              parser: egov,    engine: httpx,      url: "https://www.goyang.go.kr/www/user/bbs/BD_selectBbsList.do?q_bbsCode=1082"}
+- {id: ggi-yongin-lib, region: 경기, district: 용인시,   name: 용인시도서관사업소,                 parser: egov,    engine: httpx,      url: "https://lib.yongin.go.kr/intro/menu/10095/bbs/21108/bbsPostList.do"}
+- {id: ggi-bucheon-lib, region: 경기, district: 부천시,  name: 부천시립도서관(시 직영),            parser: custom,  engine: httpx,      scope: library, url: "https://www.bcl.go.kr/site/program/board/basicboard/list?menuid=019005001&boardtypeid=26"}
+- {id: ggi-bucheon-city, region: 경기, district: 부천시, name: 부천시청 채용공고,                  parser: custom,  engine: httpx,      url: "https://www.bucheon.go.kr/site/program/board/basicboard/list?boardtypeid=26756&menuid=148002004001"}
+- {id: ggi-bucheon-komacon, region: 경기, district: 부천시, name: 한국만화영상진흥원(만화도서관),    parser: asp,     engine: httpx,      url: "https://www.komacon.kr/b_sys/index.asp?b_code=4&s_fld=&s_txt=&s_cate=3"}
+- {id: ggi-bucheon-bcf, region: 경기, district: 부천시,  name: 부천문화재단(예술정보도서관),        parser: incruit, engine: httpx,      url: "https://bcf.incruit.com/hire/hirelist.asp"}
+- {id: ggi-ansan-lib,  region: 경기, district: 안산시,   name: 안산시 도서관(직영),                parser: spa,     engine: playwright, url: "https://lib.ansan.go.kr/NoticeInfo?manageCode=TOL"}
+- {id: ggi-ansan-city, region: 경기, district: 안산시,   name: 안산시청 채용정보,                  parser: egov,    engine: httpx,      url: "https://www.ansan.go.kr/www/common/bbs/selectPageListBbs.do?bbs_code=B0517"}
+- {id: ggi-anyang-lib, region: 경기, district: 안양시,   name: 안양시립도서관(시 직영),            parser: egov,    engine: httpx,      url: "https://lib.anyang.go.kr/intro/menu/10037/bbs/20001/bbsPostList.do?manageCd=ALL&searchCondition=title&searchKeyword=%EC%B1%84%EC%9A%A9"}
+- {id: ggi-namyangju-lib, region: 경기, district: 남양주시, name: 남양주시도서관(정약용도서관),      parser: egov,    engine: httpx,      url: "https://www.nyj.go.kr/www/selectBbsNttList.do?key=2497&bbsNo=67&pageUnit=10&searchCnd=SJ&searchKrwd=%EC%B1%84%EC%9A%A9"}
+- {id: ggi-hwaseong-hcf, region: 경기, district: 화성시, name: 화성시문화관광재단(시립도서관 위탁), parser: incruit, engine: httpx,      url: "https://recruit.incruit.com/hcf"}
+- {id: ggi-pyeongtaek-lib, region: 경기, district: 평택시, name: 평택시도서관(시 직영),             parser: egov,    engine: httpx,      url: "https://www.ptlib.go.kr/intro/menu/10024/bbs/20003/bbsPostList.do?manageCd=ALL&searchCondition=title&searchKeyword=%EC%B1%84%EC%9A%A9"}
+- {id: ggi-uijeongbu-lib, region: 경기, district: 의정부시, name: 의정부시 도서관(시 직영),          parser: custom,  engine: playwright, url: "https://www.ui4u.go.kr/portal/contents.do?mId=0301110000"}
+- {id: ggi-siheung-lib, region: 경기, district: 시흥시,  name: 시흥시 도서관(시 직영),             parser: custom,  engine: httpx,      url: "https://www.siheung.go.kr/main/jobInfoView2/list.do?mId=0401070000"}
+- {id: ggi-gwangmyeong-lib, region: 경기, district: 광명시, name: 광명시립도서관(시 직영),           parser: custom,  engine: httpx,      url: "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&wd=85&where=sub%7Ccon&what=%EC%B1%84%EC%9A%A9"}
+- {id: ggi-gunpo-lib,  region: 경기, district: 군포시,   name: 군포시도서관(시 직영),              parser: spa,     engine: playwright, url: "https://www.gunpolib.go.kr/#/bbs/notice?offset=0&max=20&all=%EC%B1%84%EC%9A%A9"}
+- {id: ggi-icheon-lib, region: 경기, district: 이천시,   name: 이천시립도서관(시 직영),            parser: egov,    engine: httpx,      url: "https://www.icheon.go.kr/portal/saeol/gosi/list.do?seCode=05&mid=0403010000"}
+- {id: ggi-yangju-lib, region: 경기, district: 양주시,   name: 양주시립도서관(시 직영),            parser: egov,    engine: httpx,      url: "https://www.libyj.go.kr/ojlake/menu/10101/bbs/20001/bbsPostList.do?manageCd=ALL&searchCondition=title&searchKeyword=%EC%B1%84%EC%9A%A9"}
+- {id: ggi-osan-lib,   region: 경기, district: 오산시,   name: 오산시중앙도서관(시 직영),          parser: egov,    engine: httpx,      url: "https://www.osanlibrary.go.kr/intro/menu/10050/bbs/20001/bbsPostList.do", note: "검색 파라미터 미지원 → 전체 목록에서 키워드필터"}
+- {id: ggi-guri-lib,   region: 경기, district: 구리시,   name: 구리시립도서관(시 직영),            parser: egov,    engine: httpx,      url: "https://www.gurilib.go.kr/inlib/menu/10059/bbs/20001/bbsPostList.do?manageCd=ALL&searchCondition=title&searchKeyword=%EC%B1%84%EC%9A%A9"}
+- {id: ggi-anseong-lib, region: 경기, district: 안성시,  name: 안성시립도서관(안성맞춤도서관 등),    parser: egov,    engine: httpx,      url: "https://www.anseong.go.kr/portal/saeol/gosiList.do?seCode=05&mId=0501070000"}
+- {id: ggi-pocheon-lib, region: 경기, district: 포천시,  name: 포천시립도서관(시 직영),            parser: egov,    engine: httpx,      url: "https://www.pocheon.go.kr/www/selectEminwonList.do?key=3717&notAncmtSeCode=05"}
+- {id: ggi-uiwang-lib, region: 경기, district: 의왕시,   name: 의왕시 도서관(시 직영),             parser: custom,  engine: playwright, url: "https://www.uiwang.go.kr/UWKORINFO1801"}
+- {id: ggi-hanam-lib,  region: 경기, district: 하남시,   name: 하남시 도서관(하남문화재단 운영),     parser: egov,    engine: httpx,      url: "https://www.hanam.go.kr/www/selectGosiList.do?key=172&not_ancmt_se_code=05"}
+- {id: ggi-ddc-lib,    region: 경기, district: 동두천시, name: 동두천시립도서관(시 직영),          parser: egov,    engine: httpx,      url: "https://www.ddc.go.kr/ddc/selectGosiList.do?key=469&not_ancmt_se_code=05"}
+- {id: ggi-gcheon-lib, region: 경기, district: 과천시,   name: 과천시 정보과학도서관(시 직영),      parser: egov,    engine: httpx,      url: "https://www.gclib.go.kr/lib/menu/10099/bbs/20001/bbsPostList.do?manageCd=ALL&searchCondition=title&searchKeyword=%EC%B1%84%EC%9A%A9"}
+- {id: ggi-paju-lib,   region: 경기, district: 파주시,   name: 파주중앙도서관(시 직영),            parser: egov,    engine: httpx,      url: "https://www.paju.go.kr/user/board/BD_board.list.do?bbsCd=1022&q_ctgCd=4064"}
+- {id: ggi-yp-lib,     region: 경기, district: 양평군,   name: 양평군립도서관(군 직영),            parser: egov,    engine: httpx,      url: "https://www.yp21.go.kr/www/selectBbsNttList.do?bbsNo=5&key=1119"}
+- {id: ggi-gp-lib,     region: 경기, district: 가평군,   name: 가평군립도서관(군 직영),            parser: egov,    engine: httpx,      url: "https://www.gp.go.kr/portal/selectGosiList.do?key=2392&not_ancmt_se_code=05"}
+- {id: ggi-ycheon-lib, region: 경기, district: 연천군,   name: 연천군립도서관(군 직영),            parser: egov,    engine: httpx,      url: "https://www.yeoncheon.go.kr/www/selectGosiList.do?key=4896&not_ancmt_se_code=05"}
+- {id: ggi-edu-goe,    region: 경기, district: 경기,     name: 경기 교육도서관(교육청),            parser: custom,  engine: playwright, url: "https://lib.goe.go.kr/gg/index.do"}
+
+# ---------- 사서교사 (서울·경기 통합) ----------
+- {id: tea-seoul-gijegye, region: 사서교사, district: 서울, name: 기간제 사서교사(서울교육일자리포털), parser: custom, engine: playwright, url: "https://work.sen.go.kr/work/search/recInfo/BD_selectSrchRecInfo.do"}
+- {id: tea-seoul-imyong,  region: 사서교사, district: 서울, name: 정교사 임용(서울시교육청),          parser: egov,    engine: httpx,      url: "https://www.sen.go.kr/user/bbs/BD_selectBbsList.do?q_bbsSn=1094"}
+- {id: tea-ggi-gijegye,   region: 사서교사, district: 경기, name: 기간제 사서교사(경기도교육청 구인구직), parser: egov, engine: httpx,      url: "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancList.do?mi=10502"}
+- {id: tea-ggi-imyong,    region: 사서교사, district: 경기, name: 정교사 임용(경기도교육청),          parser: egov,    engine: httpx,      url: "https://www.goe.go.kr/goe/na/ntt/selectNttList.do?mi=11038&bbsId=2583"}
