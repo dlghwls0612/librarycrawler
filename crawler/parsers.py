@@ -64,25 +64,18 @@ def extract_listings(html, base_url):
     return items
 
 
-# 마감일 문맥 키워드(있으면 근처 날짜를 마감으로 우선 채택)
-_DEADLINE_CTX = ("접수기간", "접수 기간", "접수마감", "접수 마감", "마감일", "마감", "~", "까지", "제출기한")
-
-
 def extract_deadline(html):
-    """상세 페이지 본문에서 접수마감일 추출. 못 찾으면 None."""
+    """상세 페이지에서 '접수 마감일' 추출. 접수/마감 문맥 창(window) 안의 마지막 날짜를 마감으로.
+    (요일표기 '(수)' 등이 섞여도 견고. 임용일/발표일은 접수 문맥 밖이라 잡지 않음.)
+    못 찾으면 None → 안전만료로만 처리(열린 공고 오숨김 방지).
+    """
     soup = BeautifulSoup(html, "lxml")
     text = soup.get_text(" ", strip=True)
-    # 1) '접수기간 ... A ~ B' 형태 → B(뒤 날짜)를 마감으로
-    for ctx in ("접수기간", "접수 기간", "접수마감", "접수 마감", "마감일", "제출기한"):
+    for ctx in ("접수기간", "접수 기간", "접수마감", "접수 마감", "마감일", "제출기한", "원서접수"):
         idx = text.find(ctx)
         if idx != -1:
-            window = text[idx: idx + 80]
-            dates = [_to_date(m) for m in DATE_RE.finditer(window)]
-            dates = [d for d in dates if d]
+            window = text[idx: idx + 90]
+            dates = [d for d in (_to_date(m) for m in DATE_RE.finditer(window)) if d]
             if dates:
-                return dates[-1]  # 범위면 뒤(마감), 단일이면 그 날짜
-    # 2) 문맥어 없이 '~ 2026.9.14' 패턴
-    m = re.search(r"~\s*" + DATE_RE.pattern, text)
-    if m:
-        return _to_date(re.search(DATE_RE, m.group(0)))
+                return dates[-1]   # 범위면 뒤(마감), 단일이면 그 날짜
     return None

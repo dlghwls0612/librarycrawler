@@ -172,6 +172,18 @@ def crawl(cfg, limit=None, only=None, details=True):
         seen.add(j["url"]); uniq.append(j)
 
     fetchmod.close()
+
+    # 직전 수집분과 비교해 '당일 신규'(isNew) 표시 — 어제 없던 URL만
+    prev_urls = set()
+    if OUT.exists():
+        try:
+            old = json.load(open(OUT, encoding="utf-8"))
+            prev_urls = {j.get("url") for j in old.get("jobs", [])}
+        except Exception:
+            pass
+    for j in uniq:
+        j["isNew"] = bool(prev_urls) and (j["url"] not in prev_urls)
+
     write(cfg, uniq)
     _report(health, len(uniq), results)
 

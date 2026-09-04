@@ -152,6 +152,6 @@ sources:
 
 # ---------- 사서교사 (서울·경기 통합) ----------
 - {id: tea-seoul-gijegye, region: 사서교사, district: 서울, name: 기간제 사서교사(서울교육일자리포털), parser: custom, engine: playwright, url: "https://work.sen.go.kr/work/search/recInfo/BD_selectSrchRecInfo.do"}
-- {id: tea-seoul-imyong,  region: 사서교사, district: 서울, name: 정교사 임용(서울시교육청),          parser: egov,    engine: httpx,      url: "https://www.sen.go.kr/user/bbs/BD_selectBbsList.do?q_bbsSn=1094"}
-- {id: tea-ggi-gijegye,   region: 사서교사, district: 경기, name: 기간제 사서교사(경기도교육청 구인구직), parser: egov, engine: httpx,      url: "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancList.do?mi=10502"}
-- {id: tea-ggi-imyong,    region: 사서교사, district: 경기, name: 정교사 임용(경기도교육청),          parser: egov,    engine: httpx,      url: "https://www.goe.go.kr/goe/na/ntt/selectNttList.do?mi=11038&bbsId=2583"}
+- {id: tea-seoul-imyong,  region: 사서교사, district: 서울, name: 정교사 임용(서울시교육청),          parser: egov,    engine: playwright, url: "https://www.sen.go.kr/user/bbs/BD_selectBbsList.do?q_bbsSn=1094"}
+- {id: tea-ggi-gijegye,   region: 사서교사, district: 경기, name: 기간제 사서교사(경기도교육청 구인구직), parser: egov, engine: playwright, url: "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancList.do?mi=10502"}
+- {id: tea-ggi-imyong,    region: 사서교사, district: 경기, name: 정교사 임용(경기도교육청),          parser: egov,    engine: playwright, url: "https://www.goe.go.kr/goe/na/ntt/selectNttList.do?mi=11038&bbsId=2583"}

@@ -165,7 +165,7 @@ var state = {region:"서울", district:"전체", q:"", sort:"new"};
 
 function todayMs(){var d=new Date();return new Date(d.getFullYear(),d.getMonth(),d.getDate()).getTime();}
 function ms(s){if(!s)return null;var p=s.split("-");return new Date(+p[0],+p[1]-1,+p[2]).getTime();}
-function isNew(j){var t=ms(j.posted);return t!==null&&(todayMs()-t)<=NEW_DAYS*864e5&&(todayMs()-t)>=0;}
+function isNew(j){return j.isNew===true;}  // 직전 수집 대비 '당일 신규'만
 function isExpired(j){var t=ms(j.deadline);if(t!==null)return t<todayMs();var p=ms(j.posted);if(p!==null)return (todayMs()-p)>SAFE_DAYS*864e5;return false;}
 function daysLeft(j){var t=ms(j.deadline);if(t===null)return null;return Math.round((t-todayMs())/864e5);}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
@@ -219,8 +219,8 @@ function render(){
 }
 function renderCounts(){
   var o=open();
-  document.getElementById("counts").innerHTML="현재 열린 공고 <b>"+o.length+"</b>건 · 최근 14일 새 공고 <b style='color:var(--new)'>"+o.filter(isNew).length+"</b>건 <span style='color:var(--faint)'>· "+(META.collected_at||"")+" 수집</span>";
-  document.getElementById("disc").innerHTML="수집 기준 "+esc(META.collected_at||"")+" · 마감된 공고는 자동 숨김 · NEW=게시 14일 이내 · '원문 보기'는 실제 공고/게시판으로 연결."+(META.note?("<br>· "+esc(META.note)):"");
+  document.getElementById("counts").innerHTML="현재 열린 공고 <b>"+o.length+"</b>건 · 오늘 새로 <b style='color:var(--new)'>"+o.filter(isNew).length+"</b>건 <span style='color:var(--faint)'>· "+(META.collected_at||"")+" 수집</span>";
+  document.getElementById("disc").innerHTML="수집 기준 "+esc(META.collected_at||"")+" · 마감된 공고는 자동 숨김 · 빨간 NEW·점=직전 수집 이후 새로 올라온 공고 · '원문 보기'는 실제 공고/게시판으로 연결."+(META.note?("<br>· "+esc(META.note)):"");
 }
 document.querySelectorAll("#regionSeg button").forEach(function(btn){
   btn.addEventListener("click",function(){
