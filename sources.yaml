@@ -77,7 +77,7 @@ sources:
 
 # ---------- 서울 전역·통합 ----------
 - {id: sel-seoullib,         region: 서울, district: 전역·통합, name: 서울도서관(서울시립),                parser: egov,     engine: httpx,      scope: library, url: "https://culture.seoul.go.kr/culture/bbs/B0000002/list.do?menuNo=200052&searchWrd=%EC%82%AC%EC%84%9C"}
-- {id: sel-portal-saramin,   region: 서울, district: 전역·통합, name: 통합포털 도서관/사서(사람인),         parser: saramin,  engine: playwright, url: "https://www.saramin.co.kr/zf_user/jobs/list/job-category?cat_kewd=1929"}
+- {id: sel-portal-saramin,   region: 서울, district: 전역·통합, name: 통합포털 도서관/사서(사람인),         parser: saramin,  engine: httpx,      url: "https://www.saramin.co.kr/zf_user/jobs/list/job-category?cat_kewd=1929"}
 - {id: sel-nl,               region: 서울, district: 전역·통합, name: 국립중앙도서관,                      parser: custom,   engine: httpx,      scope: library, url: "https://www.nl.go.kr/NL/contents/N50602000000.do"}
 - {id: sel-nlcy,             region: 서울, district: 전역·통합, name: 국립어린이청소년도서관,              parser: custom,   engine: httpx,      scope: library, url: "https://nlcy.go.kr/NLCY/contents/C40403000000.do"}
 - {id: sel-nld,              region: 서울, district: 전역·통합, name: 국립장애인도서관,                    parser: custom,   engine: httpx,      scope: library, url: "https://www.nld.go.kr/home/notice.do"}
@@ -110,7 +110,7 @@ sources:
 # ---------- 경기 전역·통합 ----------
 - {id: ggi-ggl,        region: 경기, district: 전역·통합, name: 경기도서관(경기도청 직영),          parser: spa,     engine: playwright, scope: mixed, url: "https://apply.jobaba.net/bsns/bsnsListView.do?tpCd1=04", note: "잡아바=경기도 통합접수(비도서관 포함)→키워드필터"}
 - {id: ggi-ggcf,       region: 경기, district: 전역·통합, name: 경기문화재단,                       parser: spa,     engine: playwright, url: "https://www.ggcf.kr/boards/bulletinBoards/articles?category=03&searchKeyword=%EC%B1%84%EC%9A%A9"}
-- {id: ggi-portal-saramin, region: 경기, district: 전역·통합, name: 통합포털 도서관/사서(사람인),   parser: saramin, engine: playwright, url: "https://www.saramin.co.kr/zf_user/jobs/list/job-category?cat_kewd=1929"}
+- {id: ggi-portal-saramin, region: 경기, district: 전역·통합, name: 통합포털 도서관/사서(사람인),   parser: saramin, engine: httpx,      url: "https://www.saramin.co.kr/zf_user/jobs/list/job-category?cat_kewd=1929"}
 
 # ---------- 경기 시·군 ----------
 - {id: ggi-suwon-lib,  region: 경기, district: 수원시,   name: 수원시 도서관사업소,                parser: asp,     engine: httpx,      url: "https://www.suwonlib.go.kr/ct/html/05_news/news0102.asp?process_type=list&keyword=b_title&keyfield=%EC%B1%84%EC%9A%A9"}

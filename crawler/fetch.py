@@ -2,12 +2,33 @@
 httpx(가벼움) 기본, engine=playwright면 헤드리스 렌더. playwright 미설치 시 httpx로 폴백.
 정부/도서관 사이트는 인증서 문제가 잦아 verify=False(관대) + 요청 간격/재시도.
 """
+import ssl
 import time
 import warnings
 
 import httpx
 
 warnings.filterwarnings("ignore")  # SSL 등 경고 억제
+
+
+def _legacy_ssl_context():
+    """Ubuntu(OpenSSL 3)에서 한국 관공서·재단의 옛 SSL(레거시 재협상, 낮은 보안레벨)에 접속 가능하게.
+    이게 없으면 GitHub 러너에서 sslv3 handshake failure 로 성북 등 다수가 안 걸림."""
+    ctx = ssl.create_default_context()
+    ctx.check_hostname = False
+    ctx.verify_mode = ssl.CERT_NONE
+    try:
+        ctx.options |= ssl.OP_LEGACY_SERVER_CONNECT      # 안전하지 않은 레거시 재협상 허용
+    except AttributeError:
+        ctx.options |= 0x4
+    try:
+        ctx.set_ciphers("DEFAULT@SECLEVEL=1")            # 오래된 암호/키 허용
+    except ssl.SSLError:
+        pass
+    return ctx
+
+
+_SSL = _legacy_ssl_context()
 
 DEFAULT_UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
               "(KHTML, like Gecko) Chrome/124.0 Safari/537.36 (library-jobs-crawler; respectful)")
@@ -28,7 +49,7 @@ def fetch_httpx(url, timeout, ua, retries):
     for attempt in range(retries + 1):
         try:
             with httpx.Client(headers=_headers(ua), timeout=timeout,
-                              follow_redirects=True, verify=False) as c:
+                              follow_redirects=True, verify=_SSL) as c:
                 r = c.get(url)
                 r.raise_for_status()
                 # 인코딩 자동 보정(euc-kr 사이트 대비)
@@ -90,4 +111,8 @@ def fetch(url, engine, settings):
         except Exception:
             # playwright 미설치/실패 → httpx 폴백(SPA는 놓칠 수 있음)
             return fetch_httpx(url, timeout, ua, retries)
-    return fetch_httpx(url, timeout, ua, retries)
+    # httpx 우선, 실패(SSL/차단 등)하면 브라우저로 재시도 = 안전망
+    try:
+        return fetch_httpx(url, timeout, ua, retries)
+    except Exception:
+        return fetch_playwright(url, timeout, ua)
