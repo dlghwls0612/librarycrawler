@@ -37,7 +37,8 @@ OUT = ROOT / "docs" / "data" / "jobs.json"   # GitHub Pages(/docs)에서 바로 
 REQUIRED = ("id", "region", "district", "name", "parser", "engine", "url")
 VALID_REGIONS = {"서울", "경기", "사서교사"}
 KST = timezone(timedelta(hours=9))
-MAX_CANDS = 40          # 소스당 후보 상한
+MAX_CANDS = 30          # 소스당 후보 상한
+DETAIL_CAP = 8          # 소스당 상세페이지(마감일) 진입 상한 — 속도 보호
 # 도서관 외 업무도 뽑는 '모기관' 게시판(→ 도서관/사서 키워드 필수)
 PARENT_HINTS = ("문화재단", "시설", "공단", "문화원", "진흥원", "시청", "구청", "군청")
 
@@ -110,7 +111,7 @@ def crawl(cfg, limit=None, only=None, details=True):
     if limit:
         sources = sources[:limit]
 
-    delay = settings.get("request", {}).get("delay_seconds", 2)
+    delay = min(settings.get("request", {}).get("delay_seconds", 2), 1)
     jobs, health, results = [], [], 0
 
     for s in sources:
@@ -124,6 +125,7 @@ def crawl(cfg, limit=None, only=None, details=True):
 
         cands = parsers.extract_listings(html, s["url"])[:MAX_CANDS]
         kept = 0
+        details_used = 0
         for c in cands:
             title = c["title"]
             if classify.is_result_post(title, settings):
@@ -134,12 +136,13 @@ def crawl(cfg, limit=None, only=None, details=True):
                 continue
 
             deadline = None
-            if details:
+            if details and details_used < DETAIL_CAP:
                 try:
                     dhtml = fetchmod.fetch(c["url"], s["engine"], settings)
                     deadline = parsers.extract_deadline(dhtml)
                 except Exception:
                     pass
+                details_used += 1
                 time.sleep(delay)
 
             if classify.is_expired(deadline):

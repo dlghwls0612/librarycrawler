@@ -56,8 +56,14 @@ def fetch_playwright(url, timeout, ua):
     ctx = browser.new_context(user_agent=ua, locale="ko-KR", ignore_https_errors=True)
     page = ctx.new_page()
     try:
-        page.goto(url, timeout=timeout * 1000, wait_until="networkidle")
-        page.wait_for_timeout(800)  # 지연 렌더 대기
+        # networkidle 을 무한정 기다리면 광고/폴링 사이트에서 안 끝남 →
+        # domcontentloaded 후 networkidle 을 '최대 6초'만 기다리고 넘어감(SPA 렌더 시간은 확보)
+        page.goto(url, timeout=timeout * 1000, wait_until="domcontentloaded")
+        try:
+            page.wait_for_load_state("networkidle", timeout=6000)
+        except Exception:
+            pass
+        page.wait_for_timeout(600)
         return page.content()
     finally:
         ctx.close()
@@ -75,9 +81,9 @@ def close():
 
 def fetch(url, engine, settings):
     req = settings.get("request", {})
-    timeout = req.get("timeout_seconds", 20)
+    timeout = min(req.get("timeout_seconds", 20), 12)   # 느린 사이트에 오래 매달리지 않음
     ua = req.get("user_agent", DEFAULT_UA)
-    retries = req.get("retries", 2)
+    retries = min(req.get("retries", 2), 1)
     if engine == "playwright":
         try:
             return fetch_playwright(url, timeout, ua)
