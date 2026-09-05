@@ -39,6 +39,12 @@ def _looks_detail(url):
     return any(h in u for h in DETAIL_HINTS)
 
 
+# 도서관 통합홈 목록 행의 상세 이동 함수 호출에서 글번호 추출: fnDetail('209697') 등
+ONCLICK_ID_RE = re.compile(
+    r"(?:fnDetail|fnView|fnSelectDetail|goView|goDetail|fn_view|fn_detail)\s*\(\s*['\"]?(\d+)['\"]?",
+    re.I)
+
+
 def _egov_detail_url(a, base_url):
     """전자정부 목록의 상세 링크가 href=""/javascript 라서 글번호가 속성에 담기는 경우
     상세 URL을 복원한다. 두 패턴 지원:
@@ -62,7 +68,44 @@ def _egov_detail_url(a, base_url):
         keep["nttSn"] = did
         path = pu.path[: -len("selectNttList.do")] + "selectNttInfo.do"
         return f"{pu.scheme}://{pu.netloc}{path}?{urlencode(keep)}"
+    # 도서관 통합홈(bbsPostList.do) 패턴: 행 앵커가 href="#javascript" onclick="fnDetail('209697')"
+    # → bbsPostDetail.do?postIdx=209697 로 실제 원문 딥링크 복원
+    m = ONCLICK_ID_RE.search(a.get("onclick") or "")
+    if m and pu.path.endswith("bbsPostList.do"):
+        keep = {"manageCd": (q.get("manageCd") or ["ALL"])[0]}
+        if "menuNo" in q:
+            keep["menuNo"] = q["menuNo"][0]
+        keep["postIdx"] = m.group(1)
+        path = pu.path[: -len("bbsPostList.do")] + "bbsPostDetail.do"
+        return f"{pu.scheme}://{pu.netloc}{path}?{urlencode(keep)}"
     return None
+
+
+# 개별 글이 아닌 게시판 목록/정적안내 페이지로 끝나는 URL(=메뉴·목록 링크 노이즈)
+LIST_ENDPOINTS = ("bbspostlist.do", "selectbbsnttlist.do", "selectnttlist.do",
+                  "contents.do", "bbslist.do", "list.do", "boardlist.do")
+
+
+def _is_list_or_menu(url):
+    """개별 공고가 아니라 게시판 목록/메뉴/정적 페이지 URL인지(=노이즈).
+    단, 특정 글로 진입한 흔적(#javascript 폴백, 상세 힌트 토큰)이 있으면 목록으로 안 봄."""
+    u = url.lower()
+    if "#javascript" in u:            # 파서가 목록의 특정 행을 클릭한 폴백(실제 공고)
+        return False
+    if any(h in u for h in DETAIL_HINTS):
+        return False
+    path = urlparse(u).path
+    return any(path.endswith(e) for e in LIST_ENDPOINTS)
+
+
+def _clean_title(t):
+    """목록 행 전체가 앵커로 묶여 제목에 글번호·등록일·조회수가 섞여 들어온 경우 정제.
+    예: '144712 채용공고 [다산성곽도서관] … 채용 공고 등록일 2026.08.22 조회수 552'
+        → '채용공고 [다산성곽도서관] … 채용 공고'"""
+    t = re.sub(r"^\s*\d{5,}\s+", "", t)   # 앞머리 글번호(5자리+, 연도4자리는 보존)
+    # 뒤쪽 메타데이터부터 잘라냄
+    t = re.split(r"\s*(?:등록일|작성일|게시일|수정일|조회수|조회|첨부파일|작성자|담당부서)\b", t)[0]
+    return t.strip()
 
 
 def extract_listings(html, base_url):
@@ -70,18 +113,25 @@ def extract_listings(html, base_url):
     soup = BeautifulSoup(html, "lxml")
     items, seen = [], set()
     for a in soup.find_all("a"):
-        title = a.get_text(" ", strip=True)
+        title = _clean_title(a.get_text(" ", strip=True))
         href = (a.get("href") or "").strip()
         if not title or len(title) < 5:
             continue
-        if href.lower().startswith("javascript") or href in ("#", ""):
-            # href가 비어있는 전자정부 목록(sen/goe)은 속성으로 상세 URL 복원 시도
+        if href.lower().startswith("javascript") or href == "" or href.startswith("#"):
+            # href가 js/빈값/#프래그먼트인 전자정부·도서관통합홈: 속성·onclick으로 상세 URL 복원
             url = _egov_detail_url(a, base_url)
             if not url:
-                continue
+                # 복원 실패 시: '#xxx' 프래그먼트는 목록 링크로라도 남김(공고 유실 방지)
+                if href.startswith("#") and href != "#":
+                    url = urljoin(base_url, href)
+                else:
+                    continue
         else:
             url = urljoin(base_url, href)
         if url in seen:
+            continue
+        # 게시판 목록/메뉴/정적 페이지 링크(개별 공고 아님)는 제외
+        if _is_list_or_menu(url):
             continue
         # 고용 토큰이 있고 + 프로그램/행사성 단어가 없어야 후보
         if not any(w in title for w in JOB_WORDS):
@@ -106,13 +156,51 @@ def extract_deadline(html):
     """
     soup = BeautifulSoup(html, "lxml")
     text = soup.get_text(" ", strip=True)
-    for ctx in ("접수기간", "접수 기간", "접수마감", "접수 마감", "마감일", "제출기한", "원서접수"):
+    for ctx in ("접수기간", "접수 기간", "접수마감", "접수 마감", "접수기한", "접수 기한",
+                "마감일", "제출기한", "원서접수", "원서 접수", "신청기간", "신청 기간",
+                "모집기간", "모집 기간", "지원기간", "접수일시", "접수 일시"):
         idx = text.find(ctx)
         if idx != -1:
             window = text[idx: idx + 90]
             dates = [d for d in (_to_date(m) for m in DATE_RE.finditer(window)) if d]
             if dates:
+                # 범위 끝이 연도 없이 '~ 9. 11' 형태면 시작일 연도를 물려받아 보정(하루 일찍 만료 방지)
+                tail = re.search(r"~\s*(\d{1,2})\s*[.\-월]\s*(\d{1,2})\s*일?", window)
+                if tail:
+                    cand = _compose_md(int(tail.group(1)), int(tail.group(2)), int(dates[-1][:4]), None)
+                    if cand and cand > dates[-1]:
+                        return cand
                 return dates[-1]   # 범위면 뒤(마감), 단일이면 그 날짜
+    return None
+
+
+def extract_apply_start(html):
+    """상세 페이지 접수기간의 '시작일'을 추출(첫 날짜). 시작일이 미래면 '접수예정'으로 표시하기 위함."""
+    soup = BeautifulSoup(html, "lxml")
+    text = soup.get_text(" ", strip=True)
+    for ctx in ("접수기간", "접수 기간", "신청기간", "신청 기간", "모집기간", "지원기간", "원서접수", "접수일시"):
+        idx = text.find(ctx)
+        if idx != -1:
+            window = text[idx: idx + 90]
+            dates = [d for d in (_to_date(m) for m in DATE_RE.finditer(window)) if d]
+            if dates:
+                return dates[0]   # 첫 날짜 = 접수 시작일
+    return None
+
+
+def extract_posted(html):
+    """상세 페이지에서 게시일(작성일/등록일)을 추출 — 목록에서 게시일을 못 얻었을 때 보조.
+    게시일이 있으면 안전만료(N일)가 동작해 오래된 공고가 자동으로 사라진다."""
+    soup = BeautifulSoup(html, "lxml")
+    text = soup.get_text(" ", strip=True)
+    for ctx in ("게시일", "작성일자", "작성일", "등록일자", "등록일", "게시일자", "공고일"):
+        idx = text.find(ctx)
+        if idx != -1:
+            m = DATE_RE.search(text[idx: idx + 40])
+            if m:
+                d = _to_date(m)
+                if d:
+                    return d
     return None
 
 
@@ -147,3 +235,78 @@ def deadline_from_title(title, posted=None):
     if m:
         return _compose_md(int(m.group(1)), int(m.group(2)), None, posted)
     return None
+
+
+# 제목의 임용일: "(26.08.18.임용)", "26.8.7 임용" 등 — 이 날짜가 지나면 접수는 이미 종료됨
+APPOINT_RE = re.compile(r"(\d{2})\s*[.\-]\s*(\d{1,2})\s*[.\-]\s*(\d{1,2})\s*\.?\s*임용")
+
+
+def appointment_date_from_title(title):
+    """제목에 명시된 '임용일'을 YYYY-MM-DD로. 접수 마감일은 아니지만, 임용일이 지났으면
+    접수는 확실히 끝난 것이라 만료 판정의 상한선으로 쓴다(표시 마감일로는 쓰지 않음)."""
+    if not title:
+        return None
+    m = APPOINT_RE.search(title)
+    if not m:
+        return None
+    return _compose_md(int(m.group(2)), int(m.group(3)), 2000 + int(m.group(1)), None)
+
+
+_SARAMIN_DDAY = re.compile(r"D-(\d+)")
+# 지역명 → (region, 서울/경기 여부). 사이트 탭이 서울/경기뿐이라 그 외 지역은 버림.
+_SARAMIN_REGION = {"서울": "서울", "경기": "경기"}
+
+
+def extract_saramin(html, base_url, today):
+    """사람인 목록 전용 파서: 행마다 제목·상세URL·지역·마감일(D-day)을 정확히 추출.
+    - 지역: .work_place('서울 영등포구 외') → region/district. 서울·경기 외는 제외(사이트 범위).
+    - 마감일: .support_detail .date 의 'D-N' → today+N일(절대날짜), '오늘마감'→today, 상시/수시→None.
+    today = date 객체(만료·D-day 환산 기준)."""
+    from datetime import timedelta
+    soup = BeautifulSoup(html, "lxml")
+    out = []
+    for row in soup.select("div.list_item, .item_recruit"):
+        a = row.select_one(".job_tit a")
+        if not a:
+            continue
+        title = _clean_title(a.get_text(" ", strip=True))
+        if not title or len(title) < 5:
+            continue
+        if any(w in title for w in EXCLUDE_WORDS):
+            continue
+        # 지역: 서울/경기만
+        wp = row.select_one(".work_place")
+        loc = wp.get_text(" ", strip=True) if wp else ""
+        region = _SARAMIN_REGION.get(loc.split()[0], None) if loc else None
+        if region is None:
+            continue   # 인천/강원/전국 등 서울·경기 밖은 제외
+        parts = loc.split()
+        district = next((p for p in parts[1:] if p.endswith(("구", "시", "군"))), "전역·통합")
+        # 상세 URL
+        href = (a.get("href") or "").strip()
+        rid = ""
+        rm = re.search(r"rec[-_](?:link_)?(\d+)", (row.get("id") or "") + " " + (a.get("id") or ""))
+        if rm:
+            rid = rm.group(1)
+        if href and "rec_idx" in href:
+            url = urljoin(base_url, href)
+        elif rid:
+            url = f"https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx={rid}"
+        else:
+            url = urljoin(base_url, href) if href else None
+        if not url:
+            continue
+        # 마감일(D-day)
+        deadline = None
+        dd = row.select_one(".support_detail .date") or row.select_one(".date")
+        if dd:
+            dt = dd.get_text(" ", strip=True)
+            m = _SARAMIN_DDAY.search(dt)
+            if m:
+                deadline = (today + timedelta(days=int(m.group(1)))).isoformat()
+            elif "오늘마감" in dt or "오늘 마감" in dt:
+                deadline = today.isoformat()
+            # 상시채용/수시채용/채용시/D-day없음 → None(만료 안 함)
+        out.append({"title": title, "url": url, "posted": None, "deadline": deadline,
+                    "region": region, "district": district})
+    return out

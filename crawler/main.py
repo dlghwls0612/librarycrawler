@@ -9,6 +9,7 @@
 import argparse
 import hashlib
 import json
+import re
 import sys
 import time
 from collections import Counter
@@ -123,7 +124,11 @@ def crawl(cfg, limit=None, only=None, details=True):
             print(f"  ✗ {tag}: fetch 실패 ({str(e)[:50]})")
             continue
 
-        cands = parsers.extract_listings(html, s["url"])[:MAX_CANDS]
+        is_saramin = s["parser"] == "saramin"
+        if is_saramin:   # 사람인 전용: 지역·마감일(D-day)을 목록에서 정확히 추출, 서울·경기만
+            cands = parsers.extract_saramin(html, s["url"], _now().date())[:MAX_CANDS]
+        else:
+            cands = parsers.extract_listings(html, s["url"])[:MAX_CANDS]
         kept = 0
         details_used = 0
         for c in cands:
@@ -135,11 +140,15 @@ def crawl(cfg, limit=None, only=None, details=True):
                 classify.is_library_relevant(title, settings) or "사서" in title or "도서관" in title):
                 continue
 
-            deadline = None
-            if details and details_used < DETAIL_CAP:
+            deadline = c.get("deadline")   # 사람인은 D-day에서 이미 확보
+            open_start = None
+            if deadline is None and details and not is_saramin and details_used < DETAIL_CAP:
                 try:
                     dhtml = fetchmod.fetch(c["url"], s["engine"], settings)
                     deadline = parsers.extract_deadline(dhtml)
+                    open_start = parsers.extract_apply_start(dhtml)
+                    if c["posted"] is None:   # 목록에서 게시일 못 얻었으면 상세에서 보조
+                        c["posted"] = parsers.extract_posted(dhtml)
                 except Exception:
                     pass
                 details_used += 1
@@ -149,16 +158,26 @@ def crawl(cfg, limit=None, only=None, details=True):
             if deadline is None:
                 deadline = parsers.deadline_from_title(title, c["posted"])
 
+            # 제목에 임용일이 있고 그 날이 지났으면 접수 종료 → 만료(표시 마감일과 별개)
+            appoint = parsers.appointment_date_from_title(title)
+            if appoint and classify.is_expired(appoint):
+                continue
+
             if classify.is_expired(deadline):
                 continue
             if deadline is None and classify.is_safety_expired(c["posted"], settings):
                 continue
 
+            # 접수 시작일이 미래면 '접수예정'
+            job_status = "upcoming" if (open_start and open_start > _now().date().isoformat()) else "open"
+
             jobs.append({
                 "id": _mk_id(s["id"], c["url"]),
-                "region": s["region"], "district": s["district"], "source": s["name"],
-                "title": title, "jobType": classify.tag_jobtype(title, settings),
+                "region": c.get("region", s["region"]), "district": c.get("district", s["district"]),
+                "source": s["name"], "title": title,
+                "jobType": classify.tag_jobtype(title, settings),
                 "posted": c["posted"], "deadline": deadline, "url": c["url"],
+                "status": job_status,
                 "scrapedAt": _now().isoformat(timespec="seconds"),
             })
             kept += 1
@@ -168,12 +187,16 @@ def crawl(cfg, limit=None, only=None, details=True):
         print(f"  {'✓' if kept else '·'} {tag}: {kept}건")
         time.sleep(delay)
 
-    # 중복 제거(같은 url)
-    uniq, seen = [], set()
-    for j in sorted(jobs, key=lambda x: (x["posted"] or ""), reverse=True):
-        if j["url"] in seen:
+    # 중복 제거: ①같은 url ②같은 소스+완전히 동일한 제목(공백무시)의 재게시
+    #   ※ 임용일·날짜 등이 달라 제목이 다르면 별개 공고로 유지(영등포 블라인드 채용 등)
+    uniq, seen_url, seen_st = [], set(), set()
+    for j in sorted(jobs, key=lambda x: (x["posted"] or x["deadline"] or ""), reverse=True):
+        if j["url"] in seen_url:
             continue
-        seen.add(j["url"]); uniq.append(j)
+        st = (j["source"], re.sub(r"\s+", "", j["title"]))
+        if st in seen_st:
+            continue
+        seen_url.add(j["url"]); seen_st.add(st); uniq.append(j)
 
     fetchmod.close()
 
