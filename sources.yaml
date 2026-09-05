@@ -22,7 +22,7 @@ settings:
   # 마감(종료) 판정
   closure:
     safety_expire_days: 25            # ④ 안전만료(20~30 권장)
-    result_keywords: [합격자, "서류전형 합격", "면접 대상", "최종 합격", "합격자 발표", "전형 결과", "채용 결과", 채용완료, "채용 완료", 채용마감, "채용 마감", 선정결과, 선발결과, "최종 결과", "[마감]", 모집마감, 채용연기, "채용 연기", 채용취소, "채용 취소", 접수마감]  # ② 결과공고·마감·연기·취소 매칭
+    result_keywords: [합격자, "서류전형 합격", "면접 대상", "최종 합격", "합격자 발표", "전형 결과", "채용 결과", 채용완료, "채용 완료", 채용마감, "채용 마감", 선정결과, 선발결과, "최종 결과", "[마감]", 모집마감, 채용연기, "채용 연기", 채용취소, "채용 취소"]  # ② 결과공고·마감·연기·취소 매칭(접수마감=마감일라벨 오탐 위험이라 제외)
   # 예의 크롤링
   request:
     delay_seconds: 2
@@ -80,7 +80,7 @@ sources:
 - {id: sel-portal-saramin,   region: 서울, district: 전역·통합, name: 통합포털 도서관/사서(사람인),         parser: saramin,  engine: httpx,      url: "https://www.saramin.co.kr/zf_user/jobs/list/job-category?cat_kewd=1929"}
 - {id: sel-nl,               region: 서울, district: 전역·통합, name: 국립중앙도서관,                      parser: custom,   engine: httpx,      scope: library, url: "https://www.nl.go.kr/NL/contents/N50602000000.do"}
 - {id: sel-nlcy,             region: 서울, district: 전역·통합, name: 국립어린이청소년도서관,              parser: custom,   engine: httpx,      scope: library, url: "https://nlcy.go.kr/NLCY/contents/C40403000000.do"}
-- {id: sel-nld,              region: 서울, district: 전역·통합, name: 국립장애인도서관,                    parser: custom,   engine: httpx,      scope: library, url: "https://www.nld.go.kr/home/notice.do"}
+- {id: sel-nld,              region: 서울, district: 전역·통합, name: 국립장애인도서관,                    parser: custom,   engine: playwright, scope: library, url: "https://www.nld.go.kr/home/notice.do?boardGb=EM&menu=menu_05_03_01", note: "채용 게시판(boardGb=EM)이 JS필터 뒤라 필터URL+playwright로 직접 지정"}
 - {id: sel-nanet,            region: 서울, district: 전역·통합, name: 국회도서관,                          parser: custom,   engine: playwright, scope: library, url: "https://gosi.assembly.go.kr/"}
 
 # ---------- 서울 교육청 공공도서관 (지역 편입 + "(교육청)") · parser: sen ----------
