@@ -172,8 +172,9 @@ def extract_deadline(html):
     soup = BeautifulSoup(html, "lxml")
     text = soup.get_text(" ", strip=True)
     for ctx in ("접수기간", "접수 기간", "접수마감", "접수 마감", "접수기한", "접수 기한",
-                "마감일", "제출기한", "원서접수", "원서 접수", "신청기간", "신청 기간",
-                "모집기간", "모집 기간", "지원기간", "접수일시", "접수 일시"):
+                "마감일", "제출기한", "제출기간", "제출 기간", "원서접수", "원서 접수",
+                "서류접수", "서류 접수", "신청기간", "신청 기간", "지원마감", "지원 마감",
+                "모집기간", "모집 기간", "모집마감", "지원기간", "지원 기간", "접수일시", "접수 일시"):
         idx = text.find(ctx)
         if idx != -1:
             window = text[idx: idx + 90]
@@ -285,7 +286,7 @@ def extract_saramin(html, base_url, today):
     - 지역: .work_place('서울 영등포구 외') → region/district. 서울·경기 외는 제외(사이트 범위).
     - 마감일: .support_detail .date 의 'D-N' → today+N일(절대날짜), '오늘마감'→today, 상시/수시→None.
     today = date 객체(만료·D-day 환산 기준)."""
-    from datetime import timedelta
+    from datetime import date, timedelta
     soup = BeautifulSoup(html, "lxml")
     out = []
     for row in soup.select("div.list_item, .item_recruit"):
@@ -325,11 +326,21 @@ def extract_saramin(html, base_url, today):
         if dd:
             dt = dd.get_text(" ", strip=True)
             m = _SARAMIN_DDAY.search(dt)
+            m2 = re.search(r"~\s*(\d{1,2})\s*[.\-/월]\s*(\d{1,2})", dt)  # ~09.13(토) 형식
             if m:
                 deadline = (today + timedelta(days=int(m.group(1)))).isoformat()
             elif "오늘마감" in dt or "오늘 마감" in dt:
                 deadline = today.isoformat()
-            # 상시채용/수시채용/채용시/D-day없음 → None(만료 안 함)
+            elif m2:
+                mo, d = int(m2.group(1)), int(m2.group(2))
+                try:
+                    cand = date(today.year, mo, d)
+                    if cand < today:                        # 월/일이 지났으면 이듬해
+                        cand = date(today.year + 1, mo, d)
+                    deadline = cand.isoformat()
+                except ValueError:
+                    pass
+            # 상시채용/수시채용/채용시/표기없음 → None(만료 안 함)
         out.append({"title": title, "url": url, "posted": None, "deadline": deadline,
                     "region": region, "district": district})
     return out
