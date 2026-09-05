@@ -154,9 +154,9 @@ def crawl(cfg, limit=None, only=None, details=True):
                 details_used += 1
                 time.sleep(delay)
 
-            # 상세에서 마감일을 못 읽었으면 제목에 박힌 마감일('~8/28까지')로 보조 판정
+            # 상세에서 마감일을 못 읽었으면 제목에 박힌 마감일('~8/28까지', '(~8.17)')로 보조 판정
             if deadline is None:
-                deadline = parsers.deadline_from_title(title, c["posted"])
+                deadline = parsers.deadline_from_title(title, c["posted"], _now().year)
 
             # 제목에 임용일이 있고 그 날이 지났으면 접수 종료 → 만료(표시 마감일과 별개)
             appoint = parsers.appointment_date_from_title(title)

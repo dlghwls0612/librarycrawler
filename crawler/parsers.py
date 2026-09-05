@@ -20,10 +20,12 @@ EXCLUDE_WORDS = ("참가자", "참여자", "수강", "회원", "이용자", "강
                  "대회", "공모전", "신청", "당첨", "휴관", "반납", "독서", "전시", "특강", "캠프",
                  "모임", "축제", "체험", "강연", "봉사자 모집",
                  # 도서관/사서 업무가 아닌 시설·지원 직군(사서 구직자 대상 아님)
-                 "미화원", "특수운영직", "청소원", "경비원", "방호원", "당직", "시설관리원")
+                 "미화원", "미화", "환경미화", "특수운영직", "청소원", "청소", "경비원", "경비",
+                 "방호원", "방호", "당직", "시설관리원", "시설관리", "조리", "급식", "방역",
+                 "소독", "운전원", "주차")
 DATE_RE = re.compile(r"(20\d{2})\s*[.\-/년]\s*(\d{1,2})\s*[.\-/월]\s*(\d{1,2})")
-# 제목에 박힌 마감일: "~8/28까지", "~9월 5일까지", "~2026.11.24" 등
-TITLE_DL_RE = re.compile(r"~\s*(?:(20\d{2})\s*[.\-/년]\s*)?(\d{1,2})\s*[.\-/월]\s*(\d{1,2})\s*일?\s*까지")
+# 제목에 박힌 마감일: "~8/28까지", "~8.17", "(9.1~9.11)", "~2026.11.24" 등 ('까지' 없어도 인식)
+TITLE_DL_RE = re.compile(r"~\s*(?:(20\d{2})\s*[.\-/년]\s*)?(\d{1,2})\s*[.\-/월]\s*(\d{1,2})\s*일?\s*(?:까지)?")
 TITLE_DL_RE2 = re.compile(r"(\d{1,2})\s*월\s*(\d{1,2})\s*일\s*까지")
 
 
@@ -43,9 +45,20 @@ def _looks_detail(url):
 ONCLICK_ID_RE = re.compile(
     r"(?:fnDetail|fnView|fnSelectDetail|goView|goDetail|fn_view|fn_detail)\s*\(\s*['\"]?(\d+)['\"]?",
     re.I)
+# 페이지의 fnDetail 함수에서 (글번호 필드명, 상세 endpoint)를 자동 감지
+# — 사이트마다 필드명이 다름: snlib=postIdx, eplib=bbsPostIdx 등
+_BBSDETAIL_RE = re.compile(
+    r"function\s+fnDetail\s*\([^)]*\)\s*\{.*?\.(\w+)\.value\s*=\s*\w+.*?\.action\s*=\s*[\"']([^\"']+Detail\.do)",
+    re.S)
 
 
-def _egov_detail_url(a, base_url):
+def _detect_bbspost_detail(html):
+    """목록 페이지의 fnDetail(idx) 정의에서 (글번호 파라미터명, 상세 URL 경로)를 얻는다."""
+    m = _BBSDETAIL_RE.search(html or "")
+    return (m.group(1), m.group(2)) if m else None
+
+
+def _egov_detail_url(a, base_url, bbs_ctx=None):
     """전자정부 목록의 상세 링크가 href=""/javascript 라서 글번호가 속성에 담기는 경우
     상세 URL을 복원한다. 두 패턴 지원:
     - sen.go.kr(교육청): keyValue=board_idx, index.do → view.do (menu_idx·manage_idx 유지)
@@ -69,15 +82,16 @@ def _egov_detail_url(a, base_url):
         path = pu.path[: -len("selectNttList.do")] + "selectNttInfo.do"
         return f"{pu.scheme}://{pu.netloc}{path}?{urlencode(keep)}"
     # 도서관 통합홈(bbsPostList.do) 패턴: 행 앵커가 href="#javascript" onclick="fnDetail('209697')"
-    # → bbsPostDetail.do?postIdx=209697 로 실제 원문 딥링크 복원
+    # → 상세 endpoint + 글번호파라미터로 실제 원문 딥링크 복원(파라미터명은 페이지에서 감지)
     m = ONCLICK_ID_RE.search(a.get("onclick") or "")
-    if m and pu.path.endswith("bbsPostList.do"):
-        keep = {"manageCd": (q.get("manageCd") or ["ALL"])[0]}
+    if m and (bbs_ctx or pu.path.endswith("bbsPostList.do")):
+        field, action = bbs_ctx or ("postIdx", pu.path[: -len("bbsPostList.do")] + "bbsPostDetail.do")
+        keep = {field: m.group(1), "manageCd": (q.get("manageCd") or ["ALL"])[0]}
         if "menuNo" in q:
             keep["menuNo"] = q["menuNo"][0]
-        keep["postIdx"] = m.group(1)
-        path = pu.path[: -len("bbsPostList.do")] + "bbsPostDetail.do"
-        return f"{pu.scheme}://{pu.netloc}{path}?{urlencode(keep)}"
+        detail = urljoin(base_url, action)
+        sep = "&" if "?" in detail else "?"
+        return detail + sep + urlencode(keep)
     return None
 
 
@@ -111,6 +125,7 @@ def _clean_title(t):
 def extract_listings(html, base_url):
     """목록 페이지 → [{title, url, posted}] 후보. 과다수집 후 classify에서 필터."""
     soup = BeautifulSoup(html, "lxml")
+    bbs_ctx = _detect_bbspost_detail(html)   # 도서관통합홈 상세 파라미터명·endpoint(있으면)
     items, seen = [], set()
     for a in soup.find_all("a"):
         title = _clean_title(a.get_text(" ", strip=True))
@@ -119,7 +134,7 @@ def extract_listings(html, base_url):
             continue
         if href.lower().startswith("javascript") or href == "" or href.startswith("#"):
             # href가 js/빈값/#프래그먼트인 전자정부·도서관통합홈: 속성·onclick으로 상세 URL 복원
-            url = _egov_detail_url(a, base_url)
+            url = _egov_detail_url(a, base_url, bbs_ctx)
             if not url:
                 # 복원 실패 시: '#xxx' 프래그먼트는 목록 링크로라도 남김(공고 유실 방지)
                 if href.startswith("#") and href != "#":
@@ -218,22 +233,30 @@ def _compose_md(mo, d, year, posted):
     return f"{year:04d}-{mo:02d}-{d:02d}"
 
 
-def deadline_from_title(title, posted=None):
-    """제목에 명시된 마감일('~8/28까지', '9월 5일까지' 등)을 추출.
-    상세페이지에서 마감일을 못 읽었을 때 보조로 사용(마감 오검출 방지)."""
+def deadline_from_title(title, posted=None, fallback_year=None):
+    """제목에 명시된 마감일('~8/28까지', '(~8.17)', '9월 5일까지' 등)을 추출.
+    상세페이지에서 마감일을 못 읽었을 때 보조로 사용(마감 오검출 방지).
+    연도가 제목·게시일에 다 없으면 fallback_year(보통 수집 연도)로 보정."""
     if not title:
         return None
+
+    def _mk(mo, d, y):
+        got = _compose_md(mo, d, y, posted)
+        if got is None and y is None and fallback_year:
+            got = _compose_md(mo, d, fallback_year, None)
+        return got
+
     last = None
     for m in TITLE_DL_RE.finditer(title):
         y = int(m.group(1)) if m.group(1) else None
-        got = _compose_md(int(m.group(2)), int(m.group(3)), y, posted)
+        got = _mk(int(m.group(2)), int(m.group(3)), y)
         if got:
             last = got
     if last:
         return last
     m = TITLE_DL_RE2.search(title)
     if m:
-        return _compose_md(int(m.group(1)), int(m.group(2)), None, posted)
+        return _mk(int(m.group(1)), int(m.group(2)), None)
     return None
 
 
