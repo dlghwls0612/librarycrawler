@@ -1,12 +1,14 @@
 {
   "meta": {
     "project": "서울·경기 도서관 채용 크롤러",
-    "collected_at": "2026-09-05 12:05",
-    "job_count": 31
+    "collected_at": "2026-09-05 13:00",
+    "job_count": 31,
+    "failures": []
   },
   "jobs": [
     {
       "id": "sel-portal-saramin::125d001396",
+      "sid": "sel-portal-saramin",
       "region": "경기",
       "district": "화성시",
       "source": "통합포털 도서관/사서(사람인)",
@@ -16,11 +18,12 @@
       "deadline": "2026-09-10",
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54807193",
       "status": "open",
-      "scrapedAt": "2026-09-05T11:56:34+09:00",
+      "scrapedAt": "2026-09-05T12:51:47+09:00",
       "isNew": false
     },
     {
       "id": "sel-portal-saramin::4a9d874dc4",
+      "sid": "sel-portal-saramin",
       "region": "서울",
       "district": "강남구",
       "source": "통합포털 도서관/사서(사람인)",
@@ -30,11 +33,12 @@
       "deadline": "2026-09-09",
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54929770",
       "status": "open",
-      "scrapedAt": "2026-09-05T11:56:34+09:00",
+      "scrapedAt": "2026-09-05T12:51:47+09:00",
       "isNew": false
     },
     {
       "id": "sel-portal-saramin::6da74130be",
+      "sid": "sel-portal-saramin",
       "region": "서울",
       "district": "서초구",
       "source": "통합포털 도서관/사서(사람인)",
@@ -44,11 +48,12 @@
       "deadline": "2026-09-09",
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54935394",
       "status": "open",
-      "scrapedAt": "2026-09-05T11:56:34+09:00",
+      "scrapedAt": "2026-09-05T12:51:47+09:00",
       "isNew": false
     },
     {
       "id": "sel-portal-saramin::24cb610381",
+      "sid": "sel-portal-saramin",
       "region": "경기",
       "district": "시흥시",
       "source": "통합포털 도서관/사서(사람인)",
@@ -58,11 +63,12 @@
       "deadline": "2026-09-08",
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54950156",
       "status": "open",
-      "scrapedAt": "2026-09-05T11:56:34+09:00",
+      "scrapedAt": "2026-09-05T12:51:47+09:00",
       "isNew": false
     },
     {
       "id": "ggi-gwangmyeong-lib::320a81cd9b",
+      "sid": "ggi-gwangmyeong-lib",
       "region": "경기",
       "district": "광명시",
       "source": "광명시립도서관(시 직영)",
@@ -72,11 +78,12 @@
       "deadline": "2026-09-15",
       "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10h80530m74759d&view=read&field=sub|con&wd=85&bvLib=94",
       "status": "upcoming",
-      "scrapedAt": "2026-09-05T12:02:49+09:00",
+      "scrapedAt": "2026-09-05T12:58:05+09:00",
       "isNew": false
     },
     {
       "id": "sel-guro-cc::1402f13021",
+      "sid": "sel-guro-cc",
       "region": "서울",
       "district": "구로구",
       "source": "구로문화원(구로구립도서관)",
@@ -86,11 +93,12 @@
       "deadline": null,
       "url": "https://www.gurocc.or.kr/board/board.php?code=notice&mode=view&bbs_idx=12369&search_mode=&search_word=&pg=1",
       "status": "open",
-      "scrapedAt": "2026-09-05T11:54:18+09:00",
+      "scrapedAt": "2026-09-05T12:48:58+09:00",
       "isNew": false
     },
     {
       "id": "sel-jungnang-jnfac::42cb9a35f8",
+      "sid": "sel-jungnang-jnfac",
       "region": "서울",
       "district": "중랑구",
       "source": "중랑문화재단",
@@ -100,11 +108,12 @@
       "deadline": null,
       "url": "https://www.jnfac.or.kr/board/7/16967",
       "status": "open",
-      "scrapedAt": "2026-09-05T11:56:09+09:00",
+      "scrapedAt": "2026-09-05T12:51:28+09:00",
       "isNew": false
     },
     {
       "id": "sel-edu-nslib::a892978447",
+      "sid": "sel-edu-nslib",
       "region": "서울",
       "district": "용산구",
       "source": "남산도서관(교육청)",
@@ -114,11 +123,12 @@
       "deadline": "2026-09-08",
       "url": "https://nslib.sen.go.kr/nslib/board/view.do?menu_idx=25&board_idx=1747520&manage_idx=428",
       "status": "open",
-      "scrapedAt": "2026-09-05T11:58:15+09:00",
+      "scrapedAt": "2026-09-05T12:53:28+09:00",
       "isNew": false
     },
     {
       "id": "sel-ydp-ydpcf::b657ce28d0",
+      "sid": "sel-ydp-ydpcf",
       "region": "서울",
       "district": "영등포구",
       "source": "영등포문화재단",
@@ -128,11 +138,12 @@
       "deadline": null,
       "url": "https://www.ydpcf.or.kr/postview.do?bid=3&pid=2663",
       "status": "open",
-      "scrapedAt": "2026-09-05T11:55:18+09:00",
+      "scrapedAt": "2026-09-05T12:49:45+09:00",
       "isNew": false
     },
     {
       "id": "sel-eunpyeong-eplib::0dca7f6247",
+      "sid": "sel-eunpyeong-eplib",
       "region": "서울",
       "district": "은평구",
       "source": "은평구공공도서관(직영)",
@@ -142,11 +153,12 @@
       "deadline": "2026-09-18",
       "url": "https://www.eplib.or.kr/intro/menu/10041/bbs/20002/bbsPostDetail.do?bbsPostIdx=226409&manageCd=ALL",
       "status": "open",
-      "scrapedAt": "2026-09-05T11:55:32+09:00",
+      "scrapedAt": "2026-09-05T12:50:46+09:00",
       "isNew": false
     },
     {
       "id": "sel-edu-ydpllc::82d38628b5",
+      "sid": "sel-edu-ydpllc",
       "region": "서울",
       "district": "영등포구",
       "source": "영등포평생학습관(교육청)",
@@ -156,11 +168,12 @@
       "deadline": "2026-09-07",
       "url": "https://ydpllc.sen.go.kr/ydpllc/board/view.do?menu_idx=25&board_idx=1747378&manage_idx=951",
       "status": "open",
-      "scrapedAt": "2026-09-05T12:01:02+09:00",
+      "scrapedAt": "2026-09-05T12:56:08+09:00",
       "isNew": false
     },
     {
       "id": "sel-eunpyeong-eplib::9723d8ec5f",
+      "sid": "sel-eunpyeong-eplib",
       "region": "서울",
       "district": "은평구",
       "source": "은평구공공도서관(직영)",
@@ -170,11 +183,12 @@
       "deadline": "2026-09-11",
       "url": "https://www.eplib.or.kr/intro/menu/10041/bbs/20002/bbsPostDetail.do?bbsPostIdx=226065&manageCd=ALL",
       "status": "open",
-      "scrapedAt": "2026-09-05T11:55:34+09:00",
+      "scrapedAt": "2026-09-05T12:50:49+09:00",
       "isNew": false
     },
     {
       "id": "ggi-seongnam-lib::9c3918b713",
+      "sid": "ggi-seongnam-lib",
       "region": "경기",
       "district": "성남시",
       "source": "성남시도서관사업소",
@@ -184,11 +198,12 @@
       "deadline": "2026-09-11",
       "url": "https://www.snlib.go.kr/intro/menu/10048/bbs/20001/bbsPostDetail.do?postIdx=209697&manageCd=ALL",
       "status": "upcoming",
-      "scrapedAt": "2026-09-05T12:01:30+09:00",
+      "scrapedAt": "2026-09-05T12:56:44+09:00",
       "isNew": false
     },
     {
       "id": "ggi-seongnam-lib::914cb4712e",
+      "sid": "ggi-seongnam-lib",
       "region": "경기",
       "district": "성남시",
       "source": "성남시도서관사업소",
@@ -198,11 +213,12 @@
       "deadline": "2026-09-11",
       "url": "https://www.snlib.go.kr/intro/menu/10048/bbs/20001/bbsPostDetail.do?postIdx=209694&manageCd=ALL",
       "status": "upcoming",
-      "scrapedAt": "2026-09-05T12:01:32+09:00",
+      "scrapedAt": "2026-09-05T12:56:45+09:00",
       "isNew": false
     },
     {
       "id": "sel-edu-yslib::1e9f787225",
+      "sid": "sel-edu-yslib",
       "region": "서울",
       "district": "용산구",
       "source": "용산도서관(교육청)",
@@ -212,11 +228,12 @@
       "deadline": "2026-09-05",
       "url": "https://yslib.sen.go.kr/yslib/board/view.do?menu_idx=25&board_idx=1746977&manage_idx=997",
       "status": "open",
-      "scrapedAt": "2026-09-05T11:58:33+09:00",
+      "scrapedAt": "2026-09-05T12:53:43+09:00",
       "isNew": false
     },
     {
       "id": "ggi-gwangmyeong-lib::383f254bd8",
+      "sid": "ggi-gwangmyeong-lib",
       "region": "경기",
       "district": "광명시",
       "source": "광명시립도서관(시 직영)",
@@ -226,11 +243,12 @@
       "deadline": "2026-09-16",
       "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10hb0530ldc5edb&view=read&field=sub|con&wd=85&bvLib=91",
       "status": "open",
-      "scrapedAt": "2026-09-05T12:02:50+09:00",
+      "scrapedAt": "2026-09-05T12:58:07+09:00",
       "isNew": false
     },
     {
       "id": "sel-gangbuk-gbcmc::d0751166c7",
+      "sid": "sel-gangbuk-gbcmc",
       "region": "서울",
       "district": "강북구",
       "source": "강북구도시관리공단",
@@ -240,11 +258,12 @@
       "deadline": null,
       "url": "https://www.gbcmc.or.kr/fmcs/138?action=read&action-value=9b934a1e370777ef5e5534c1571c3431",
       "status": "open",
-      "scrapedAt": "2026-09-05T11:53:50+09:00",
+      "scrapedAt": "2026-09-05T12:48:30+09:00",
       "isNew": false
     },
     {
       "id": "sel-seongbuk-sbc::3b70784450",
+      "sid": "sel-seongbuk-sbc",
       "region": "서울",
       "district": "성북구",
       "source": "성북문화재단",
@@ -254,11 +273,12 @@
       "deadline": "2026-09-09",
       "url": "https://www.sbculture.or.kr/culture/bbs/BMSR00034/view.do?boardId=35689&menuNo=500348&searchCnd=1&searchWrd=%EC%B1%84%EC%9A%A9",
       "status": "open",
-      "scrapedAt": "2026-09-05T11:55:06+09:00",
+      "scrapedAt": "2026-09-05T12:49:34+09:00",
       "isNew": false
     },
     {
       "id": "sel-seongbuk-sbc::92213315c7",
+      "sid": "sel-seongbuk-sbc",
       "region": "서울",
       "district": "성북구",
       "source": "성북문화재단",
@@ -268,11 +288,12 @@
       "deadline": "2026-09-09",
       "url": "https://www.sbculture.or.kr/culture/bbs/BMSR00034/view.do?boardId=35688&menuNo=500348&searchCnd=1&searchWrd=%EC%B1%84%EC%9A%A9",
       "status": "open",
-      "scrapedAt": "2026-09-05T11:55:07+09:00",
+      "scrapedAt": "2026-09-05T12:49:37+09:00",
       "isNew": false
     },
     {
       "id": "sel-jungnang-jnfac::7093b7d0e0",
+      "sid": "sel-jungnang-jnfac",
       "region": "서울",
       "district": "중랑구",
       "source": "중랑문화재단",
@@ -282,11 +303,12 @@
       "deadline": null,
       "url": "https://www.jnfac.or.kr/board/7/16883",
       "status": "open",
-      "scrapedAt": "2026-09-05T11:56:14+09:00",
+      "scrapedAt": "2026-09-05T12:51:34+09:00",
       "isNew": false
     },
     {
       "id": "sel-junggu-caci::ac902da3bd",
+      "sid": "sel-junggu-caci",
       "region": "서울",
       "district": "중구",
       "source": "중구문화재단(충무아트센터)",
@@ -296,11 +318,12 @@
       "deadline": null,
       "url": "https://www.caci.or.kr/community/notice/144712?q=M2FiYzY0MGNjOWQxNGM4NDlkY2MyNDZmZDFhM2UxOWE=",
       "status": "open",
-      "scrapedAt": "2026-09-05T11:55:58+09:00",
+      "scrapedAt": "2026-09-05T12:51:20+09:00",
       "isNew": false
     },
     {
       "id": "sel-edu-gdlib::52c759ad9f",
+      "sid": "sel-edu-gdlib",
       "region": "서울",
       "district": "강동구",
       "source": "강동도서관(교육청)",
@@ -310,11 +333,12 @@
       "deadline": "2026-11-24",
       "url": "https://gdlib.sen.go.kr/gdlib/board/view.do?menu_idx=25&board_idx=1709292&manage_idx=52",
       "status": "upcoming",
-      "scrapedAt": "2026-09-05T11:57:16+09:00",
+      "scrapedAt": "2026-09-05T12:52:32+09:00",
       "isNew": false
     },
     {
       "id": "sel-portal-saramin::b4c51c321b",
+      "sid": "sel-portal-saramin",
       "region": "서울",
       "district": "은평구",
       "source": "통합포털 도서관/사서(사람인)",
@@ -324,11 +348,12 @@
       "deadline": null,
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54945247",
       "status": "open",
-      "scrapedAt": "2026-09-05T11:56:34+09:00",
+      "scrapedAt": "2026-09-05T12:51:47+09:00",
       "isNew": false
     },
     {
       "id": "sel-portal-saramin::26843b1e76",
+      "sid": "sel-portal-saramin",
       "region": "서울",
       "district": "강서구",
       "source": "통합포털 도서관/사서(사람인)",
@@ -338,11 +363,12 @@
       "deadline": null,
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54932267",
       "status": "open",
-      "scrapedAt": "2026-09-05T11:56:34+09:00",
+      "scrapedAt": "2026-09-05T12:51:47+09:00",
       "isNew": false
     },
     {
       "id": "sel-portal-saramin::9eb97aaed0",
+      "sid": "sel-portal-saramin",
       "region": "경기",
       "district": "부천시",
       "source": "통합포털 도서관/사서(사람인)",
@@ -352,11 +378,12 @@
       "deadline": null,
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54919477",
       "status": "open",
-      "scrapedAt": "2026-09-05T11:56:34+09:00",
+      "scrapedAt": "2026-09-05T12:51:47+09:00",
       "isNew": false
     },
     {
       "id": "sel-portal-saramin::589c0cc48c",
+      "sid": "sel-portal-saramin",
       "region": "서울",
       "district": "강서구",
       "source": "통합포털 도서관/사서(사람인)",
@@ -366,11 +393,12 @@
       "deadline": null,
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54882053",
       "status": "open",
-      "scrapedAt": "2026-09-05T11:56:34+09:00",
+      "scrapedAt": "2026-09-05T12:51:47+09:00",
       "isNew": false
     },
     {
       "id": "sel-portal-saramin::b0c21b9277",
+      "sid": "sel-portal-saramin",
       "region": "서울",
       "district": "강서구",
       "source": "통합포털 도서관/사서(사람인)",
@@ -380,11 +408,12 @@
       "deadline": null,
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54866623",
       "status": "open",
-      "scrapedAt": "2026-09-05T11:56:34+09:00",
+      "scrapedAt": "2026-09-05T12:51:47+09:00",
       "isNew": false
     },
     {
       "id": "sel-portal-saramin::4d07eb2fed",
+      "sid": "sel-portal-saramin",
       "region": "서울",
       "district": "은평구",
       "source": "통합포털 도서관/사서(사람인)",
@@ -394,11 +423,12 @@
       "deadline": null,
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54854231",
       "status": "open",
-      "scrapedAt": "2026-09-05T11:56:34+09:00",
+      "scrapedAt": "2026-09-05T12:51:47+09:00",
       "isNew": false
     },
     {
       "id": "sel-portal-saramin::d769ab4e3f",
+      "sid": "sel-portal-saramin",
       "region": "경기",
       "district": "부천시",
       "source": "통합포털 도서관/사서(사람인)",
@@ -408,11 +438,12 @@
       "deadline": null,
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54819793",
       "status": "open",
-      "scrapedAt": "2026-09-05T11:56:34+09:00",
+      "scrapedAt": "2026-09-05T12:51:47+09:00",
       "isNew": false
     },
     {
       "id": "sel-portal-saramin::30ca66eb8e",
+      "sid": "sel-portal-saramin",
       "region": "서울",
       "district": "금천구",
       "source": "통합포털 도서관/사서(사람인)",
@@ -422,11 +453,12 @@
       "deadline": null,
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54800491",
       "status": "open",
-      "scrapedAt": "2026-09-05T11:56:34+09:00",
+      "scrapedAt": "2026-09-05T12:51:47+09:00",
       "isNew": false
     },
     {
       "id": "sel-portal-saramin::dbc0f0d7e0",
+      "sid": "sel-portal-saramin",
       "region": "서울",
       "district": "송파구",
       "source": "통합포털 도서관/사서(사람인)",
@@ -436,7 +468,7 @@
       "deadline": null,
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54683139",
       "status": "open",
-      "scrapedAt": "2026-09-05T11:56:34+09:00",
+      "scrapedAt": "2026-09-05T12:51:47+09:00",
       "isNew": false
     }
   ]
