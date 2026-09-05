@@ -36,6 +36,7 @@
   .mark .dot{color:var(--accent)}
   .tagline{color:var(--muted);font-size:.92rem;margin:8px 0 0}
   .counts{margin-top:12px;font-size:.82rem;color:var(--faint)}
+  .failnote{margin-top:8px;font-size:.78rem;font-weight:600;color:var(--new);background:var(--new-soft);border-radius:8px;padding:7px 11px;line-height:1.5}
   .counts b{color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums}
   .controls{position:sticky;top:0;z-index:20;background:var(--ground);border-bottom:1px solid var(--border)}
   .controls .container{padding:13px 20px;display:flex;flex-direction:column;gap:12px}
@@ -99,6 +100,7 @@
       <h1 class="mark">서울·경기 도서관 <span class="dot">채용공고</span></h1>
       <p class="tagline">지역을 고르면 도서관/사서 채용공고가 바로 목록으로. 매일 리스트가 최신화됩니다.</p>
       <div class="counts" id="counts"></div>
+      <div class="failnote" id="failnote" hidden></div>
     </div>
   </header>
   <div class="controls">
@@ -227,6 +229,9 @@ function render(){
 function renderCounts(){
   var o=open();
   document.getElementById("counts").innerHTML="현재 열린 공고 <b>"+o.length+"</b>건 · 오늘 새로 <b style='color:var(--new)'>"+o.filter(isNew).length+"</b>건 <span style='color:var(--faint)'>· "+(META.collected_at||"")+" 수집</span>";
+  var fn=document.getElementById("failnote"),fa=(META.failures||[]);
+  if(fa.length){fn.hidden=false;fn.innerHTML="⚠ 수집 실패(이전 목록 임시 표시): "+fa.map(esc).join(", ");}
+  else fn.hidden=true;
   document.getElementById("disc").innerHTML="수집 기준 "+esc(META.collected_at||"")+" · 마감된 공고는 자동 숨김 · 빨간 NEW·점=직전 수집 이후 새로 올라온 공고 · '원문 보기'는 실제 공고/게시판으로 연결."+(META.note?("<br>· "+esc(META.note)):"");
 }
 document.querySelectorAll("#regionSeg button").forEach(function(btn){
