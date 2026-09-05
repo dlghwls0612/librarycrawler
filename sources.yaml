@@ -22,7 +22,7 @@ settings:
   # 마감(종료) 판정
   closure:
     safety_expire_days: 25            # ④ 안전만료(20~30 권장)
-    result_keywords: [합격자, "서류전형 합격", "면접 대상", "최종 합격", "합격자 발표", "전형 결과", "채용 결과", 채용완료, "채용 완료", 채용마감, "채용 마감", 선정결과, 선발결과, "최종 결과"]  # ② 결과공고·마감완료 매칭
+    result_keywords: [합격자, "서류전형 합격", "면접 대상", "최종 합격", "합격자 발표", "전형 결과", "채용 결과", 채용완료, "채용 완료", 채용마감, "채용 마감", 선정결과, 선발결과, "최종 결과", "[마감]", 모집마감, 채용연기, "채용 연기", 채용취소, "채용 취소", 접수마감]  # ② 결과공고·마감·연기·취소 매칭
   # 예의 크롤링
   request:
     delay_seconds: 2
@@ -76,7 +76,7 @@ sources:
 - {id: sel-jungnang-jnfac,   region: 서울, district: 중랑구,   name: 중랑문화재단,                        parser: spa,      engine: playwright, url: "https://www.jnfac.or.kr/board/7"}
 
 # ---------- 서울 전역·통합 ----------
-- {id: sel-seoullib,         region: 서울, district: 전역·통합, name: 서울도서관(서울시립),                parser: egov,     engine: httpx,      scope: library, url: "https://culture.seoul.go.kr/culture/bbs/B0000002/list.do?menuNo=200052&searchWrd=%EC%82%AC%EC%84%9C"}
+- {id: sel-seoullib,         region: 서울, district: 전역·통합, name: 서울도서관(서울시립),                parser: egov,     engine: httpx,      scope: mixed, url: "https://culture.seoul.go.kr/culture/bbs/B0000002/list.do?menuNo=200052&searchWrd=%EC%82%AC%EC%84%9C", note: "서울문화포털 사서검색=혼합결과→제목에 도서관/사서 키워드 필수(재단 일반직원 채용 유입 방지)"}
 - {id: sel-portal-saramin,   region: 서울, district: 전역·통합, name: 통합포털 도서관/사서(사람인),         parser: saramin,  engine: httpx,      url: "https://www.saramin.co.kr/zf_user/jobs/list/job-category?cat_kewd=1929"}
 - {id: sel-nl,               region: 서울, district: 전역·통합, name: 국립중앙도서관,                      parser: custom,   engine: httpx,      scope: library, url: "https://www.nl.go.kr/NL/contents/N50602000000.do"}
 - {id: sel-nlcy,             region: 서울, district: 전역·통합, name: 국립어린이청소년도서관,              parser: custom,   engine: httpx,      scope: library, url: "https://nlcy.go.kr/NLCY/contents/C40403000000.do"}
