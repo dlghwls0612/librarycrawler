@@ -1,7 +1,7 @@
 {
   "meta": {
     "project": "서울·경기 도서관 채용 크롤러",
-    "collected_at": "2026-09-05 09:01",
+    "collected_at": "2026-09-05 05:08",
     "job_count": 37
   },
   "jobs": [
@@ -15,7 +15,7 @@
       "posted": "2026-09-04",
       "deadline": "2026-09-07",
       "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10h80530m74759d&view=read&field=sub|con&wd=85&bvLib=94",
-      "scrapedAt": "2026-09-05T08:58:59+09:00",
+      "scrapedAt": "2026-09-05T05:06:25+09:00",
       "isNew": false
     },
     {
@@ -28,7 +28,7 @@
       "posted": "2026-09-03",
       "deadline": null,
       "url": "https://www.gurocc.or.kr/board/board.php?code=notice&mode=view&bbs_idx=12369&search_mode=&search_word=&pg=1",
-      "scrapedAt": "2026-09-05T08:53:45+09:00",
+      "scrapedAt": "2026-09-05T05:01:13+09:00",
       "isNew": false
     },
     {
@@ -41,7 +41,7 @@
       "posted": "2026-09-03",
       "deadline": null,
       "url": "https://www.jnfac.or.kr/board/7/16967",
-      "scrapedAt": "2026-09-05T08:55:20+09:00",
+      "scrapedAt": "2026-09-05T05:02:45+09:00",
       "isNew": false
     },
     {
@@ -54,7 +54,7 @@
       "posted": "2026-09-01",
       "deadline": null,
       "url": "https://www.snlib.go.kr/intro/menu/10048/bbs/20001/bbsPostList.do?manageCd=ALL&searchCondition=title&searchKeyword=%EC%B1%84%EC%9A%A9#javascript",
-      "scrapedAt": "2026-09-05T08:57:49+09:00",
+      "scrapedAt": "2026-09-05T05:05:12+09:00",
       "isNew": false
     },
     {
@@ -67,7 +67,7 @@
       "posted": "2026-08-27",
       "deadline": null,
       "url": "https://www.gbcmc.or.kr/fmcs/138?action=read&action-value=9b934a1e370777ef5e5534c1571c3431",
-      "scrapedAt": "2026-09-05T08:53:16+09:00",
+      "scrapedAt": "2026-09-05T05:00:44+09:00",
       "isNew": false
     },
     {
@@ -80,7 +80,7 @@
       "posted": "2026-08-27",
       "deadline": null,
       "url": "https://culture.seoul.go.kr/culture/bbs/B0000002/view.do?nttId=16453&menuNo=200052&searchWrd=%EC%82%AC%EC%84%9C&pageIndex=1",
-      "scrapedAt": "2026-09-05T08:55:40+09:00",
+      "scrapedAt": "2026-09-05T05:03:01+09:00",
       "isNew": false
     },
     {
@@ -93,7 +93,7 @@
       "posted": "2026-08-26",
       "deadline": null,
       "url": "https://www.sbculture.or.kr/culture/bbs/BMSR00034/view.do?boardId=35689&menuNo=500348&searchCnd=1&searchWrd=%EC%B1%84%EC%9A%A9",
-      "scrapedAt": "2026-09-05T08:54:16+09:00",
+      "scrapedAt": "2026-09-05T05:01:44+09:00",
       "isNew": false
     },
     {
@@ -106,7 +106,7 @@
       "posted": "2026-08-26",
       "deadline": null,
       "url": "https://www.sbculture.or.kr/culture/bbs/BMSR00034/view.do?boardId=35688&menuNo=500348&searchCnd=1&searchWrd=%EC%B1%84%EC%9A%A9",
-      "scrapedAt": "2026-09-05T08:54:17+09:00",
+      "scrapedAt": "2026-09-05T05:01:47+09:00",
       "isNew": false
     },
     {
@@ -119,7 +119,7 @@
       "posted": "2026-08-26",
       "deadline": null,
       "url": "https://www.jnfac.or.kr/board/7/16883",
-      "scrapedAt": "2026-09-05T08:55:26+09:00",
+      "scrapedAt": "2026-09-05T05:02:49+09:00",
       "isNew": false
     },
     {
@@ -127,12 +127,12 @@
       "region": "서울",
       "district": "중구",
       "source": "중구문화재단(충무아트센터)",
-      "title": "144712 채용공고 [다산성곽도서관] 주말 단시간 근로자 채용 공고 등록일 2026.08.22 조회수 551",
+      "title": "144712 채용공고 [다산성곽도서관] 주말 단시간 근로자 채용 공고 등록일 2026.08.22 조회수 550",
       "jobType": "알바",
       "posted": "2026-08-22",
       "deadline": null,
       "url": "https://www.caci.or.kr/community/notice/144712?q=M2FiYzY0MGNjOWQxNGM4NDlkY2MyNDZmZDFhM2UxOWE=",
-      "scrapedAt": "2026-09-05T08:55:11+09:00",
+      "scrapedAt": "2026-09-05T05:02:34+09:00",
       "isNew": false
     },
     {
@@ -145,7 +145,7 @@
       "posted": "2026-08-10",
       "deadline": null,
       "url": "https://gfac.or.kr/site/main/recruit/965/view",
-      "scrapedAt": "2026-09-05T08:53:27+09:00",
+      "scrapedAt": "2026-09-05T05:00:56+09:00",
       "isNew": false
     },
     {
@@ -158,7 +158,7 @@
       "posted": "2026-08-10",
       "deadline": null,
       "url": "https://gfac.or.kr/site/main/recruit/966/view",
-      "scrapedAt": "2026-09-05T08:53:31+09:00",
+      "scrapedAt": "2026-09-05T05:00:59+09:00",
       "isNew": false
     },
     {
@@ -171,7 +171,7 @@
       "posted": null,
       "deadline": null,
       "url": "https://library.gangnam.go.kr/yllib/menu/12451/bbs/20301/bbsPostList.do",
-      "scrapedAt": "2026-09-05T08:53:02+09:00",
+      "scrapedAt": "2026-09-05T05:00:27+09:00",
       "isNew": false
     },
     {
@@ -184,7 +184,7 @@
       "posted": null,
       "deadline": null,
       "url": "https://www.idfac.or.kr/bbs/board.php?bo_table=job&wr_id=644",
-      "scrapedAt": "2026-09-05T08:53:56+09:00",
+      "scrapedAt": "2026-09-05T05:01:25+09:00",
       "isNew": false
     },
     {
@@ -197,7 +197,7 @@
       "posted": null,
       "deadline": null,
       "url": "https://www.ydpcf.or.kr/postview.do?bid=3&pid=2663",
-      "scrapedAt": "2026-09-05T08:54:26+09:00",
+      "scrapedAt": "2026-09-05T05:01:56+09:00",
       "isNew": false
     },
     {
@@ -210,7 +210,7 @@
       "posted": null,
       "deadline": null,
       "url": "https://www.ydpcf.or.kr/postview.do?bid=3&pid=2613",
-      "scrapedAt": "2026-09-05T08:54:27+09:00",
+      "scrapedAt": "2026-09-05T05:01:57+09:00",
       "isNew": false
     },
     {
@@ -223,7 +223,7 @@
       "posted": null,
       "deadline": null,
       "url": "https://www.ydpcf.or.kr/postview.do?bid=3&pid=2603",
-      "scrapedAt": "2026-09-05T08:54:28+09:00",
+      "scrapedAt": "2026-09-05T05:01:58+09:00",
       "isNew": false
     },
     {
@@ -236,7 +236,7 @@
       "posted": null,
       "deadline": null,
       "url": "https://www.ydpcf.or.kr/postview.do?bid=3&pid=2591",
-      "scrapedAt": "2026-09-05T08:54:34+09:00",
+      "scrapedAt": "2026-09-05T05:01:59+09:00",
       "isNew": false
     },
     {
@@ -249,7 +249,7 @@
       "posted": null,
       "deadline": null,
       "url": "https://www.eplib.or.kr/intro/menu/10041/bbs/20002/bbsPostList.do#javascript",
-      "scrapedAt": "2026-09-05T08:54:48+09:00",
+      "scrapedAt": "2026-09-05T05:02:06+09:00",
       "isNew": false
     },
     {
@@ -262,7 +262,7 @@
       "posted": null,
       "deadline": null,
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54945247",
-      "scrapedAt": "2026-09-05T08:56:01+09:00",
+      "scrapedAt": "2026-09-05T05:03:16+09:00",
       "isNew": false
     },
     {
@@ -275,7 +275,7 @@
       "posted": null,
       "deadline": null,
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54935134",
-      "scrapedAt": "2026-09-05T08:56:03+09:00",
+      "scrapedAt": "2026-09-05T05:03:17+09:00",
       "isNew": false
     },
     {
@@ -288,7 +288,7 @@
       "posted": null,
       "deadline": null,
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54932267",
-      "scrapedAt": "2026-09-05T08:56:04+09:00",
+      "scrapedAt": "2026-09-05T05:03:18+09:00",
       "isNew": false
     },
     {
@@ -301,7 +301,7 @@
       "posted": null,
       "deadline": null,
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54929770",
-      "scrapedAt": "2026-09-05T08:56:05+09:00",
+      "scrapedAt": "2026-09-05T05:03:20+09:00",
       "isNew": false
     },
     {
@@ -314,7 +314,7 @@
       "posted": null,
       "deadline": null,
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54923252",
-      "scrapedAt": "2026-09-05T08:56:07+09:00",
+      "scrapedAt": "2026-09-05T05:03:23+09:00",
       "isNew": false
     },
     {
@@ -327,7 +327,7 @@
       "posted": null,
       "deadline": null,
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54919477",
-      "scrapedAt": "2026-09-05T08:56:09+09:00",
+      "scrapedAt": "2026-09-05T05:03:25+09:00",
       "isNew": false
     },
     {
@@ -340,7 +340,7 @@
       "posted": null,
       "deadline": null,
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54882053",
-      "scrapedAt": "2026-09-05T08:56:10+09:00",
+      "scrapedAt": "2026-09-05T05:03:26+09:00",
       "isNew": false
     },
     {
@@ -353,7 +353,7 @@
       "posted": null,
       "deadline": null,
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54866623",
-      "scrapedAt": "2026-09-05T08:56:11+09:00",
+      "scrapedAt": "2026-09-05T05:03:27+09:00",
       "isNew": false
     },
     {
@@ -366,7 +366,7 @@
       "posted": null,
       "deadline": null,
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54807193",
-      "scrapedAt": "2026-09-05T08:56:11+09:00",
+      "scrapedAt": "2026-09-05T05:03:27+09:00",
       "isNew": false
     },
     {
@@ -379,7 +379,7 @@
       "posted": null,
       "deadline": null,
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54683139",
-      "scrapedAt": "2026-09-05T08:56:11+09:00",
+      "scrapedAt": "2026-09-05T05:03:27+09:00",
       "isNew": false
     },
     {
@@ -392,7 +392,7 @@
       "posted": null,
       "deadline": null,
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54950156",
-      "scrapedAt": "2026-09-05T08:56:11+09:00",
+      "scrapedAt": "2026-09-05T05:03:27+09:00",
       "isNew": false
     },
     {
@@ -405,7 +405,7 @@
       "posted": null,
       "deadline": null,
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54935394",
-      "scrapedAt": "2026-09-05T08:56:11+09:00",
+      "scrapedAt": "2026-09-05T05:03:27+09:00",
       "isNew": false
     },
     {
@@ -418,7 +418,7 @@
       "posted": null,
       "deadline": null,
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54847055",
-      "scrapedAt": "2026-09-05T08:56:11+09:00",
+      "scrapedAt": "2026-09-05T05:03:27+09:00",
       "isNew": false
     },
     {
@@ -431,7 +431,7 @@
       "posted": null,
       "deadline": null,
       "url": "https://lib.yongin.go.kr/intro/menu/10128/contents/40041/contents.do",
-      "scrapedAt": "2026-09-05T08:58:02+09:00",
+      "scrapedAt": "2026-09-05T05:05:24+09:00",
       "isNew": false
     },
     {
@@ -444,7 +444,7 @@
       "posted": null,
       "deadline": null,
       "url": "https://lib.yongin.go.kr/intro/menu/10095/bbs/21108/bbsPostList.do#javascript",
-      "scrapedAt": "2026-09-05T08:58:03+09:00",
+      "scrapedAt": "2026-09-05T05:05:25+09:00",
       "isNew": false
     },
     {
@@ -457,7 +457,7 @@
       "posted": null,
       "deadline": null,
       "url": "https://www.yangju.go.kr/www/selectBbsNttList.do?bbsNo=21&key=216",
-      "scrapedAt": "2026-09-05T09:00:11+09:00",
+      "scrapedAt": "2026-09-05T05:07:23+09:00",
       "isNew": false
     },
     {
@@ -470,7 +470,7 @@
       "posted": null,
       "deadline": null,
       "url": "https://www.gurilib.go.kr/inlib/menu/10059/bbs/20001/bbsPostList.do?manageCd=ALL&searchCondition=title&searchKeyword=%EC%B1%84%EC%9A%A9#javascript",
-      "scrapedAt": "2026-09-05T09:00:35+09:00",
+      "scrapedAt": "2026-09-05T05:07:37+09:00",
       "isNew": false
     },
     {
@@ -483,7 +483,7 @@
       "posted": null,
       "deadline": null,
       "url": "https://www.gclib.go.kr/lib/menu/10099/bbs/20001/bbsPostList.do?manageCd=ALL&searchCondition=title&searchKeyword=%EC%B1%84%EC%9A%A9#javascript",
-      "scrapedAt": "2026-09-05T09:01:01+09:00",
+      "scrapedAt": "2026-09-05T05:07:57+09:00",
       "isNew": false
     }
   ]

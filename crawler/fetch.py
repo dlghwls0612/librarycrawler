@@ -67,7 +67,9 @@ def _get_pw():
     if _pw is None:
         from playwright.sync_api import sync_playwright
         pw = sync_playwright().start()
-        browser = pw.chromium.launch(headless=True)
+        # 도커/저메모리 환경에서 크롬 안정화 (/dev/shm 부족·샌드박스 이슈 회피)
+        browser = pw.chromium.launch(headless=True, args=[
+            "--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu"])
         _pw = (pw, browser)
     return _pw[1]
 
