@@ -145,6 +145,10 @@ def crawl(cfg, limit=None, only=None, details=True):
                 details_used += 1
                 time.sleep(delay)
 
+            # 상세에서 마감일을 못 읽었으면 제목에 박힌 마감일('~8/28까지')로 보조 판정
+            if deadline is None:
+                deadline = parsers.deadline_from_title(title, c["posted"])
+
             if classify.is_expired(deadline):
                 continue
             if deadline is None and classify.is_safety_expired(c["posted"], settings):
