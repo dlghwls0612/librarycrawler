@@ -77,6 +77,10 @@
   .job-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
   .dates{font-size:.8rem;color:var(--muted);font-variant-numeric:tabular-nums}
   .dates .dl{color:var(--new);font-weight:700}
+  .dates .dl.imminent{background:var(--new-soft);padding:1px 7px;border-radius:6px;font-weight:800}
+  .dates .dl.upcoming{color:#0A5A4E;background:#DCEEE9;padding:1px 7px;border-radius:6px;font-weight:800}
+  @media (prefers-color-scheme:dark){.dates .dl.upcoming{color:#8FE0D1;background:#173029}}
+  :root[data-theme="dark"] .dates .dl.upcoming{color:#8FE0D1;background:#173029}
   .cta{display:inline-flex;align-items:center;gap:6px;background:var(--accent);color:var(--on-accent);text-decoration:none;font-weight:750;font-size:.86rem;padding:8px 14px;border-radius:9px;transition:background .13s;white-space:nowrap}
   .cta:hover{background:var(--accent-ink)}
   .empty{text-align:center;color:var(--muted);padding:48px 20px}
@@ -207,8 +211,11 @@ function render(){
   resultLine.textContent=state.region+" · "+(state.district==="전체"?"전체":(state.district==="전역·통합"?"전역":state.district))+" · "+items.length+"건";
   items.forEach(function(j){
     var el=document.createElement("article");el.className="job";
-    var dl=daysLeft(j);var dlTxt=dl===null?"":(dl===0?"오늘 마감":(dl>0?"D-"+dl:""));
-    var datePart=(j.posted?("게시 "+fmt(j.posted)+" · "):"")+"마감 "+(j.deadline?fmt(j.deadline):"공고문 확인")+(dlTxt?' <span class="dl">'+dlTxt+"</span>":"");
+    var dl=daysLeft(j);var upcoming=(j.status==="upcoming");
+    var dlTxt=dl===null?"":(dl===0?"오늘 마감":(dl>0?"D-"+dl:""));
+    var dlCls="dl"+(!upcoming&&dl!==null&&dl>=0&&dl<=3?" imminent":"");
+    var dlSpan=upcoming?'<span class="dl upcoming">접수예정</span>':(dlTxt?'<span class="'+dlCls+'">'+dlTxt+'</span>':"");
+    var datePart=(j.posted?("게시 "+fmt(j.posted)+" · "):"")+"마감 "+(j.deadline?fmt(j.deadline):"공고문 확인")+(dlSpan?" "+dlSpan:"");
     el.innerHTML=
       '<div class="job-top"><h3>'+esc(j.title)+'</h3>'+(isNew(j)?'<span class="badge-new">NEW</span>':'')+'</div>'+
       '<div class="job-meta"><span class="src">'+esc(j.source)+'</span><span class="dot-sep">·</span><span class="dist">'+esc(j.district==="전역·통합"?(j.region+" 전역"):j.district)+'</span><span class="jt '+j.jobType+'">'+esc(JOBLABEL[j.jobType]||j.jobType)+'</span></div>'+
