@@ -115,12 +115,34 @@ def crawl(cfg, limit=None, only=None, details=True):
     delay = min(settings.get("request", {}).get("delay_seconds", 2), 1)
     jobs, health, results = [], [], 0
 
+    # 직전 수집분 로드(수집 실패 시 재사용 · isNew 비교용)
+    prev_jobs = []
+    if OUT.exists():
+        try:
+            prev_jobs = json.load(open(OUT, encoding="utf-8-sig")).get("jobs", [])
+        except Exception:
+            pass
+    prev_by_sid, prev_urls = {}, {j.get("url") for j in prev_jobs}
+    for j in prev_jobs:
+        prev_by_sid.setdefault(j.get("sid"), []).append(j)
+
+    def _live(j):   # 만료 안 된(아직 유효한) 공고인지
+        dl = j.get("deadline")
+        if classify.is_expired(dl):
+            return False
+        if dl is None and classify.is_safety_expired(j.get("posted"), settings):
+            return False
+        return True
+
+    failures = []   # [{"id","name","reason"}] — fetch=접속실패 · empty=구조변경 의심
+
     for s in sources:
         tag = f"[{s['region']}/{s['district']}] {s['name']}"
         try:
             html = fetchmod.fetch(s["url"], s["engine"], settings)
         except Exception as e:
             health.append((s["id"], "FETCH_FAIL", str(e)[:70]))
+            failures.append({"id": s["id"], "name": s["name"], "reason": "fetch"})
             print(f"  ✗ {tag}: fetch 실패 ({str(e)[:50]})")
             continue
 
@@ -180,6 +202,7 @@ def crawl(cfg, limit=None, only=None, details=True):
 
             jobs.append({
                 "id": _mk_id(s["id"], c["url"]),
+                "sid": s["id"],
                 "region": c.get("region", s["region"]), "district": c.get("district", s["district"]),
                 "source": s["name"], "title": title,
                 "jobType": classify.tag_jobtype(title, settings),
@@ -192,7 +215,20 @@ def crawl(cfg, limit=None, only=None, details=True):
         status = "OK" if kept else "ZERO"
         health.append((s["id"], status, f"cands={len(cands)} kept={kept}"))
         print(f"  {'✓' if kept else '·'} {tag}: {kept}건" + (f" (후보 {len(cands)})" if not kept and cands else ""))
+        # 접속은 됐으나 후보 0건인데 직전엔 유효 공고가 있었으면 = 홈페이지 구조 변경 의심
+        if len(cands) == 0 and any(_live(j) for j in prev_by_sid.get(s["id"], [])):
+            failures.append({"id": s["id"], "name": s["name"], "reason": "empty"})
         time.sleep(delay)
+
+    # 수집 실패/구조변경 의심 소스: 직전 수집분(아직 유효한 것)을 임시로 그대로 재사용
+    failed_ids = {f["id"] for f in failures}
+    reused = 0
+    for fid in failed_ids:
+        for j in prev_by_sid.get(fid, []):
+            if not _live(j):
+                continue
+            j = dict(j); j["stale"] = True   # '이전 수집분 임시표시' 플래그
+            jobs.append(j); reused += 1
 
     # 중복 제거: ①같은 url ②같은 소스+완전히 동일한 제목(공백무시)의 재게시
     #   ※ 임용일·날짜 등이 달라 제목이 다르면 별개 공고로 유지(영등포 블라인드 채용 등)
@@ -207,28 +243,25 @@ def crawl(cfg, limit=None, only=None, details=True):
 
     fetchmod.close()
 
-    # 직전 수집분과 비교해 '당일 신규'(isNew) 표시 — 어제 없던 URL만
-    prev_urls = set()
-    if OUT.exists():
-        try:
-            old = json.load(open(OUT, encoding="utf-8"))
-            prev_urls = {j.get("url") for j in old.get("jobs", [])}
-        except Exception:
-            pass
+    # 직전 수집분과 비교해 '당일 신규'(isNew) 표시 — 어제 없던 URL만(재사용분은 자동 False)
     for j in uniq:
         j["isNew"] = bool(prev_urls) and (j["url"] not in prev_urls)
 
-    write(cfg, uniq)
+    fail_names = sorted({f["name"] for f in failures})
+    if fail_names:
+        print(f"\n⚠ 수집 실패/구조변경 의심 {len(fail_names)}곳(이전 목록 {reused}건 재사용): " + ", ".join(fail_names))
+    write(cfg, uniq, fail_names)
     _report(health, len(uniq), results)
 
 
-def write(cfg, jobs):
+def write(cfg, jobs, failures=None):
     OUT.parent.mkdir(parents=True, exist_ok=True)
     payload = {
         "meta": {
             "project": cfg.get("meta", {}).get("project", ""),
             "collected_at": _now().strftime("%Y-%m-%d %H:%M"),
             "job_count": len(jobs),
+            "failures": failures or [],
         },
         "jobs": jobs,
     }
