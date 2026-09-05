@@ -129,6 +129,13 @@ def crawl(cfg, limit=None, only=None, details=True):
             cands = parsers.extract_saramin(html, s["url"], _now().date())[:MAX_CANDS]
         else:
             cands = parsers.extract_listings(html, s["url"])[:MAX_CANDS]
+            # httpx가 JS 목록보드(bbsPostList 등)의 행을 못 읽어 0건이면 playwright로 재렌더 후 재시도
+            if not cands and s["engine"] == "httpx" and parsers._detect_bbspost_detail(html):
+                try:
+                    html = fetchmod.fetch(s["url"], "playwright", settings)
+                    cands = parsers.extract_listings(html, s["url"])[:MAX_CANDS]
+                except Exception:
+                    pass
         kept = 0
         details_used = 0
         for c in cands:
@@ -183,8 +190,8 @@ def crawl(cfg, limit=None, only=None, details=True):
             kept += 1
 
         status = "OK" if kept else "ZERO"
-        health.append((s["id"], status, f"{kept} jobs"))
-        print(f"  {'✓' if kept else '·'} {tag}: {kept}건")
+        health.append((s["id"], status, f"cands={len(cands)} kept={kept}"))
+        print(f"  {'✓' if kept else '·'} {tag}: {kept}건" + (f" (후보 {len(cands)})" if not kept and cands else ""))
         time.sleep(delay)
 
     # 중복 제거: ①같은 url ②같은 소스+완전히 동일한 제목(공백무시)의 재게시
