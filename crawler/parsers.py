@@ -98,11 +98,23 @@ def _egov_detail_url(a, base_url, bbs_ctx=None):
 # 개별 글이 아닌 게시판 목록/정적안내 페이지로 끝나는 URL(=메뉴·목록 링크 노이즈)
 LIST_ENDPOINTS = ("bbspostlist.do", "selectbbsnttlist.do", "selectnttlist.do",
                   "contents.do", "bbslist.do", "list.do", "boardlist.do")
+# 사이트 첫 화면(로고·홈으로 돌아가는 링크). 사이트 이름 자체에 고용어가 들어간 경우
+# ('국회채용시스템' 등) 홈 링크가 공고로 오수집되므로 별도로 차단.
+HOME_ENDPOINTS = ("mainpage.do", "main.do", "main.jsp", "mainpage.jsp", "main.php")
+
+
+def _is_home(url):
+    pu = urlparse(url.lower())
+    if pu.path.endswith(HOME_ENDPOINTS):
+        return True
+    return pu.path in ("", "/") and not pu.query
 
 
 def _is_list_or_menu(url):
     """개별 공고가 아니라 게시판 목록/메뉴/정적 페이지 URL인지(=노이즈).
     단, 특정 글로 진입한 흔적(#javascript 폴백, 상세 힌트 토큰)이 있으면 목록으로 안 봄."""
+    if _is_home(url):     # 첫 화면은 어떤 경우에도 개별 공고가 아님
+        return True
     u = url.lower()
     if "#javascript" in u:            # 파서가 목록의 특정 행을 클릭한 폴백(실제 공고)
         return False
@@ -145,7 +157,11 @@ def extract_listings(html, base_url):
             url = urljoin(base_url, href)
         if url in seen:
             continue
-        # 게시판 목록/메뉴/정적 페이지 링크(개별 공고 아님)는 제외
+        # 목록 페이지 자기 자신으로 돌아오는 링크(현재 페이지·탭)는 공고가 아님
+        # (단 '…#javascript' 폴백은 특정 행을 가리키므로 제외 대상 아님 → 완전 일치만 걸러냄)
+        if url == base_url:
+            continue
+        # 게시판 목록/메뉴/첫화면/정적 페이지 링크(개별 공고 아님)는 제외
         if _is_list_or_menu(url):
             continue
         # 고용 토큰이 있고 + 프로그램/행사성 단어가 없어야 후보

@@ -125,12 +125,17 @@ def crawl(cfg, limit=None, only=None, details=True):
     prev_by_sid, prev_urls = {}, {j.get("url") for j in prev_jobs}
     for j in prev_jobs:
         prev_by_sid.setdefault(j.get("sid"), []).append(j)
+    # 게시일을 못 얻은 공고의 안전만료 기준일 = '처음 수집한 날'.
+    # (firstSeen 없던 시절 데이터는 scrapedAt으로 보정)
+    prev_first = {j.get("url"): (j.get("firstSeen") or (j.get("scrapedAt") or "")[:10])
+                  for j in prev_jobs}
+    today_str = _now().date().isoformat()
 
     def _live(j):   # 만료 안 된(아직 유효한) 공고인지
         dl = j.get("deadline")
         if classify.is_expired(dl):
             return False
-        if dl is None and classify.is_safety_expired(j.get("posted"), settings):
+        if dl is None and classify.is_safety_expired(j.get("posted") or j.get("firstSeen"), settings):
             return False
         return True
 
@@ -194,7 +199,10 @@ def crawl(cfg, limit=None, only=None, details=True):
 
             if classify.is_expired(deadline):
                 continue
-            if deadline is None and classify.is_safety_expired(c["posted"], settings):
+            # 게시일이 없으면 '처음 수집한 날'을 안전만료 기준으로 —
+            # 날짜가 하나도 없는 항목이 목록에 영구히 남는 것 방지(오수집·재게시 잔류 차단)
+            first_seen = prev_first.get(c["url"]) or today_str
+            if deadline is None and classify.is_safety_expired(c["posted"] or first_seen, settings):
                 continue
 
             # 접수 시작일이 미래면 '접수예정'
@@ -207,7 +215,7 @@ def crawl(cfg, limit=None, only=None, details=True):
                 "source": s["name"], "title": title,
                 "jobType": classify.tag_jobtype(title, settings),
                 "posted": c["posted"], "deadline": deadline, "url": c["url"],
-                "status": job_status,
+                "firstSeen": first_seen, "status": job_status,
                 "scrapedAt": _now().isoformat(timespec="seconds"),
             })
             kept += 1

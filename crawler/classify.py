@@ -1,5 +1,14 @@
 """classify.py — 도서관 관련성 필터 · 고용형태 태깅 · 결과공고 판별 · 마감판정."""
-from datetime import date, datetime, timedelta
+from datetime import datetime, timedelta, timezone
+
+KST = timezone(timedelta(hours=9))
+
+
+def _today(today=None):
+    """'오늘'은 반드시 한국시간 기준.
+    (NAS 도커는 로컬시간이 UTC라 date.today()를 쓰면 05:00 KST 실행 시 전날로 잡혀
+     어제 마감된 공고가 하루 더 살아남고 안전만료도 하루씩 밀린다.)"""
+    return today or datetime.now(KST).date()
 
 
 def is_result_post(title, settings):
@@ -27,7 +36,7 @@ def tag_jobtype(title, settings):
 def is_expired(deadline, today=None):
     if not deadline:
         return False
-    today = today or date.today()
+    today = _today(today)
     try:
         d = datetime.strptime(deadline, "%Y-%m-%d").date()
         return d < today
@@ -39,8 +48,8 @@ def is_safety_expired(posted, settings, today=None):
     """마감일을 못 읽은 공고: 게시 후 N일 지나면 만료(④ 안전만료)."""
     if not posted:
         return False
-    days = settings.get("closure", {}).get("safety_expire_days", 25)
-    today = today or date.today()
+    days = settings.get("closure", {}).get("safety_expire_days", 15)
+    today = _today(today)
     try:
         p = datetime.strptime(posted, "%Y-%m-%d").date()
         return (today - p) > timedelta(days=days)

@@ -17,7 +17,8 @@ library-crawler/
 ├─ docs/                 # ← GitHub Pages(/docs)가 서빙하는 폴더
 │  ├─ index.html         # 최종 사이트(서울/경기/사서교사 3탭)
 │  └─ data/jobs.json     # 수집 결과 (사이트가 읽음, Actions가 매일 갱신)
-├─ site/index.html       # docs/index.html 원본(개발용 사본)
+├─ site/index.html       # ⚠ 구버전 사본(수집실패 배너·접수예정 배지 없음). 원본은 docs/index.html
+│                        #    사이트 수정은 docs/index.html 에서만 — 여기서 복사하면 기능이 되돌아감
 └─ .github/workflows/
    └─ crawl.yml          # 매일 자동 수집 + 커밋
 ```
@@ -25,7 +26,7 @@ library-crawler/
 ## 설계 원칙
 - **파서는 설정(sources.yaml)** — 사이트 개편 시 코드가 아니라 한 항목만 수정
 - **list → detail 2단계** — 목록에서 각 게시글에 직접 진입해 본문 마감일 추출 + 딥링크
-- **4단계 마감판정** — ①본문 마감일 ②합격자/결과 공고 매칭 ③원문 사라짐 ④안전만료 25일
+- **4단계 마감판정** — ①본문 마감일 ②합격자/결과 공고 매칭 ③원문 사라짐 ④안전만료 15일(`sources.yaml`)
 - **봇 우회** — Playwright 헤드리스 + 실제 브라우저 헤더, 요청 간격, 재시도
 - **예의 크롤링** — robots 존중, 요청 간격, 원문 링크로 트래픽 환원
 

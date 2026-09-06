@@ -81,7 +81,13 @@ sources:
 - {id: sel-nl,               region: 서울, district: 전역·통합, name: 국립중앙도서관,                      parser: custom,   engine: httpx,      scope: library, url: "https://www.nl.go.kr/NL/contents/N50602000000.do"}
 - {id: sel-nlcy,             region: 서울, district: 전역·통합, name: 국립어린이청소년도서관,              parser: custom,   engine: httpx,      scope: library, url: "https://nlcy.go.kr/NLCY/contents/C40403000000.do"}
 - {id: sel-nld,              region: 서울, district: 전역·통합, name: 국립장애인도서관,                    parser: custom,   engine: playwright, scope: library, url: "https://www.nld.go.kr/home/notice.do?boardGb=EM&menu=menu_05_03_01", note: "채용 게시판(boardGb=EM)이 JS필터 뒤라 필터URL+playwright로 직접 지정"}
-- {id: sel-nanet,            region: 서울, district: 전역·통합, name: 국회도서관,                          parser: custom,   engine: playwright, scope: library, url: "https://gosi.assembly.go.kr/"}
+# 국회채용시스템(sel-nanet) — 2026-09-06 수집 중단.
+#   ① 사서 대상은 '열람봉사 임기제' 월 1건 수준이고 그마저 대부분 합격자 발표(결과공고)
+#   ② 인턴·아르바이트 공고 없음, 기간제는 방호·경비 등 비도서관 직군 위주
+#   ③ 목록 제목 링크가 href="#none" + JS 이동이라 딥링크 복원 불가(전용 파서 필요=저ROI)
+#   ④ 국회부산도서관(부산) 공고가 서울 탭에 섞임
+#   ※ 되살리려면 아래 줄 주석 해제 + 전용 파서 필요. 수동 확인용: https://gosi.assembly.go.kr/board/examList.do (기관=국회도서관 필터)
+# - {id: sel-nanet,          region: 서울, district: 전역·통합, name: 국회도서관,                          parser: custom,   engine: playwright, scope: mixed,   url: "https://gosi.assembly.go.kr/board/examList.do"}
 
 # ---------- 서울 교육청 공공도서관 (지역 편입 + "(교육청)") · parser: sen ----------
 - {id: sel-edu-gnlib,   region: 서울, district: 강남구,   name: 강남도서관(교육청),           parser: sen, engine: httpx, url: "https://gnlib.sen.go.kr/gnlib/board/index.do?search_type=title%2Bcontent&search_text=%EC%B1%84%EC%9A%A9&searchStartDate=2025-09-04&searchEndDate=2026-09-04&menu_idx=25&manage_idx=27&board_idx=0&rowCount=10&viewPage=1"}

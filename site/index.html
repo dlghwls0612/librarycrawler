@@ -160,13 +160,13 @@ var EMBEDDED = {"meta":{"collected_at":"2026-09-04 12:58","job_count":38,"note":
 
 var JOBS = [], META = {};
 var JOBLABEL = {정규:"정규", 계약:"계약", 알바:"알바"};
-var NEW_DAYS = 14, SAFE_DAYS = 25;
+var NEW_DAYS = 14, SAFE_DAYS = 15;   // sources.yaml 의 safety_expire_days 와 동일하게 유지
 var state = {region:"서울", district:"전체", q:"", sort:"new"};
 
 function todayMs(){var d=new Date();return new Date(d.getFullYear(),d.getMonth(),d.getDate()).getTime();}
 function ms(s){if(!s)return null;var p=s.split("-");return new Date(+p[0],+p[1]-1,+p[2]).getTime();}
 function isNew(j){return j.isNew===true;}  // 직전 수집 대비 '당일 신규'만
-function isExpired(j){var t=ms(j.deadline);if(t!==null)return t<todayMs();var p=ms(j.posted);if(p!==null)return (todayMs()-p)>SAFE_DAYS*864e5;return false;}
+function isExpired(j){var t=ms(j.deadline);if(t!==null)return t<todayMs();var p=ms(j.posted||j.firstSeen);if(p!==null)return (todayMs()-p)>SAFE_DAYS*864e5;return false;}
 function daysLeft(j){var t=ms(j.deadline);if(t===null)return null;return Math.round((t-todayMs())/864e5);}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
 function fmt(s){if(!s)return null;var p=s.split("-");return p[1]+"."+p[2];}
