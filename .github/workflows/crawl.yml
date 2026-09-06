@@ -1,12 +1,18 @@
 name: 도서관 채용 크롤 (매일)
 
+# ⚠ 자동 실행 중단 상태 (2026-09-06)
+#   수집은 NAS(집=한국 IP)가 매일 05:00 KST에 담당한다.
+#   GitHub Actions는 미국 IP라 한국 관공서·교육청 상당수가 차단 → 수집 실패분이
+#   NAS가 만든 정상 jobs.json 을 덮어쓰는 사고가 난다.
+#   그래서 schedule 을 주석 처리해 둔다(레포 설정에서 Disable 해둔 것과 이중 안전장치).
+#   되살리려면 아래 두 줄의 주석을 풀기 전에 NAS 스케줄러를 먼저 꺼야 한다.
 on:
-  schedule:
-    - cron: "0 20 * * *"
-  workflow_dispatch: {}
+  # schedule:
+  #   - cron: "0 20 * * *"    # 매일 05:00 KST (UTC 20:00)
+  workflow_dispatch: {}         # 수동 실행 버튼(필요할 때만)
 
 permissions:
-  contents: write
+  contents: write               # jobs.json 커밋용
 
 concurrency:
   group: crawl
@@ -29,16 +35,16 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Playwright 설치
+      - name: Playwright(헤드리스 크롬) 설치
         run: python -m playwright install --with-deps chromium
 
       - name: 수집 실행
         run: python -m crawler.main --crawl
 
-      - name: 결과 커밋
+      - name: 결과 커밋 (docs/data/jobs.json)
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add docs/data/jobs.json
-          git commit -m "auto: jobs.json 갱신" || echo "변경 없음"
+          git commit -m "auto: jobs.json 갱신 ($(date -u +%Y-%m-%d))" || echo "변경 없음"
           git push
