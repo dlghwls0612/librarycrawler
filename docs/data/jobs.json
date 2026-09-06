@@ -1,109 +1,11 @@
 {
   "meta": {
     "project": "서울·경기 도서관 채용 크롤러",
-    "collected_at": "2026-09-06 09:16",
-    "job_count": 30,
-    "failures": [
-      "한국만화영상진흥원(만화도서관)"
-    ]
+    "collected_at": "2026-09-05 13:00",
+    "job_count": 31,
+    "failures": []
   },
   "jobs": [
-    {
-      "id": "sel-portal-saramin::4d07eb2fed",
-      "sid": "sel-portal-saramin",
-      "region": "서울",
-      "district": "은평구",
-      "source": "통합포털 도서관/사서(사람인)",
-      "title": "도서관 MARC 입력 담당자를 모집합니다.",
-      "jobType": "계약",
-      "posted": null,
-      "deadline": "2026-10-25",
-      "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54854231",
-      "firstSeen": "2026-09-05",
-      "status": "open",
-      "scrapedAt": "2026-09-06T09:05:40+09:00",
-      "isNew": false
-    },
-    {
-      "id": "sel-portal-saramin::d769ab4e3f",
-      "sid": "sel-portal-saramin",
-      "region": "경기",
-      "district": "부천시",
-      "source": "통합포털 도서관/사서(사람인)",
-      "title": "유초등 교육 콘텐츠 기획 및 마케팅(도서관 사서 우대)",
-      "jobType": "계약",
-      "posted": null,
-      "deadline": "2026-09-19",
-      "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54819793",
-      "firstSeen": "2026-09-05",
-      "status": "open",
-      "scrapedAt": "2026-09-06T09:05:40+09:00",
-      "isNew": false
-    },
-    {
-      "id": "sel-portal-saramin::30ca66eb8e",
-      "sid": "sel-portal-saramin",
-      "region": "서울",
-      "district": "금천구",
-      "source": "통합포털 도서관/사서(사람인)",
-      "title": "공공 도서관 자료 입력 및 목록 관리",
-      "jobType": "계약",
-      "posted": null,
-      "deadline": "2026-09-19",
-      "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54800491",
-      "firstSeen": "2026-09-05",
-      "status": "open",
-      "scrapedAt": "2026-09-06T09:05:40+09:00",
-      "isNew": false
-    },
-    {
-      "id": "sel-portal-saramin::26843b1e76",
-      "sid": "sel-portal-saramin",
-      "region": "서울",
-      "district": "강서구",
-      "source": "통합포털 도서관/사서(사람인)",
-      "title": "서울 강서구 (가칭)열린도서관 사서 채용 공고(이메일 접수)",
-      "jobType": "계약",
-      "posted": null,
-      "deadline": "2026-09-17",
-      "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54932267",
-      "firstSeen": "2026-09-05",
-      "status": "open",
-      "scrapedAt": "2026-09-06T09:05:40+09:00",
-      "isNew": false
-    },
-    {
-      "id": "sel-portal-saramin::589c0cc48c",
-      "sid": "sel-portal-saramin",
-      "region": "서울",
-      "district": "강서구",
-      "source": "통합포털 도서관/사서(사람인)",
-      "title": "등마루골작은도서관 상주사서 채용 공고",
-      "jobType": "계약",
-      "posted": null,
-      "deadline": "2026-09-15",
-      "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54882053",
-      "firstSeen": "2026-09-05",
-      "status": "open",
-      "scrapedAt": "2026-09-06T09:05:40+09:00",
-      "isNew": false
-    },
-    {
-      "id": "sel-portal-saramin::b0c21b9277",
-      "sid": "sel-portal-saramin",
-      "region": "서울",
-      "district": "강서구",
-      "source": "통합포털 도서관/사서(사람인)",
-      "title": "등마루골작은도서관 상주사서 채용 공고 (이메일 접수)",
-      "jobType": "계약",
-      "posted": null,
-      "deadline": "2026-09-15",
-      "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54866623",
-      "firstSeen": "2026-09-05",
-      "status": "open",
-      "scrapedAt": "2026-09-06T09:05:40+09:00",
-      "isNew": false
-    },
     {
       "id": "sel-portal-saramin::125d001396",
       "sid": "sel-portal-saramin",
@@ -115,9 +17,8 @@
       "posted": null,
       "deadline": "2026-09-10",
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54807193",
-      "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-06T09:05:40+09:00",
+      "scrapedAt": "2026-09-05T12:51:47+09:00",
       "isNew": false
     },
     {
@@ -131,9 +32,8 @@
       "posted": null,
       "deadline": "2026-09-09",
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54929770",
-      "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-06T09:05:40+09:00",
+      "scrapedAt": "2026-09-05T12:51:47+09:00",
       "isNew": false
     },
     {
@@ -147,9 +47,8 @@
       "posted": null,
       "deadline": "2026-09-09",
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54935394",
-      "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-06T09:05:40+09:00",
+      "scrapedAt": "2026-09-05T12:51:47+09:00",
       "isNew": false
     },
     {
@@ -163,9 +62,8 @@
       "posted": null,
       "deadline": "2026-09-08",
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54950156",
-      "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-06T09:05:40+09:00",
+      "scrapedAt": "2026-09-05T12:51:47+09:00",
       "isNew": false
     },
     {
@@ -179,9 +77,8 @@
       "posted": "2026-09-04",
       "deadline": "2026-09-15",
       "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10h80530m74759d&view=read&field=sub|con&wd=85&bvLib=94",
-      "firstSeen": "2026-09-05",
       "status": "upcoming",
-      "scrapedAt": "2026-09-06T09:13:44+09:00",
+      "scrapedAt": "2026-09-05T12:58:05+09:00",
       "isNew": false
     },
     {
@@ -195,9 +92,8 @@
       "posted": "2026-09-03",
       "deadline": null,
       "url": "https://www.gurocc.or.kr/board/board.php?code=notice&mode=view&bbs_idx=12369&search_mode=&search_word=&pg=1",
-      "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-06T09:03:24+09:00",
+      "scrapedAt": "2026-09-05T12:48:58+09:00",
       "isNew": false
     },
     {
@@ -211,9 +107,8 @@
       "posted": "2026-09-03",
       "deadline": null,
       "url": "https://www.jnfac.or.kr/board/7/16967",
-      "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-06T09:05:14+09:00",
+      "scrapedAt": "2026-09-05T12:51:28+09:00",
       "isNew": false
     },
     {
@@ -227,9 +122,8 @@
       "posted": "2026-09-03",
       "deadline": "2026-09-08",
       "url": "https://nslib.sen.go.kr/nslib/board/view.do?menu_idx=25&board_idx=1747520&manage_idx=428",
-      "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-06T09:07:23+09:00",
+      "scrapedAt": "2026-09-05T12:53:28+09:00",
       "isNew": false
     },
     {
@@ -241,11 +135,10 @@
       "title": "영등포구립도서관 보조인력 블라인드 채용 공고(26.10.04.임용)",
       "jobType": "알바",
       "posted": "2026-09-02",
-      "deadline": "2026-09-14",
+      "deadline": null,
       "url": "https://www.ydpcf.or.kr/postview.do?bid=3&pid=2663",
-      "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-06T09:04:08+09:00",
+      "scrapedAt": "2026-09-05T12:49:45+09:00",
       "isNew": false
     },
     {
@@ -259,9 +152,8 @@
       "posted": "2026-09-02",
       "deadline": "2026-09-18",
       "url": "https://www.eplib.or.kr/intro/menu/10041/bbs/20002/bbsPostDetail.do?bbsPostIdx=226409&manageCd=ALL",
-      "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-06T09:04:24+09:00",
+      "scrapedAt": "2026-09-05T12:50:46+09:00",
       "isNew": false
     },
     {
@@ -275,9 +167,8 @@
       "posted": "2026-09-02",
       "deadline": "2026-09-07",
       "url": "https://ydpllc.sen.go.kr/ydpllc/board/view.do?menu_idx=25&board_idx=1747378&manage_idx=951",
-      "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-06T09:11:10+09:00",
+      "scrapedAt": "2026-09-05T12:56:08+09:00",
       "isNew": false
     },
     {
@@ -291,9 +182,8 @@
       "posted": "2026-09-01",
       "deadline": "2026-09-11",
       "url": "https://www.eplib.or.kr/intro/menu/10041/bbs/20002/bbsPostDetail.do?bbsPostIdx=226065&manageCd=ALL",
-      "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-06T09:04:30+09:00",
+      "scrapedAt": "2026-09-05T12:50:49+09:00",
       "isNew": false
     },
     {
@@ -307,9 +197,8 @@
       "posted": "2026-09-01",
       "deadline": "2026-09-11",
       "url": "https://www.snlib.go.kr/intro/menu/10048/bbs/20001/bbsPostDetail.do?postIdx=209697&manageCd=ALL",
-      "firstSeen": "2026-09-05",
       "status": "upcoming",
-      "scrapedAt": "2026-09-06T09:11:40+09:00",
+      "scrapedAt": "2026-09-05T12:56:44+09:00",
       "isNew": false
     },
     {
@@ -323,9 +212,23 @@
       "posted": "2026-09-01",
       "deadline": "2026-09-11",
       "url": "https://www.snlib.go.kr/intro/menu/10048/bbs/20001/bbsPostDetail.do?postIdx=209694&manageCd=ALL",
-      "firstSeen": "2026-09-05",
       "status": "upcoming",
-      "scrapedAt": "2026-09-06T09:11:42+09:00",
+      "scrapedAt": "2026-09-05T12:56:45+09:00",
+      "isNew": false
+    },
+    {
+      "id": "sel-edu-yslib::1e9f787225",
+      "sid": "sel-edu-yslib",
+      "region": "서울",
+      "district": "용산구",
+      "source": "용산도서관(교육청)",
+      "title": "[채용공고](~9월 5일까지)2026년 자료실 주말 단시간 근로자 채용 공고",
+      "jobType": "알바",
+      "posted": "2026-08-31",
+      "deadline": "2026-09-05",
+      "url": "https://yslib.sen.go.kr/yslib/board/view.do?menu_idx=25&board_idx=1746977&manage_idx=997",
+      "status": "open",
+      "scrapedAt": "2026-09-05T12:53:43+09:00",
       "isNew": false
     },
     {
@@ -339,9 +242,8 @@
       "posted": "2026-08-31",
       "deadline": "2026-09-16",
       "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10hb0530ldc5edb&view=read&field=sub|con&wd=85&bvLib=91",
-      "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-06T09:13:47+09:00",
+      "scrapedAt": "2026-09-05T12:58:07+09:00",
       "isNew": false
     },
     {
@@ -355,9 +257,8 @@
       "posted": "2026-08-27",
       "deadline": null,
       "url": "https://www.gbcmc.or.kr/fmcs/138?action=read&action-value=9b934a1e370777ef5e5534c1571c3431",
-      "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-06T09:02:56+09:00",
+      "scrapedAt": "2026-09-05T12:48:30+09:00",
       "isNew": false
     },
     {
@@ -371,9 +272,8 @@
       "posted": "2026-08-26",
       "deadline": "2026-09-09",
       "url": "https://www.sbculture.or.kr/culture/bbs/BMSR00034/view.do?boardId=35689&menuNo=500348&searchCnd=1&searchWrd=%EC%B1%84%EC%9A%A9",
-      "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-06T09:03:54+09:00",
+      "scrapedAt": "2026-09-05T12:49:34+09:00",
       "isNew": false
     },
     {
@@ -387,9 +287,8 @@
       "posted": "2026-08-26",
       "deadline": "2026-09-09",
       "url": "https://www.sbculture.or.kr/culture/bbs/BMSR00034/view.do?boardId=35688&menuNo=500348&searchCnd=1&searchWrd=%EC%B1%84%EC%9A%A9",
-      "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-06T09:03:58+09:00",
+      "scrapedAt": "2026-09-05T12:49:37+09:00",
       "isNew": false
     },
     {
@@ -403,9 +302,8 @@
       "posted": "2026-08-26",
       "deadline": null,
       "url": "https://www.jnfac.or.kr/board/7/16883",
-      "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-06T09:05:21+09:00",
+      "scrapedAt": "2026-09-05T12:51:34+09:00",
       "isNew": false
     },
     {
@@ -419,9 +317,8 @@
       "posted": "2026-08-22",
       "deadline": null,
       "url": "https://www.caci.or.kr/community/notice/144712?q=M2FiYzY0MGNjOWQxNGM4NDlkY2MyNDZmZDFhM2UxOWE=",
-      "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-06T09:04:58+09:00",
+      "scrapedAt": "2026-09-05T12:51:20+09:00",
       "isNew": false
     },
     {
@@ -435,9 +332,8 @@
       "posted": "2025-11-24",
       "deadline": "2026-11-24",
       "url": "https://gdlib.sen.go.kr/gdlib/board/view.do?menu_idx=25&board_idx=1709292&manage_idx=52",
-      "firstSeen": "2026-09-05",
       "status": "upcoming",
-      "scrapedAt": "2026-09-06T09:06:22+09:00",
+      "scrapedAt": "2026-09-05T12:52:32+09:00",
       "isNew": false
     },
     {
@@ -451,9 +347,23 @@
       "posted": null,
       "deadline": null,
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54945247",
-      "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-06T09:05:40+09:00",
+      "scrapedAt": "2026-09-05T12:51:47+09:00",
+      "isNew": false
+    },
+    {
+      "id": "sel-portal-saramin::26843b1e76",
+      "sid": "sel-portal-saramin",
+      "region": "서울",
+      "district": "강서구",
+      "source": "통합포털 도서관/사서(사람인)",
+      "title": "서울 강서구 (가칭)열린도서관 사서 채용 공고(이메일 접수)",
+      "jobType": "계약",
+      "posted": null,
+      "deadline": null,
+      "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54932267",
+      "status": "open",
+      "scrapedAt": "2026-09-05T12:51:47+09:00",
       "isNew": false
     },
     {
@@ -467,9 +377,83 @@
       "posted": null,
       "deadline": null,
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54919477",
-      "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-06T09:05:40+09:00",
+      "scrapedAt": "2026-09-05T12:51:47+09:00",
+      "isNew": false
+    },
+    {
+      "id": "sel-portal-saramin::589c0cc48c",
+      "sid": "sel-portal-saramin",
+      "region": "서울",
+      "district": "강서구",
+      "source": "통합포털 도서관/사서(사람인)",
+      "title": "등마루골작은도서관 상주사서 채용 공고",
+      "jobType": "계약",
+      "posted": null,
+      "deadline": null,
+      "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54882053",
+      "status": "open",
+      "scrapedAt": "2026-09-05T12:51:47+09:00",
+      "isNew": false
+    },
+    {
+      "id": "sel-portal-saramin::b0c21b9277",
+      "sid": "sel-portal-saramin",
+      "region": "서울",
+      "district": "강서구",
+      "source": "통합포털 도서관/사서(사람인)",
+      "title": "등마루골작은도서관 상주사서 채용 공고 (이메일 접수)",
+      "jobType": "계약",
+      "posted": null,
+      "deadline": null,
+      "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54866623",
+      "status": "open",
+      "scrapedAt": "2026-09-05T12:51:47+09:00",
+      "isNew": false
+    },
+    {
+      "id": "sel-portal-saramin::4d07eb2fed",
+      "sid": "sel-portal-saramin",
+      "region": "서울",
+      "district": "은평구",
+      "source": "통합포털 도서관/사서(사람인)",
+      "title": "도서관 MARC 입력 담당자를 모집합니다.",
+      "jobType": "계약",
+      "posted": null,
+      "deadline": null,
+      "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54854231",
+      "status": "open",
+      "scrapedAt": "2026-09-05T12:51:47+09:00",
+      "isNew": false
+    },
+    {
+      "id": "sel-portal-saramin::d769ab4e3f",
+      "sid": "sel-portal-saramin",
+      "region": "경기",
+      "district": "부천시",
+      "source": "통합포털 도서관/사서(사람인)",
+      "title": "유초등 교육 콘텐츠 기획 및 마케팅(도서관 사서 우대)",
+      "jobType": "계약",
+      "posted": null,
+      "deadline": null,
+      "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54819793",
+      "status": "open",
+      "scrapedAt": "2026-09-05T12:51:47+09:00",
+      "isNew": false
+    },
+    {
+      "id": "sel-portal-saramin::30ca66eb8e",
+      "sid": "sel-portal-saramin",
+      "region": "서울",
+      "district": "금천구",
+      "source": "통합포털 도서관/사서(사람인)",
+      "title": "공공 도서관 자료 입력 및 목록 관리",
+      "jobType": "계약",
+      "posted": null,
+      "deadline": null,
+      "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54800491",
+      "status": "open",
+      "scrapedAt": "2026-09-05T12:51:47+09:00",
       "isNew": false
     },
     {
@@ -483,9 +467,8 @@
       "posted": null,
       "deadline": null,
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54683139",
-      "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-06T09:05:40+09:00",
+      "scrapedAt": "2026-09-05T12:51:47+09:00",
       "isNew": false
     }
   ]

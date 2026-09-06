@@ -40,6 +40,10 @@ VALID_REGIONS = {"서울", "경기", "사서교사"}
 KST = timezone(timedelta(hours=9))
 MAX_CANDS = 30          # 소스당 후보 상한
 DETAIL_CAP = 8          # 소스당 상세페이지(마감일) 진입 상한 — 속도 보호
+# 전체 수집 시간 상한(분). 사이트 다수가 동시에 먹통이면 소스당 최대 1분(httpx 2회+playwright)까지
+# 늘어질 수 있어 안전장치를 둔다. 초과하면 남은 소스는 '수집 실패'로 처리 →
+# 이전 목록을 그대로 재사용하고 사이트에 배너가 뜨므로 공고가 사라지지는 않는다.
+MAX_RUNTIME_MIN = 45
 # 도서관 외 업무도 뽑는 '모기관' 게시판(→ 도서관/사서 키워드 필수)
 PARENT_HINTS = ("문화재단", "시설", "공단", "문화원", "진흥원", "시청", "구청", "군청")
 
@@ -103,6 +107,18 @@ def _mk_id(source_id, url):
     return source_id + "::" + hashlib.md5(url.encode("utf-8")).hexdigest()[:10]
 
 
+def _expand_url(url):
+    """소스 URL의 날짜 자리표시자 치환.
+    교육청(sen) 검색 게시판은 URL에 검색기간이 들어가는데, 이게 고정 날짜로 박혀 있으면
+    그 날짜 이후 올라온 공고가 검색 결과에서 통째로 빠진다(매일 조금씩 눈이 머는 버그).
+      {today}    = 오늘(KST)      {year_ago} = 1년 전"""
+    if "{" not in url:
+        return url
+    today = _now().date()
+    return (url.replace("{today}", today.isoformat())
+               .replace("{year_ago}", (today - timedelta(days=365)).isoformat()))
+
+
 def crawl(cfg, limit=None, only=None, details=True):
     settings = cfg["settings"]
     sources = cfg["sources"]
@@ -112,7 +128,10 @@ def crawl(cfg, limit=None, only=None, details=True):
     if limit:
         sources = sources[:limit]
 
-    delay = min(settings.get("request", {}).get("delay_seconds", 2), 1)
+    # 예의 크롤링 — sources.yaml 의 delay_seconds 를 그대로 지킨다.
+    # (집 IP로 도는 크롤러라 과다요청으로 차단되면 크롤러뿐 아니라 가정 접속까지 막힘)
+    delay = settings.get("request", {}).get("delay_seconds", 2)
+    started = time.monotonic()
     jobs, health, results = [], [], 0
 
     # 직전 수집분 로드(수집 실패 시 재사용 · isNew 비교용)
@@ -141,10 +160,20 @@ def crawl(cfg, limit=None, only=None, details=True):
 
     failures = []   # [{"id","name","reason"}] — fetch=접속실패 · empty=구조변경 의심
 
-    for s in sources:
+    for i, s in enumerate(sources):
+        # 시간 상한 초과: 남은 소스는 손대지 않고 '수집 실패'로 넘겨 이전 목록을 재사용시킨다
+        # (중간에 그냥 끊으면 남은 도서관들의 공고가 그날 통째로 사라짐)
+        if time.monotonic() - started > MAX_RUNTIME_MIN * 60:
+            for rest in sources[i:]:
+                failures.append({"id": rest["id"], "name": rest["name"], "reason": "timeout"})
+                health.append((rest["id"], "SKIPPED", f"시간상한 {MAX_RUNTIME_MIN}분 초과 — 이전 목록 재사용"))
+            print(f"\n⏱ 시간상한 {MAX_RUNTIME_MIN}분 초과 — 남은 {len(sources) - i}곳은 이전 목록으로 대체")
+            break
+
         tag = f"[{s['region']}/{s['district']}] {s['name']}"
+        src_url = _expand_url(s["url"])   # 검색기간 등 날짜 자리표시자를 오늘 기준으로
         try:
-            html = fetchmod.fetch(s["url"], s["engine"], settings)
+            html = fetchmod.fetch(src_url, s["engine"], settings)
         except Exception as e:
             health.append((s["id"], "FETCH_FAIL", str(e)[:70]))
             failures.append({"id": s["id"], "name": s["name"], "reason": "fetch"})
@@ -153,14 +182,14 @@ def crawl(cfg, limit=None, only=None, details=True):
 
         is_saramin = s["parser"] == "saramin"
         if is_saramin:   # 사람인 전용: 지역·마감일(D-day)을 목록에서 정확히 추출, 서울·경기만
-            cands = parsers.extract_saramin(html, s["url"], _now().date())[:MAX_CANDS]
+            cands = parsers.extract_saramin(html, src_url, _now().date())[:MAX_CANDS]
         else:
-            cands = parsers.extract_listings(html, s["url"])[:MAX_CANDS]
+            cands = parsers.extract_listings(html, src_url)[:MAX_CANDS]
             # httpx가 JS 목록보드(bbsPostList 등)의 행을 못 읽어 0건이면 playwright로 재렌더 후 재시도
             if not cands and s["engine"] == "httpx" and parsers._detect_bbspost_detail(html):
                 try:
-                    html = fetchmod.fetch(s["url"], "playwright", settings)
-                    cands = parsers.extract_listings(html, s["url"])[:MAX_CANDS]
+                    html = fetchmod.fetch(src_url, "playwright", settings)
+                    cands = parsers.extract_listings(html, src_url)[:MAX_CANDS]
                 except Exception:
                     pass
         kept = 0
@@ -282,7 +311,10 @@ def _report(health, jobcount, results):
     ok = sum(1 for _, s, _ in health if s == "OK")
     zero = sum(1 for _, s, _ in health if s == "ZERO")
     fail = sum(1 for _, s, _ in health if s == "FETCH_FAIL")
-    print(f"\n=== 건강검진 ===  소스 {len(health)} · 성공 {ok} · 0건 {zero} · fetch실패 {fail} · 결과공고제외 {results}")
+    skipped = sum(1 for _, s, _ in health if s == "SKIPPED")
+    print(f"\n=== 건강검진 ===  소스 {len(health)} · 성공 {ok} · 0건 {zero} · fetch실패 {fail}"
+          + (f" · 시간초과 건너뜀 {skipped}" if skipped else "")
+          + f" · 결과공고제외 {results}")
     for sid, st, msg in health:
         if st != "OK":
             print(f"  [{st}] {sid} — {msg}")

@@ -2,6 +2,7 @@
 httpx(가벼움) 기본, engine=playwright면 헤드리스 렌더. playwright 미설치 시 httpx로 폴백.
 정부/도서관 사이트는 인증서 문제가 잦아 verify=False(관대) + 요청 간격/재시도.
 """
+import re
 import ssl
 import time
 import warnings
@@ -52,9 +53,11 @@ def fetch_httpx(url, timeout, ua, retries):
                               follow_redirects=True, verify=_SSL) as c:
                 r = c.get(url)
                 r.raise_for_status()
-                # 인코딩 자동 보정(euc-kr 사이트 대비)
+                # 인코딩 자동 보정(euc-kr 사이트 대비) — httpx에는 requests의
+                # apparent_encoding 이 없으므로 본문 meta charset 을 직접 읽는다.
                 if not r.encoding or r.encoding.lower() in ("iso-8859-1", "ascii"):
-                    r.encoding = r.apparent_encoding or "utf-8"
+                    m = re.search(rb'charset=["\']?([\w-]+)', r.content[:2048].lower())
+                    r.encoding = m.group(1).decode("ascii", "ignore") if m else "utf-8"
                 return r.text
         except Exception as e:
             last = e
@@ -104,7 +107,9 @@ def close():
 
 def fetch(url, engine, settings):
     req = settings.get("request", {})
-    timeout = min(req.get("timeout_seconds", 20), 12)   # 느린 사이트에 오래 매달리지 않음
+    # sources.yaml 의 timeout_seconds 를 그대로 사용(예전 12초 캡 때문에 느린 사이트가
+    # 매번 fetch 실패로 떨어졌음 — 예: 한국만화영상진흥원 playwright 12s 타임아웃)
+    timeout = req.get("timeout_seconds", 20)
     ua = req.get("user_agent", DEFAULT_UA)
     retries = min(req.get("retries", 2), 1)
     if engine == "playwright":
