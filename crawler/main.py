@@ -5,6 +5,8 @@
 --crawl    : 실제 수집 → data/jobs.json
   옵션: --limit N (앞 N개 소스만) · --only <문자열> (id/region/district/이름 부분일치)
         --no-details (상세페이지 진입 생략=마감일 미추출, 빠름)
+        ※ --limit/--only 부분수집은 jobs.partial.json 에만 쓴다(사이트용 jobs.json 보호).
+          정말 덮어쓰려면 --write 를 함께.
 """
 import argparse
 import hashlib
@@ -34,12 +36,17 @@ from . import classify
 ROOT = Path(__file__).resolve().parent.parent
 SOURCES = ROOT / "sources.yaml"
 OUT = ROOT / "docs" / "data" / "jobs.json"   # GitHub Pages(/docs)에서 바로 서빙
+# --limit/--only 로 일부만 돌린 결과가 가는 곳. 사이트가 읽는 jobs.json 을 반쪽짜리로
+# 덮어써서 나머지 도서관 공고가 통째로 사라지는 사고를 막는다(docs/ 밖 = 배포 안 됨).
+PARTIAL_OUT = ROOT / "jobs.partial.json"
 
 REQUIRED = ("id", "region", "district", "name", "parser", "engine", "url")
 VALID_REGIONS = {"서울", "경기", "사서교사"}
 KST = timezone(timedelta(hours=9))
 MAX_CANDS = 30          # 소스당 후보 상한
 DETAIL_CAP = 8          # 소스당 상세페이지(마감일) 진입 상한 — 속도 보호
+MAX_PAGES = 3           # 소스당 목록 페이지 상한(1쪽만 보면 2쪽으로 밀린 모집중 공고가 사라짐)
+PAGE_LOOKBACK_DAYS = 60 # 이 쪽의 가장 오래된 글이 이보다 오래됐으면 다음 쪽은 볼 필요 없음
 # 전체 수집 시간 상한(분). 사이트 다수가 동시에 먹통이면 소스당 최대 1분(httpx 2회+playwright)까지
 # 늘어질 수 있어 안전장치를 둔다. 초과하면 남은 소스는 '수집 실패'로 처리 →
 # 이전 목록을 그대로 재사용하고 사이트에 배너가 뜨므로 공고가 사라지지는 않는다.
@@ -103,6 +110,20 @@ def _needs_library_kw(s):
     return True
 
 
+def _worth_next_page(html):
+    """이 목록 쪽의 가장 오래된 글이 아직 '모집 중일 수 있는' 기간 안이면 다음 쪽도 본다.
+    이미 몇 달 전 글까지 내려간 쪽이면 다음 쪽엔 유효 공고가 없으므로 그만 본다(요청 절약).
+    날짜를 하나도 못 읽으면 판단 불가 → 한 쪽 더 본다(공고 유실 방지 쪽으로)."""
+    dates = sorted(parsers.listing_dates(html))
+    if not dates:
+        return True
+    # 맨 위 고정공지(성북 '채용관련 일반 자격기준' 2021년 등)가 섞여 있어 최솟값을 쓰면
+    # 매일 갱신되는 게시판도 '몇 년치'로 오인된다 → 오래된 쪽 1/4은 고정공지로 보고 버림
+    oldest = dates[len(dates) // 4]
+    cutoff = (_now().date() - timedelta(days=PAGE_LOOKBACK_DAYS)).isoformat()
+    return oldest >= cutoff
+
+
 def _mk_id(source_id, url):
     return source_id + "::" + hashlib.md5(url.encode("utf-8")).hexdigest()[:10]
 
@@ -119,7 +140,7 @@ def _expand_url(url):
                .replace("{year_ago}", (today - timedelta(days=365)).isoformat()))
 
 
-def crawl(cfg, limit=None, only=None, details=True):
+def crawl(cfg, limit=None, only=None, details=True, out=OUT):
     settings = cfg["settings"]
     sources = cfg["sources"]
     if only:
@@ -181,17 +202,45 @@ def crawl(cfg, limit=None, only=None, details=True):
             continue
 
         is_saramin = s["parser"] == "saramin"
-        if is_saramin:   # 사람인 전용: 지역·마감일(D-day)을 목록에서 정확히 추출, 서울·경기만
-            cands = parsers.extract_saramin(html, src_url, _now().date())[:MAX_CANDS]
-        else:
-            cands = parsers.extract_listings(html, src_url)[:MAX_CANDS]
-            # httpx가 JS 목록보드(bbsPostList 등)의 행을 못 읽어 0건이면 playwright로 재렌더 후 재시도
-            if not cands and s["engine"] == "httpx" and parsers._detect_bbspost_detail(html):
-                try:
-                    html = fetchmod.fetch(src_url, "playwright", settings)
-                    cands = parsers.extract_listings(html, src_url)[:MAX_CANDS]
-                except Exception:
-                    pass
+
+        def _parse(page_html, page_url):
+            if is_saramin:   # 사람인 전용: 지역·마감일(D-day)을 목록에서 정확히 추출, 서울·경기만
+                return parsers.extract_saramin(page_html, page_url, _now().date())
+            return parsers.extract_listings(page_html, page_url)
+
+        cands = _parse(html, src_url)
+        # httpx가 JS 목록보드(bbsPostList 등)의 행을 못 읽어 0건이면 playwright로 재렌더 후 재시도
+        if not cands and not is_saramin and s["engine"] == "httpx" \
+                and parsers._detect_bbspost_detail(html):
+            try:
+                html = fetchmod.fetch(src_url, "playwright", settings)
+                cands = _parse(html, src_url)
+            except Exception:
+                pass
+
+        # 2쪽 이후: 한 쪽 건수가 적은 게시판은 아직 모집 중인 공고가 다음 쪽으로 밀린다.
+        # 이 쪽이 이미 오래된 글까지 내려갔거나 새 후보가 안 나오면 즉시 중단(요청 절약).
+        seen_cand = {c["url"] for c in cands}
+        pages_used, page_urls = 1, {src_url}
+        max_pages = s.get("pages", MAX_PAGES)
+        while (len(cands) < MAX_CANDS and pages_used < max_pages
+               and _worth_next_page(html)):
+            nxt = parsers.next_page_url(html, src_url, pages_used + 1)
+            if not nxt or nxt in page_urls:
+                break
+            page_urls.add(nxt)
+            time.sleep(delay)
+            try:
+                html = fetchmod.fetch(nxt, s["engine"], settings)
+            except Exception:
+                break
+            pages_used += 1
+            fresh = [c for c in _parse(html, nxt) if c["url"] not in seen_cand]
+            if not fresh:       # 같은 쪽이 다시 왔거나 더 볼 게 없음
+                break
+            seen_cand.update(c["url"] for c in fresh)
+            cands += fresh
+        cands = cands[:MAX_CANDS]
         kept = 0
         details_used = 0
         for c in cands:
@@ -250,7 +299,7 @@ def crawl(cfg, limit=None, only=None, details=True):
             kept += 1
 
         status = "OK" if kept else "ZERO"
-        health.append((s["id"], status, f"cands={len(cands)} kept={kept}"))
+        health.append((s["id"], status, f"cands={len(cands)} kept={kept} pages={pages_used}"))
         print(f"  {'✓' if kept else '·'} {tag}: {kept}건" + (f" (후보 {len(cands)})" if not kept and cands else ""))
         # 접속은 됐으나 후보 0건인데 직전엔 유효 공고가 있었으면 = 홈페이지 구조 변경 의심
         if len(cands) == 0 and any(_live(j) for j in prev_by_sid.get(s["id"], [])):
@@ -287,12 +336,12 @@ def crawl(cfg, limit=None, only=None, details=True):
     fail_names = sorted({f["name"] for f in failures})
     if fail_names:
         print(f"\n⚠ 수집 실패/구조변경 의심 {len(fail_names)}곳(이전 목록 {reused}건 재사용): " + ", ".join(fail_names))
-    write(cfg, uniq, fail_names)
+    write(cfg, uniq, fail_names, out=out)
     _report(health, len(uniq), results)
 
 
-def write(cfg, jobs, failures=None):
-    OUT.parent.mkdir(parents=True, exist_ok=True)
+def write(cfg, jobs, failures=None, out=OUT):
+    out.parent.mkdir(parents=True, exist_ok=True)
     payload = {
         "meta": {
             "project": cfg.get("meta", {}).get("project", ""),
@@ -302,9 +351,9 @@ def write(cfg, jobs, failures=None):
         },
         "jobs": jobs,
     }
-    with open(OUT, "w", encoding="utf-8") as f:
+    with open(out, "w", encoding="utf-8") as f:
         json.dump(payload, f, ensure_ascii=False, indent=2)
-    print(f"\njobs.json 작성: {OUT} (공고 {len(jobs)}건)")
+    print(f"\n{out.name} 작성: {out} (공고 {len(jobs)}건)")
 
 
 def _report(health, jobcount, results):
@@ -337,6 +386,8 @@ def main():
     ap.add_argument("--limit", type=int)
     ap.add_argument("--only", type=str)
     ap.add_argument("--no-details", action="store_true")
+    ap.add_argument("--write", action="store_true",
+                    help="--limit/--only 부분수집 결과로 docs/data/jobs.json 을 덮어쓴다(위험)")
     args = ap.parse_args()
 
     cfg = load()
@@ -350,8 +401,15 @@ def main():
 
     if args.crawl:
         summarize(cfg)
+        # 일부 소스만 돌린 결과를 jobs.json 에 쓰면 나머지 도서관 공고가 전부 날아간다.
+        # (재사용 안전장치는 '수집 실패' 소스만 살리므로, 아예 안 돈 소스는 못 살린다)
+        out = OUT
+        if (args.limit or args.only) and not args.write:
+            out = PARTIAL_OUT
+            print(f"\n※ 부분 수집(--limit/--only) — 사이트용 {OUT.name} 은 건드리지 않고"
+                  f" {PARTIAL_OUT.name} 에만 씁니다. 정말 덮어쓰려면 --write 를 추가하세요.")
         print("\n=== 수집 시작 ===")
-        crawl(cfg, limit=args.limit, only=args.only, details=not args.no_details)
+        crawl(cfg, limit=args.limit, only=args.only, details=not args.no_details, out=out)
     else:
         summarize(cfg)
         if not OUT.exists():

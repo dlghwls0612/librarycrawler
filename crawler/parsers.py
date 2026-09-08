@@ -180,6 +180,86 @@ def extract_listings(html, base_url):
     return items
 
 
+# ---------- 페이지 넘김(2쪽 이후) ----------
+# 게시판 URL/폼에서 쓰이는 '쪽 번호' 파라미터 이름들(사이트마다 제각각)
+PAGE_PARAMS = ("pageIndex", "currentPageNo", "currentPage", "pageNo", "pageNum",
+               "pageNumber", "page_no", "pageIdx", "curPage", "nowPage", "cpage",
+               "nPage", "startPage", "page", "pg")
+_PAGE_PARAMS_LC = {p.lower() for p in PAGE_PARAMS}
+
+
+def _page_param(soup, base_url):
+    """이 게시판이 쓰는 쪽번호 파라미터명(실제 근거가 있을 때만). URL 쿼리에 이미 있으면
+    그 이름(대소문자 보존), 없으면 목록 폼의 hidden input(전자정부 표준: pageIndex 등).
+    근거가 없으면 None — 아무 이름이나 찍어 보내면 헛요청만 늘기 때문."""
+    for k in parse_qs(urlparse(base_url).query):
+        if k.lower() in _PAGE_PARAMS_LC:
+            return k
+    for inp in soup.find_all("input"):
+        name = (inp.get("name") or "").strip()
+        if name.lower() in _PAGE_PARAMS_LC:
+            return name
+    return None
+
+
+def _set_param(url, key, value):
+    pu = urlparse(url)
+    q = {k: v[0] for k, v in parse_qs(pu.query).items()}
+    q[key] = str(value)
+    return f"{pu.scheme}://{pu.netloc}{pu.path}?{urlencode(q)}"
+
+
+def _has_page_value(url, page):
+    """URL의 쪽번호 파라미터가 실제로 해당 쪽을 가리키는지(=진짜 페이지 링크인지) 확인."""
+    for k, v in parse_qs(urlparse(url).query).items():
+        if k.lower() in _PAGE_PARAMS_LC and v and v[0] == str(page):
+            return True
+    return False
+
+
+def next_page_url(html, base_url, page):
+    """목록 페이지의 페이지네이션에서 `page`쪽 URL을 만든다. 못 만들면 None.
+    한 쪽에 실리는 건수가 적은 게시판(성북문화재단 등)은 아직 모집 중인 공고가
+    2쪽으로 밀려나는데, 1쪽만 읽으면 그 공고가 사이트에서 통째로 사라진다.
+    세 형태 지원:
+      ① 진짜 링크  <a href="...?pageIndex=2">2</a>
+      ② JS 폼전송  <a href="#" onclick="fnSubmitForm(2)">2</a> → 폼의 쪽번호 파라미터로 복원
+         (method=get 인 전자정부 목록폼이라 쿼리스트링으로 그대로 접근 가능)
+      ③ 페이지네이션 자체가 JS로 그려져 앵커가 아예 없는 목록(은평구 bbsPostList 등)
+         → 폼에 쪽번호 hidden input이 있을 때만 그 이름으로 복원(근거 없으면 시도 안 함)"""
+    soup = BeautifulSoup(html, "lxml")
+    param = _page_param(soup, base_url)
+    call_re = re.compile(r"\(\s*['\"]?%d['\"]?\s*[,)]" % page)
+    for a in soup.find_all("a"):
+        if a.get_text(strip=True) != str(page):
+            continue
+        href = (a.get("href") or "").strip()
+        if href and not href.lower().startswith(("javascript", "#")):
+            url = urljoin(base_url, href)
+            if _has_page_value(url, page):
+                return url
+            continue
+        if param and call_re.search(href + " " + (a.get("onclick") or "")):
+            return _set_param(base_url, param, page)
+    return _set_param(base_url, param, page) if param else None
+
+
+def listing_dates(html):
+    """목록 행들의 날짜(등록일) 모음 — '다음 쪽까지 볼 가치가 있나' 판단용.
+    링크가 있는 tr/li 만 목록 행으로 본다(푸터·저작권 연도 오인 방지)."""
+    soup = BeautifulSoup(html, "lxml")
+    out = []
+    for row in soup.select("tr, li"):
+        if not row.find("a"):
+            continue
+        m = DATE_RE.search(row.get_text(" ", strip=True))
+        if m:
+            d = _to_date(m)
+            if d:
+                out.append(d)
+    return out
+
+
 def extract_deadline(html):
     """상세 페이지에서 '접수 마감일' 추출. 접수/마감 문맥 창(window) 안의 마지막 날짜를 마감으로.
     (요일표기 '(수)' 등이 섞여도 견고. 임용일/발표일은 접수 문맥 밖이라 잡지 않음.)
