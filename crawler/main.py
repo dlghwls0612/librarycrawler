@@ -368,14 +368,22 @@ def crawl(cfg, limit=None, only=None, details=True, out=OUT):
 
     # 중복 제거: ①같은 url ②같은 소스+완전히 동일한 제목(공백무시)의 재게시
     #   ※ 임용일·날짜 등이 달라 제목이 다르면 별개 공고로 유지(영등포 블라인드 채용 등)
-    uniq, seen_url, seen_st = [], set(), set()
+    uniq, seen_url, seen_st, seen_cross = [], set(), set(), set()
     for j in sorted(jobs, key=lambda x: (x["posted"] or x["deadline"] or ""), reverse=True):
         cu = parsers.canon_url(j["url"])
         if cu in seen_url:
             continue
-        st = (j["source"], re.sub(r"\s+", "", j["title"]))
+        norm = re.sub(r"\s+", "", j["title"])
+        st = (j["source"], norm)
         if st in seen_st:
             continue
+        # ③ 소스는 다르지만 같은 공고 — 한 공고가 도서관과 시청 양쪽에 실리는 경우
+        #    (부천시립도서관 ↔ 부천시청). 제목이 충분히 길고 마감일까지 같을 때만 묶는다:
+        #    '기간제근로자 채용 공고' 같은 짧고 흔한 제목이 잘못 합쳐지면 진짜 공고가 사라진다.
+        if j["deadline"] and len(norm) >= 20:
+            if (norm, j["deadline"]) in seen_cross:
+                continue
+            seen_cross.add((norm, j["deadline"]))
         seen_url.add(cu); seen_st.add(st); uniq.append(j)
 
     fetchmod.close()
