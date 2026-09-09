@@ -1,8 +1,8 @@
 {
   "meta": {
     "project": "서울·경기 도서관 채용 크롤러",
-    "collected_at": "2026-09-09 10:55",
-    "job_count": 38,
+    "collected_at": "2026-09-09 11:23",
+    "job_count": 37,
     "failures": [],
     "unreadable": []
   },
@@ -20,7 +20,7 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54854231",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T10:36:32+09:00",
+      "scrapedAt": "2026-09-09T11:04:00+09:00",
       "isNew": false
     },
     {
@@ -36,7 +36,7 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54819793",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T10:36:32+09:00",
+      "scrapedAt": "2026-09-09T11:04:00+09:00",
       "isNew": false
     },
     {
@@ -52,7 +52,7 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54800491",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T10:36:32+09:00",
+      "scrapedAt": "2026-09-09T11:04:00+09:00",
       "isNew": false
     },
     {
@@ -68,7 +68,7 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54932267",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T10:36:32+09:00",
+      "scrapedAt": "2026-09-09T11:04:00+09:00",
       "isNew": false
     },
     {
@@ -84,7 +84,7 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54882053",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T10:36:32+09:00",
+      "scrapedAt": "2026-09-09T11:04:00+09:00",
       "isNew": false
     },
     {
@@ -100,7 +100,7 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54866623",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T10:36:32+09:00",
+      "scrapedAt": "2026-09-09T11:04:00+09:00",
       "isNew": false
     },
     {
@@ -116,7 +116,7 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54959726",
       "firstSeen": "2026-09-08",
       "status": "open",
-      "scrapedAt": "2026-09-09T10:36:32+09:00",
+      "scrapedAt": "2026-09-09T11:04:00+09:00",
       "isNew": false
     },
     {
@@ -132,7 +132,7 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54929770",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T10:36:32+09:00",
+      "scrapedAt": "2026-09-09T11:04:00+09:00",
       "isNew": false
     },
     {
@@ -148,7 +148,7 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54935394",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T10:36:32+09:00",
+      "scrapedAt": "2026-09-09T11:04:00+09:00",
       "isNew": false
     },
     {
@@ -164,23 +164,7 @@
       "url": "https://www.bcl.go.kr/site/program/board/basicboard/view?menuid=019005001&pagesize=15&boardtypeid=26&boardid=96335",
       "firstSeen": "2026-09-09",
       "status": "upcoming",
-      "scrapedAt": "2026-09-09T10:45:05+09:00",
-      "isNew": false
-    },
-    {
-      "id": "ggi-bucheon-city::96ec5f4dab",
-      "sid": "ggi-bucheon-city",
-      "region": "경기",
-      "district": "부천시",
-      "source": "부천시청 채용공고",
-      "title": "2026년 부천시립역곡밝은도서관 자료실운영보조 기간제근로자 채용 공고",
-      "jobType": "계약",
-      "posted": "2026-09-09",
-      "deadline": "2026-09-16",
-      "url": "https://www.bucheon.go.kr/site/program/board/basicboard/view?menuid=148002004001&pagesize=10&boardtypeid=26756&encid=8KGqTMGVeR1dmCTeUTcRdQ==",
-      "firstSeen": "2026-09-09",
-      "status": "upcoming",
-      "scrapedAt": "2026-09-09T10:45:26+09:00",
+      "scrapedAt": "2026-09-09T11:12:08+09:00",
       "isNew": false
     },
     {
@@ -196,7 +180,7 @@
       "url": "https://recruit.incruit.com/songpafac/job/2608270015",
       "firstSeen": "2026-09-09",
       "status": "open",
-      "scrapedAt": "2026-09-09T10:34:33+09:00",
+      "scrapedAt": "2026-09-09T11:01:42+09:00",
       "isNew": false
     },
     {
@@ -212,7 +196,7 @@
       "url": "https://www.eplib.or.kr/intro/menu/10041/bbs/20002/bbsPostDetail.do?bbsPostIdx=227345&manageCd=ALL",
       "firstSeen": "2026-09-09",
       "status": "open",
-      "scrapedAt": "2026-09-09T10:35:23+09:00",
+      "scrapedAt": "2026-09-09T11:02:56+09:00",
       "isNew": false
     },
     {
@@ -228,7 +212,7 @@
       "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10h60g70mn34e62&view=read&field=sub|con&wd=85&bvLib=85",
       "firstSeen": "2026-09-09",
       "status": "open",
-      "scrapedAt": "2026-09-09T10:47:19+09:00",
+      "scrapedAt": "2026-09-09T11:14:11+09:00",
       "isNew": false
     },
     {
@@ -244,7 +228,7 @@
       "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10h60lr0mlb5d2f&view=read&field=sub|con&wd=85&bvLib=85",
       "firstSeen": "2026-09-09",
       "status": "open",
-      "scrapedAt": "2026-09-09T10:47:21+09:00",
+      "scrapedAt": "2026-09-09T11:14:13+09:00",
       "isNew": false
     },
     {
@@ -260,7 +244,7 @@
       "url": "https://www.snlib.go.kr/intro/menu/10048/bbs/20001/bbsPostDetail.do?postIdx=209836&manageCd=ALL",
       "firstSeen": "2026-09-08",
       "status": "upcoming",
-      "scrapedAt": "2026-09-09T10:43:56+09:00",
+      "scrapedAt": "2026-09-09T11:11:10+09:00",
       "isNew": false
     },
     {
@@ -276,7 +260,7 @@
       "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10h707v0mgffab0&view=read&field=sub|con&wd=85&bvLib=85",
       "firstSeen": "2026-09-08",
       "status": "open",
-      "scrapedAt": "2026-09-09T10:47:24+09:00",
+      "scrapedAt": "2026-09-09T11:14:16+09:00",
       "isNew": false
     },
     {
@@ -292,7 +276,7 @@
       "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10h80530m74759d&view=read&field=sub|con&wd=85&bvLib=85",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T10:47:26+09:00",
+      "scrapedAt": "2026-09-09T11:14:20+09:00",
       "isNew": false
     },
     {
@@ -308,7 +292,7 @@
       "url": "https://www.gurocc.or.kr/board/board.php?code=notice&mode=view&bbs_idx=12369&search_mode=&search_word=&pg=1",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T10:33:17+09:00",
+      "scrapedAt": "2026-09-09T11:00:13+09:00",
       "isNew": false
     },
     {
@@ -324,7 +308,7 @@
       "url": "https://www.jnfac.or.kr/board/7/16967",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T10:36:24+09:00",
+      "scrapedAt": "2026-09-09T11:03:52+09:00",
       "isNew": false
     },
     {
@@ -340,7 +324,7 @@
       "url": "https://www.ydpcf.or.kr/postview.do?bid=3&pid=2663",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T10:34:41+09:00",
+      "scrapedAt": "2026-09-09T11:01:52+09:00",
       "isNew": false
     },
     {
@@ -356,7 +340,7 @@
       "url": "https://www.eplib.or.kr/intro/menu/10041/bbs/20002/bbsPostDetail.do?bbsPostIdx=226409&manageCd=ALL",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T10:35:28+09:00",
+      "scrapedAt": "2026-09-09T11:03:06+09:00",
       "isNew": false
     },
     {
@@ -372,7 +356,7 @@
       "url": "https://www.eplib.or.kr/intro/menu/10041/bbs/20002/bbsPostDetail.do?bbsPostIdx=226065&manageCd=ALL",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T10:35:36+09:00",
+      "scrapedAt": "2026-09-09T11:03:10+09:00",
       "isNew": false
     },
     {
@@ -388,7 +372,7 @@
       "url": "https://www.nl.go.kr/NL/contents/N50602000000.do?schM=view&id=58826",
       "firstSeen": "2026-09-09",
       "status": "open",
-      "scrapedAt": "2026-09-09T10:36:46+09:00",
+      "scrapedAt": "2026-09-09T11:04:17+09:00",
       "isNew": false
     },
     {
@@ -404,7 +388,7 @@
       "url": "https://www.snlib.go.kr/intro/menu/10048/bbs/20001/bbsPostDetail.do?postIdx=209697&manageCd=ALL",
       "firstSeen": "2026-09-05",
       "status": "upcoming",
-      "scrapedAt": "2026-09-09T10:43:59+09:00",
+      "scrapedAt": "2026-09-09T11:11:16+09:00",
       "isNew": false
     },
     {
@@ -420,7 +404,7 @@
       "url": "https://www.snlib.go.kr/intro/menu/10048/bbs/20001/bbsPostDetail.do?postIdx=209694&manageCd=ALL",
       "firstSeen": "2026-09-05",
       "status": "upcoming",
-      "scrapedAt": "2026-09-09T10:44:01+09:00",
+      "scrapedAt": "2026-09-09T11:11:19+09:00",
       "isNew": false
     },
     {
@@ -436,7 +420,7 @@
       "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10hb0530ldc5edb&view=read&field=sub|con&wd=85&bvLib=85",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T10:47:29+09:00",
+      "scrapedAt": "2026-09-09T11:14:22+09:00",
       "isNew": false
     },
     {
@@ -452,7 +436,7 @@
       "url": "https://www.nl.go.kr/NL/contents/N50602000000.do?schM=view&id=58798",
       "firstSeen": "2026-09-09",
       "status": "open",
-      "scrapedAt": "2026-09-09T10:36:50+09:00",
+      "scrapedAt": "2026-09-09T11:04:21+09:00",
       "isNew": false
     },
     {
@@ -468,7 +452,7 @@
       "url": "https://www.gbcmc.or.kr/fmcs/138?action=read&action-value=9b934a1e370777ef5e5534c1571c3431",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T10:32:21+09:00",
+      "scrapedAt": "2026-09-09T10:59:25+09:00",
       "isNew": false
     },
     {
@@ -484,7 +468,7 @@
       "url": "https://recruit.incruit.com/nowonarts/job/2608250010",
       "firstSeen": "2026-09-09",
       "status": "open",
-      "scrapedAt": "2026-09-09T10:33:33+09:00",
+      "scrapedAt": "2026-09-09T11:00:29+09:00",
       "isNew": false
     },
     {
@@ -500,7 +484,7 @@
       "url": "https://www.sbculture.or.kr/culture/bbs/BMSR00034/view.do?boardId=35689&menuNo=500348&searchCnd=1&searchWrd=%EC%B1%84%EC%9A%A9",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T10:34:21+09:00",
+      "scrapedAt": "2026-09-09T11:01:30+09:00",
       "isNew": false
     },
     {
@@ -516,7 +500,7 @@
       "url": "https://www.sbculture.or.kr/culture/bbs/BMSR00034/view.do?boardId=35688&menuNo=500348&searchCnd=1&searchWrd=%EC%B1%84%EC%9A%A9&pageIndex=2",
       "firstSeen": "2026-09-09",
       "status": "open",
-      "scrapedAt": "2026-09-09T10:34:24+09:00",
+      "scrapedAt": "2026-09-09T11:01:33+09:00",
       "isNew": false
     },
     {
@@ -532,7 +516,7 @@
       "url": "https://www.jnfac.or.kr/board/7/16883",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T10:36:24+09:00",
+      "scrapedAt": "2026-09-09T11:03:52+09:00",
       "isNew": false
     },
     {
@@ -548,7 +532,7 @@
       "url": "https://www.caci.or.kr/community/notice/144712?q=M2FiYzY0MGNjOWQxNGM4NDlkY2MyNDZmZDFhM2UxOWE=",
       "firstSeen": "2026-09-09",
       "status": "open",
-      "scrapedAt": "2026-09-09T10:36:18+09:00",
+      "scrapedAt": "2026-09-09T11:03:45+09:00",
       "isNew": false
     },
     {
@@ -564,7 +548,7 @@
       "url": "https://gdlib.sen.go.kr/gdlib/board/view.do?menu_idx=25&board_idx=1709292&manage_idx=52",
       "firstSeen": "2026-09-05",
       "status": "upcoming",
-      "scrapedAt": "2026-09-09T10:38:38+09:00",
+      "scrapedAt": "2026-09-09T11:06:01+09:00",
       "isNew": false
     },
     {
@@ -580,7 +564,7 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54945247",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T10:36:32+09:00",
+      "scrapedAt": "2026-09-09T11:04:00+09:00",
       "isNew": false
     },
     {
@@ -596,7 +580,7 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54919477",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T10:36:32+09:00",
+      "scrapedAt": "2026-09-09T11:04:00+09:00",
       "isNew": false
     },
     {
@@ -612,7 +596,7 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54807193",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T10:36:32+09:00",
+      "scrapedAt": "2026-09-09T11:04:00+09:00",
       "isNew": false
     }
   ]
