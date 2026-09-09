@@ -48,7 +48,7 @@ def is_safety_expired(posted, settings, today=None):
     """마감일을 못 읽은 공고: 게시 후 N일 지나면 만료(④ 안전만료)."""
     if not posted:
         return False
-    days = settings.get("closure", {}).get("safety_expire_days", 15)
+    days = settings.get("closure", {}).get("safety_expire_days", 20)
     today = _today(today)
     try:
         p = datetime.strptime(posted, "%Y-%m-%d").date()

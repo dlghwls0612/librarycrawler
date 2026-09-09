@@ -44,7 +44,9 @@ REQUIRED = ("id", "region", "district", "name", "parser", "engine", "url")
 VALID_REGIONS = {"서울", "경기", "사서교사"}
 KST = timezone(timedelta(hours=9))
 MAX_CANDS = 30          # 소스당 후보 상한
-DETAIL_CAP = 8          # 소스당 상세페이지(마감일) 진입 상한 — 속도 보호
+DETAIL_CAP = 15         # 소스당 상세페이지(마감일) 진입 상한 — 속도 보호.
+                        # 8이던 시절 12개 소스가 상한에 걸려 마감일 미확인 공고가
+                        # 34건 중 10건이었다(안전만료로 조용히 사라지는 주범).
 MAX_PAGES = 3           # 소스당 목록 페이지 상한(1쪽만 보면 2쪽으로 밀린 모집중 공고가 사라짐)
 PAGE_LOOKBACK_DAYS = 60 # 이 쪽의 가장 오래된 글이 이보다 오래됐으면 다음 쪽은 볼 필요 없음
 # 전체 수집 시간 상한(분). 사이트 다수가 동시에 먹통이면 소스당 최대 1분(httpx 2회+playwright)까지
@@ -162,12 +164,16 @@ def crawl(cfg, limit=None, only=None, details=True, out=OUT):
             prev_jobs = json.load(open(OUT, encoding="utf-8-sig")).get("jobs", [])
         except Exception:
             pass
-    prev_by_sid, prev_urls = {}, {j.get("url") for j in prev_jobs}
+    # 비교는 모두 '정규 URL'(목록·검색 문맥 파라미터 제거) 기준 —
+    # 게시판이 링크에 붙이는 문맥값이 바뀌어도 같은 공고로 인식된다(광명 bvLib 사례).
+    prev_by_sid = {}
+    prev_urls = {parsers.canon_url(j.get("url") or "") for j in prev_jobs}
     for j in prev_jobs:
         prev_by_sid.setdefault(j.get("sid"), []).append(j)
     # 게시일을 못 얻은 공고의 안전만료 기준일 = '처음 수집한 날'.
     # (firstSeen 없던 시절 데이터는 scrapedAt으로 보정)
-    prev_first = {j.get("url"): (j.get("firstSeen") or (j.get("scrapedAt") or "")[:10])
+    prev_first = {parsers.canon_url(j.get("url") or ""):
+                  (j.get("firstSeen") or (j.get("scrapedAt") or "")[:10])
                   for j in prev_jobs}
     today_str = _now().date().isoformat()
 
@@ -180,6 +186,12 @@ def crawl(cfg, limit=None, only=None, details=True, out=OUT):
         return True
 
     failures = []   # [{"id","name","reason"}] — fetch=접속실패 · empty=구조변경 의심
+    # 사각지대 진단: 후보 0건인데 목록엔 진짜 공고 행이 보이는 소스.
+    # (기존 '구조변경 의심'은 직전에 유효 공고가 있던 소스만 잡아서, 한 번도 못 잡아본
+    #  소스는 영원히 조용히 0건이었다 — 군포·송파·노원·금천·성동이 그 사각지대였다.)
+    unreadable = []
+    capped = []     # 상세 진입 상한(DETAIL_CAP)에 걸린 소스 — 마감일 미확인 공고 발생 가능
+    dropped = []    # 어제는 유효 공고가 있었는데 오늘 0건이 된 소스 — 조용한 유실 조기경보
 
     for i, s in enumerate(sources):
         # 시간 상한 초과: 남은 소스는 손대지 않고 '수집 실패'로 넘겨 이전 목록을 재사용시킨다
@@ -203,9 +215,13 @@ def crawl(cfg, limit=None, only=None, details=True, out=OUT):
 
         is_saramin = s["parser"] == "saramin"
 
+        api = s.get("api")   # JSON 목록 API 소스(화면에 링크가 없는 Vue 게시판)
+
         def _parse(page_html, page_url):
             if is_saramin:   # 사람인 전용: 지역·마감일(D-day)을 목록에서 정확히 추출, 서울·경기만
                 return parsers.extract_saramin(page_html, page_url, _now().date())
+            if api:
+                return parsers.extract_json_listings(page_html, api)
             return parsers.extract_listings(page_html, page_url)
 
         cands = _parse(html, src_url)
@@ -225,7 +241,8 @@ def crawl(cfg, limit=None, only=None, details=True, out=OUT):
         max_pages = s.get("pages", MAX_PAGES)
         while (len(cands) < MAX_CANDS and pages_used < max_pages
                and _worth_next_page(html)):
-            nxt = parsers.next_page_url(html, src_url, pages_used + 1)
+            nxt = (parsers.api_next_page(src_url, api, pages_used + 1) if api
+                   else parsers.next_page_url(html, src_url, pages_used + 1))
             if not nxt or nxt in page_urls:
                 break
             page_urls.add(nxt)
@@ -253,8 +270,21 @@ def crawl(cfg, limit=None, only=None, details=True, out=OUT):
                 continue
 
             deadline = c.get("deadline")   # 사람인은 D-day에서 이미 확보
+            # ── 상세 진입 '전에' 제목만으로 확정되는 만료를 먼저 걸러낸다.
+            # 예전엔 상세를 먼저 열어보고 나서 만료 판정을 해서, 이미 끝난 공고가
+            # 상세 진입 상한(DETAIL_CAP)을 다 써버리고 정작 살아있는 공고는
+            # 마감일을 못 읽은 채 안전만료로 조용히 사라졌다.
+            appoint = parsers.appointment_date_from_title(title)
+            if appoint and classify.is_expired(appoint):
+                continue   # 임용일이 지남 = 접수는 확실히 종료
+            title_dl = parsers.deadline_from_title(title, c["posted"], _now().year)
+            if deadline is None and classify.is_expired(title_dl):
+                continue   # 제목에 박힌 마감일이 이미 지남
+
             open_start = None
-            if deadline is None and details and not is_saramin and details_used < DETAIL_CAP:
+            # API 소스의 상세 화면은 Vue 껍데기라 httpx로 열어도 본문이 없다 → 상세 진입 생략
+            if deadline is None and details and not is_saramin and not api \
+                    and details_used < DETAIL_CAP:
                 try:
                     dhtml = fetchmod.fetch(c["url"], s["engine"], settings)
                     deadline = parsers.extract_deadline(dhtml)
@@ -268,18 +298,14 @@ def crawl(cfg, limit=None, only=None, details=True, out=OUT):
 
             # 상세에서 마감일을 못 읽었으면 제목에 박힌 마감일('~8/28까지', '(~8.17)')로 보조 판정
             if deadline is None:
-                deadline = parsers.deadline_from_title(title, c["posted"], _now().year)
-
-            # 제목에 임용일이 있고 그 날이 지났으면 접수 종료 → 만료(표시 마감일과 별개)
-            appoint = parsers.appointment_date_from_title(title)
-            if appoint and classify.is_expired(appoint):
-                continue
+                deadline = title_dl
 
             if classify.is_expired(deadline):
                 continue
             # 게시일이 없으면 '처음 수집한 날'을 안전만료 기준으로 —
             # 날짜가 하나도 없는 항목이 목록에 영구히 남는 것 방지(오수집·재게시 잔류 차단)
-            first_seen = prev_first.get(c["url"]) or today_str
+            canon = parsers.canon_url(c["url"])
+            first_seen = prev_first.get(canon) or today_str
             if deadline is None and classify.is_safety_expired(c["posted"] or first_seen, settings):
                 continue
 
@@ -287,7 +313,7 @@ def crawl(cfg, limit=None, only=None, details=True, out=OUT):
             job_status = "upcoming" if (open_start and open_start > _now().date().isoformat()) else "open"
 
             jobs.append({
-                "id": _mk_id(s["id"], c["url"]),
+                "id": _mk_id(s["id"], canon),
                 "sid": s["id"],
                 "region": c.get("region", s["region"]), "district": c.get("district", s["district"]),
                 "source": s["name"], "title": title,
@@ -299,11 +325,35 @@ def crawl(cfg, limit=None, only=None, details=True, out=OUT):
             kept += 1
 
         status = "OK" if kept else "ZERO"
+        # 상세 진입 상한에 걸린 소스 = 마감일을 못 읽은 공고가 생겼을 수 있다.
+        # (마감일 None 은 게시 N일 뒤 안전만료로 조용히 사라지므로 유실의 주범)
+        if details_used >= DETAIL_CAP:
+            capped.append({"id": s["id"], "name": s["name"], "cands": len(cands)})
+            health.append((s["id"], "DETAIL_CAP",
+                           f"상세 진입 {DETAIL_CAP}건 상한 도달 — 나머지는 마감일 미확인"))
         health.append((s["id"], status, f"cands={len(cands)} kept={kept} pages={pages_used}"))
         print(f"  {'✓' if kept else '·'} {tag}: {kept}건" + (f" (후보 {len(cands)})" if not kept and cands else ""))
+        # '공고 없음'인가 '못 읽음'인가 — 목록에 보이는 공고 행 수와 후보 수를 비교한다.
+        # 0건만 보면 '절반 넘게 못 읽는' 부분 실패(의정부·안성 등)를 놓치므로 비율로 본다.
+        # 도서관 키워드가 필수인 소스(시청 통합 게시판 등)는 도서관 공고 행만 세어 비교한다
+        lib_kw = (tuple(settings.get("keywords_include", [])) + ("사서", "도서관")
+                  if _needs_library_kw(s) else None)
+        rows = parsers.suspect_rows(html, lib_kw)
+        if rows and len(cands) * 2 < len(rows):
+            unreadable.append({"id": s["id"], "name": s["name"],
+                               "cands": len(cands), "rows": len(rows), "samples": rows[:3]})
+            health.append((s["id"], "UNREADABLE",
+                           f"목록엔 공고 행 {len(rows)}개인데 후보 {len(cands)}개 — 파서 점검 필요"))
+            print(f"    ⚠ 목록엔 공고 {len(rows)}행인데 후보 {len(cands)}건 — 파서 점검 필요")
         # 접속은 됐으나 후보 0건인데 직전엔 유효 공고가 있었으면 = 홈페이지 구조 변경 의심
-        if len(cands) == 0 and any(_live(j) for j in prev_by_sid.get(s["id"], [])):
+        prev_live = sum(1 for j in prev_by_sid.get(s["id"], []) if _live(j))
+        if len(cands) == 0 and prev_live:
             failures.append({"id": s["id"], "name": s["name"], "reason": "empty"})
+        # 후보는 나오는데 최종 수집이 0이 된 경우 — 위 '구조변경 의심'이 못 잡는 사각지대다.
+        # (제목 형식이 바뀌어 필터에 걸리거나, 마감일 오독으로 전부 만료 처리된 경우)
+        elif kept == 0 and prev_live:
+            dropped.append({"id": s["id"], "name": s["name"],
+                            "prev": prev_live, "cands": len(cands)})
         time.sleep(delay)
 
     # 수집 실패/구조변경 의심 소스: 직전 수집분(아직 유효한 것)을 임시로 그대로 재사용
@@ -320,27 +370,44 @@ def crawl(cfg, limit=None, only=None, details=True, out=OUT):
     #   ※ 임용일·날짜 등이 달라 제목이 다르면 별개 공고로 유지(영등포 블라인드 채용 등)
     uniq, seen_url, seen_st = [], set(), set()
     for j in sorted(jobs, key=lambda x: (x["posted"] or x["deadline"] or ""), reverse=True):
-        if j["url"] in seen_url:
+        cu = parsers.canon_url(j["url"])
+        if cu in seen_url:
             continue
         st = (j["source"], re.sub(r"\s+", "", j["title"]))
         if st in seen_st:
             continue
-        seen_url.add(j["url"]); seen_st.add(st); uniq.append(j)
+        seen_url.add(cu); seen_st.add(st); uniq.append(j)
 
     fetchmod.close()
 
     # 직전 수집분과 비교해 '당일 신규'(isNew) 표시 — 어제 없던 URL만(재사용분은 자동 False)
     for j in uniq:
-        j["isNew"] = bool(prev_urls) and (j["url"] not in prev_urls)
+        j["isNew"] = bool(prev_urls) and (parsers.canon_url(j["url"]) not in prev_urls)
 
     fail_names = sorted({f["name"] for f in failures})
     if fail_names:
         print(f"\n⚠ 수집 실패/구조변경 의심 {len(fail_names)}곳(이전 목록 {reused}건 재사용): " + ", ".join(fail_names))
-    write(cfg, uniq, fail_names, out=out)
+    if unreadable:
+        print(f"\n🔧 파서 점검 필요 {len(unreadable)}곳 — 목록에 보이는 공고를 제대로 못 읽음:")
+        for u in unreadable:
+            print(f"  · {u['name']} ({u['id']}) — 공고 행 {u['rows']}개 중 후보 {u['cands']}건")
+            for smp in u["samples"]:
+                print(f"      {smp}")
+    if dropped:
+        print(f"\n📉 수집 급감 {len(dropped)}곳 — 어제는 유효 공고가 있었는데 오늘 0건:")
+        for d in dropped:
+            print(f"  · {d['name']} ({d['id']}) — 어제 {d['prev']}건 · 오늘 후보 {d['cands']}건 수집 0")
+    nodl = [j for j in uniq if not j.get("deadline")]
+    if nodl or capped:
+        print(f"\n📅 마감일 미확인 {len(nodl)}건 / 전체 {len(uniq)}건"
+              + (f" · 상세 진입 상한({DETAIL_CAP}) 도달 소스 {len(capped)}곳" if capped else ""))
+        for c in capped:
+            print(f"  · {c['name']} (후보 {c['cands']}건)")
+    write(cfg, uniq, fail_names, out=out, unreadable=unreadable)
     _report(health, len(uniq), results)
 
 
-def write(cfg, jobs, failures=None, out=OUT):
+def write(cfg, jobs, failures=None, out=OUT, unreadable=None):
     out.parent.mkdir(parents=True, exist_ok=True)
     payload = {
         "meta": {
@@ -348,6 +415,8 @@ def write(cfg, jobs, failures=None, out=OUT):
             "collected_at": _now().strftime("%Y-%m-%d %H:%M"),
             "job_count": len(jobs),
             "failures": failures or [],
+            # 사이트 배너에는 안 쓴다(‘수집 실패’와 성격이 다름). 점검용 기록.
+            "unreadable": [u["name"] for u in (unreadable or [])],
         },
         "jobs": jobs,
     }

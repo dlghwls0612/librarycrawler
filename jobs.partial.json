@@ -1,0 +1,26 @@
+{
+  "meta": {
+    "project": "서울·경기 도서관 채용 크롤러",
+    "collected_at": "2026-09-08 13:41",
+    "job_count": 1,
+    "failures": []
+  },
+  "jobs": [
+    {
+      "id": "sel-guro-cc::1402f13021",
+      "sid": "sel-guro-cc",
+      "region": "서울",
+      "district": "구로구",
+      "source": "구로문화원(구로구립도서관)",
+      "title": "구로문화원 구립도서관 직원 채용 재공고",
+      "jobType": "계약",
+      "posted": "2026-09-03",
+      "deadline": null,
+      "url": "https://www.gurocc.or.kr/board/board.php?code=notice&mode=view&bbs_idx=12369&search_mode=&search_word=&pg=1",
+      "firstSeen": "2026-09-05",
+      "status": "open",
+      "scrapedAt": "2026-09-08T13:41:42+09:00",
+      "isNew": false
+    }
+  ]
+}

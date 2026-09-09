@@ -1,8 +1,8 @@
 {
   "meta": {
     "project": "서울·경기 도서관 채용 크롤러",
-    "collected_at": "2026-09-09 05:21",
-    "job_count": 31,
+    "collected_at": "2026-09-08 05:16",
+    "job_count": 29,
     "failures": []
   },
   "jobs": [
@@ -19,7 +19,7 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54854231",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T05:05:41+09:00",
+      "scrapedAt": "2026-09-08T05:04:24+09:00",
       "isNew": false
     },
     {
@@ -35,7 +35,7 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54819793",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T05:05:41+09:00",
+      "scrapedAt": "2026-09-08T05:04:24+09:00",
       "isNew": false
     },
     {
@@ -51,7 +51,7 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54800491",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T05:05:41+09:00",
+      "scrapedAt": "2026-09-08T05:04:24+09:00",
       "isNew": false
     },
     {
@@ -67,7 +67,7 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54932267",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T05:05:41+09:00",
+      "scrapedAt": "2026-09-08T05:04:24+09:00",
       "isNew": false
     },
     {
@@ -83,7 +83,7 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54882053",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T05:05:41+09:00",
+      "scrapedAt": "2026-09-08T05:04:24+09:00",
       "isNew": false
     },
     {
@@ -99,7 +99,7 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54866623",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T05:05:41+09:00",
+      "scrapedAt": "2026-09-08T05:04:24+09:00",
       "isNew": false
     },
     {
@@ -115,88 +115,40 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54959726",
       "firstSeen": "2026-09-08",
       "status": "open",
-      "scrapedAt": "2026-09-09T05:05:41+09:00",
-      "isNew": false
+      "scrapedAt": "2026-09-08T05:04:24+09:00",
+      "isNew": true
     },
     {
-      "id": "sel-portal-saramin::4a9d874dc4",
+      "id": "sel-portal-saramin::125d001396",
       "sid": "sel-portal-saramin",
-      "region": "서울",
-      "district": "강남구",
+      "region": "경기",
+      "district": "화성시",
       "source": "통합포털 도서관/사서(사람인)",
-      "title": "콘텐츠 자료실 운영 담당 채용 (육아휴직 대체)",
+      "title": "수원대학교 중앙도서관 사서직 채용 공고",
       "jobType": "계약",
       "posted": null,
-      "deadline": "2026-09-09",
-      "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54929770",
+      "deadline": "2026-09-10",
+      "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54807193",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T05:05:41+09:00",
+      "scrapedAt": "2026-09-08T05:04:24+09:00",
       "isNew": false
     },
     {
-      "id": "sel-portal-saramin::6da74130be",
+      "id": "sel-portal-saramin::24cb610381",
       "sid": "sel-portal-saramin",
-      "region": "서울",
-      "district": "서초구",
+      "region": "경기",
+      "district": "시흥시",
       "source": "통합포털 도서관/사서(사람인)",
-      "title": "국립중앙도서관 국제교류홍보팀 기간제근로자(휴직대체, 장애인제한경쟁) 채용 공고",
+      "title": "한국공학대학교 계약직원 채용 공고(도서관)",
       "jobType": "계약",
       "posted": null,
-      "deadline": "2026-09-09",
-      "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54935394",
+      "deadline": "2026-09-08",
+      "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54950156",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T05:05:41+09:00",
+      "scrapedAt": "2026-09-08T05:04:24+09:00",
       "isNew": false
-    },
-    {
-      "id": "sel-eunpyeong-eplib::c70fce6546",
-      "sid": "sel-eunpyeong-eplib",
-      "region": "서울",
-      "district": "은평구",
-      "source": "은평구공공도서관(직영)",
-      "title": "「내를 건너서 숲으로 도서관」  (계약직)행정보조 공개 채용 공고(~9.18)",
-      "jobType": "계약",
-      "posted": "2026-09-08",
-      "deadline": "2026-09-18",
-      "url": "https://www.eplib.or.kr/intro/menu/10041/bbs/20002/bbsPostDetail.do?bbsPostIdx=227345&manageCd=ALL",
-      "firstSeen": "2026-09-09",
-      "status": "open",
-      "scrapedAt": "2026-09-09T05:04:07+09:00",
-      "isNew": true
-    },
-    {
-      "id": "ggi-gwangmyeong-lib::99b44d8252",
-      "sid": "ggi-gwangmyeong-lib",
-      "region": "경기",
-      "district": "광명시",
-      "source": "광명시립도서관(시 직영)",
-      "title": "광명도서관 자료실 운영(주말) 기간제근로자 공개 채용 공고",
-      "jobType": "알바",
-      "posted": "2026-09-08",
-      "deadline": "2026-09-15",
-      "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10h60g70mn34e62&view=read&field=sub|con&wd=85&bvLib=85",
-      "firstSeen": "2026-09-09",
-      "status": "open",
-      "scrapedAt": "2026-09-09T05:16:33+09:00",
-      "isNew": true
-    },
-    {
-      "id": "ggi-gwangmyeong-lib::44ca1f9c6e",
-      "sid": "ggi-gwangmyeong-lib",
-      "region": "경기",
-      "district": "광명시",
-      "source": "광명시립도서관(시 직영)",
-      "title": "소하도서관 자료실 기간제근로자 공개 채용 공고",
-      "jobType": "계약",
-      "posted": "2026-09-08",
-      "deadline": "2026-09-14",
-      "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10h60lr0mlb5d2f&view=read&field=sub|con&wd=85&bvLib=85",
-      "firstSeen": "2026-09-09",
-      "status": "open",
-      "scrapedAt": "2026-09-09T05:16:36+09:00",
-      "isNew": true
     },
     {
       "id": "ggi-seongnam-lib::b57517e9e5",
@@ -211,11 +163,11 @@
       "url": "https://www.snlib.go.kr/intro/menu/10048/bbs/20001/bbsPostDetail.do?postIdx=209836&manageCd=ALL",
       "firstSeen": "2026-09-08",
       "status": "upcoming",
-      "scrapedAt": "2026-09-09T05:14:08+09:00",
-      "isNew": false
+      "scrapedAt": "2026-09-08T05:12:21+09:00",
+      "isNew": true
     },
     {
-      "id": "ggi-gwangmyeong-lib::de864d8ab6",
+      "id": "ggi-gwangmyeong-lib::f2a5cad9fd",
       "sid": "ggi-gwangmyeong-lib",
       "region": "경기",
       "district": "광명시",
@@ -224,14 +176,14 @@
       "jobType": "계약",
       "posted": "2026-09-07",
       "deadline": "2026-09-13",
-      "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10h707v0mgffab0&view=read&field=sub|con&wd=85&bvLib=85",
-      "firstSeen": "2026-09-09",
+      "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10h707v0mgffab0&view=read&field=sub|con&wd=85&bvLib=88",
+      "firstSeen": "2026-09-08",
       "status": "open",
-      "scrapedAt": "2026-09-09T05:16:39+09:00",
+      "scrapedAt": "2026-09-08T05:14:06+09:00",
       "isNew": true
     },
     {
-      "id": "ggi-gwangmyeong-lib::ac5c3ebe52",
+      "id": "ggi-gwangmyeong-lib::320a81cd9b",
       "sid": "ggi-gwangmyeong-lib",
       "region": "경기",
       "district": "광명시",
@@ -240,11 +192,11 @@
       "jobType": "알바",
       "posted": "2026-09-04",
       "deadline": "2026-09-15",
-      "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10h80530m74759d&view=read&field=sub|con&wd=85&bvLib=85",
-      "firstSeen": "2026-09-09",
+      "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10h80530m74759d&view=read&field=sub|con&wd=85&bvLib=94",
+      "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T05:16:42+09:00",
-      "isNew": true
+      "scrapedAt": "2026-09-08T05:14:09+09:00",
+      "isNew": false
     },
     {
       "id": "sel-guro-cc::1402f13021",
@@ -259,7 +211,7 @@
       "url": "https://www.gurocc.or.kr/board/board.php?code=notice&mode=view&bbs_idx=12369&search_mode=&search_word=&pg=1",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T05:02:01+09:00",
+      "scrapedAt": "2026-09-08T05:01:31+09:00",
       "isNew": false
     },
     {
@@ -275,7 +227,23 @@
       "url": "https://www.jnfac.or.kr/board/7/16967",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T05:05:14+09:00",
+      "scrapedAt": "2026-09-08T05:03:56+09:00",
+      "isNew": false
+    },
+    {
+      "id": "sel-edu-nslib::a892978447",
+      "sid": "sel-edu-nslib",
+      "region": "서울",
+      "district": "용산구",
+      "source": "남산도서관(교육청)",
+      "title": "[채용] 2026년도 서울특별시교육청남산도서관 자료실 주말근무(1명) 지원인력 채용공고(~...",
+      "jobType": "알바",
+      "posted": "2026-09-03",
+      "deadline": "2026-09-08",
+      "url": "https://nslib.sen.go.kr/nslib/board/view.do?menu_idx=25&board_idx=1747520&manage_idx=428",
+      "firstSeen": "2026-09-05",
+      "status": "open",
+      "scrapedAt": "2026-09-08T05:06:57+09:00",
       "isNew": false
     },
     {
@@ -291,7 +259,7 @@
       "url": "https://www.ydpcf.or.kr/postview.do?bid=3&pid=2663",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T05:03:24+09:00",
+      "scrapedAt": "2026-09-08T05:02:40+09:00",
       "isNew": false
     },
     {
@@ -307,7 +275,7 @@
       "url": "https://www.eplib.or.kr/intro/menu/10041/bbs/20002/bbsPostDetail.do?bbsPostIdx=226409&manageCd=ALL",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T05:04:16+09:00",
+      "scrapedAt": "2026-09-08T05:03:05+09:00",
       "isNew": false
     },
     {
@@ -323,7 +291,7 @@
       "url": "https://www.eplib.or.kr/intro/menu/10041/bbs/20002/bbsPostDetail.do?bbsPostIdx=226065&manageCd=ALL",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T05:04:19+09:00",
+      "scrapedAt": "2026-09-08T05:03:12+09:00",
       "isNew": false
     },
     {
@@ -339,7 +307,7 @@
       "url": "https://www.snlib.go.kr/intro/menu/10048/bbs/20001/bbsPostDetail.do?postIdx=209697&manageCd=ALL",
       "firstSeen": "2026-09-05",
       "status": "upcoming",
-      "scrapedAt": "2026-09-09T05:14:10+09:00",
+      "scrapedAt": "2026-09-08T05:12:23+09:00",
       "isNew": false
     },
     {
@@ -355,11 +323,11 @@
       "url": "https://www.snlib.go.kr/intro/menu/10048/bbs/20001/bbsPostDetail.do?postIdx=209694&manageCd=ALL",
       "firstSeen": "2026-09-05",
       "status": "upcoming",
-      "scrapedAt": "2026-09-09T05:14:12+09:00",
+      "scrapedAt": "2026-09-08T05:12:26+09:00",
       "isNew": false
     },
     {
-      "id": "ggi-gwangmyeong-lib::7d851ab98b",
+      "id": "ggi-gwangmyeong-lib::383f254bd8",
       "sid": "ggi-gwangmyeong-lib",
       "region": "경기",
       "district": "광명시",
@@ -368,11 +336,11 @@
       "jobType": "계약",
       "posted": "2026-08-31",
       "deadline": "2026-09-16",
-      "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10hb0530ldc5edb&view=read&field=sub|con&wd=85&bvLib=85",
-      "firstSeen": "2026-09-09",
+      "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10hb0530ldc5edb&view=read&field=sub|con&wd=85&bvLib=91",
+      "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T05:16:46+09:00",
-      "isNew": true
+      "scrapedAt": "2026-09-08T05:14:13+09:00",
+      "isNew": false
     },
     {
       "id": "sel-gangbuk-gbcmc::d0751166c7",
@@ -387,7 +355,7 @@
       "url": "https://www.gbcmc.or.kr/fmcs/138?action=read&action-value=9b934a1e370777ef5e5534c1571c3431",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T05:00:52+09:00",
+      "scrapedAt": "2026-09-08T05:00:51+09:00",
       "isNew": false
     },
     {
@@ -403,24 +371,8 @@
       "url": "https://www.sbculture.or.kr/culture/bbs/BMSR00034/view.do?boardId=35689&menuNo=500348&searchCnd=1&searchWrd=%EC%B1%84%EC%9A%A9",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T05:03:03+09:00",
+      "scrapedAt": "2026-09-08T05:02:26+09:00",
       "isNew": false
-    },
-    {
-      "id": "sel-seongbuk-sbc::2125480653",
-      "sid": "sel-seongbuk-sbc",
-      "region": "서울",
-      "district": "성북구",
-      "source": "성북문화재단",
-      "title": "(제26-24호)성북문화재단 정규직 채용 공고(8급-사서)",
-      "jobType": "정규",
-      "posted": "2026-08-26",
-      "deadline": "2026-09-09",
-      "url": "https://www.sbculture.or.kr/culture/bbs/BMSR00034/view.do?boardId=35688&menuNo=500348&searchCnd=1&searchWrd=%EC%B1%84%EC%9A%A9&pageIndex=2",
-      "firstSeen": "2026-09-09",
-      "status": "open",
-      "scrapedAt": "2026-09-09T05:03:05+09:00",
-      "isNew": true
     },
     {
       "id": "sel-jungnang-jnfac::7093b7d0e0",
@@ -435,7 +387,7 @@
       "url": "https://www.jnfac.or.kr/board/7/16883",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T05:05:20+09:00",
+      "scrapedAt": "2026-09-08T05:04:04+09:00",
       "isNew": false
     },
     {
@@ -451,7 +403,7 @@
       "url": "https://gdlib.sen.go.kr/gdlib/board/view.do?menu_idx=25&board_idx=1709292&manage_idx=52",
       "firstSeen": "2026-09-05",
       "status": "upcoming",
-      "scrapedAt": "2026-09-09T05:06:48+09:00",
+      "scrapedAt": "2026-09-08T05:05:23+09:00",
       "isNew": false
     },
     {
@@ -467,7 +419,23 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54945247",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T05:05:41+09:00",
+      "scrapedAt": "2026-09-08T05:04:24+09:00",
+      "isNew": false
+    },
+    {
+      "id": "sel-portal-saramin::4a9d874dc4",
+      "sid": "sel-portal-saramin",
+      "region": "서울",
+      "district": "강남구",
+      "source": "통합포털 도서관/사서(사람인)",
+      "title": "콘텐츠 자료실 운영 담당 채용 (육아휴직 대체)",
+      "jobType": "계약",
+      "posted": null,
+      "deadline": null,
+      "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54929770",
+      "firstSeen": "2026-09-05",
+      "status": "open",
+      "scrapedAt": "2026-09-08T05:04:24+09:00",
       "isNew": false
     },
     {
@@ -483,23 +451,23 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54919477",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T05:05:41+09:00",
+      "scrapedAt": "2026-09-08T05:04:24+09:00",
       "isNew": false
     },
     {
-      "id": "sel-portal-saramin::125d001396",
+      "id": "sel-portal-saramin::6da74130be",
       "sid": "sel-portal-saramin",
-      "region": "경기",
-      "district": "화성시",
+      "region": "서울",
+      "district": "서초구",
       "source": "통합포털 도서관/사서(사람인)",
-      "title": "수원대학교 중앙도서관 사서직 채용 공고",
+      "title": "국립중앙도서관 국제교류홍보팀 기간제근로자(휴직대체, 장애인제한경쟁) 채용 공고",
       "jobType": "계약",
       "posted": null,
       "deadline": null,
-      "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54807193",
+      "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54935394",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-09T05:05:41+09:00",
+      "scrapedAt": "2026-09-08T05:04:24+09:00",
       "isNew": false
     }
   ]

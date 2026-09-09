@@ -21,7 +21,11 @@ settings:
     알바: [단시간, 초단시간, 주말, 시간선택제, 아르바이트, 보조인력, 지원인력, 야간]
   # 마감(종료) 판정
   closure:
-    safety_expire_days: 15            # ④ 안전만료 — 실측 35건 분석: 마감-게시일 중앙값 6일·94%가 15일내 마감(마감일 못읽은 공고에만 적용)
+    safety_expire_days: 20            # ④ 안전만료(마감일 못읽은 공고에만 적용). 2026-09-08 재실측:
+                                      # 마감−게시일 중앙값 10일 · 15일내 81% · 20일내 94%.
+                                      # 15일이면 살아있는 공고의 19%를 조기에 죽인다. 살아있는 공고가
+                                      # 사라지면 구직자는 알 방법이 없고, 끝난 공고가 며칠 남는 건
+                                      # 눌러보면 확인되므로 비용이 비대칭 → 20일.
     result_keywords: [합격자, "서류전형 합격", "면접 대상", "최종 합격", "합격자 발표", "전형 결과", "채용 결과", 채용완료, "채용 완료", 채용마감, "채용 마감", 선정결과, 선발결과, "최종 결과", "[마감]", 모집마감, 채용연기, "채용 연기", 채용취소, "채용 취소"]  # ② 결과공고·마감·연기·취소 매칭(접수마감=마감일라벨 오탐 위험이라 제외)
   # 예의 크롤링
   request:
@@ -41,6 +45,9 @@ parsers:
   fairyhr:   { engine: playwright,  list_row: ".list li, table tbody tr", title_link: "a", date: ".date", detail_deadline: "마감|접수" }
   spa:       { engine: playwright,  list_row: "TODO", title_link: "TODO", date: "TODO", detail_deadline: "접수기간|마감" }
   custom:    { engine: playwright,  list_row: "TODO", title_link: "TODO", date: "TODO", detail_deadline: "접수기간|마감" }
+  # 화면이 Vue로만 그려져 목록 링크에 href가 없는 도서관 통합홈 — 화면이 부르는 JSON API를 직접 호출.
+  # 소스마다 api: {rows,title,id,date,detail} 블록이 필요하다(detail 의 {id} 가 글번호로 치환됨).
+  apijson:   { engine: httpx,       detail_deadline: "접수기간|마감" }
 
 # =====================================================================
 sources:
@@ -50,7 +57,7 @@ sources:
 - {id: sel-gangnam-gnlib-hub,region: 서울, district: 강남구,   name: 강남구립도서관 통합포털(직영),        parser: egov,     engine: httpx,      url: "https://library.gangnam.go.kr/yllib/menu/12451/bbs/20301/bbsPostList.do", note: "각 관 서브사이트 개별 게시(2단계에서 관별 확장)"}
 - {id: sel-gangdong-gdfac,   region: 서울, district: 강동구,   name: 강동문화재단,                        parser: incruit,  engine: httpx,      url: "https://recruit.incruit.com/gdfac/job/"}
 - {id: sel-gangbuk-gbcmc,    region: 서울, district: 강북구,   name: 강북구도시관리공단,                  parser: custom,   engine: playwright, url: "https://www.gbcmc.or.kr/fmcs/138"}
-- {id: sel-gangseo-lib,      region: 서울, district: 강서구,   name: 강서구립도서관 통합(민간위탁),        parser: spa,      engine: playwright, url: "https://lib.gangseo.seoul.kr/NoticeInfo?libCode=TOL"}
+- {id: sel-gangseo-lib,      region: 서울, district: 강서구,   name: 강서구립도서관 통합(민간위탁),        parser: apijson,  engine: httpx,      url: "https://lib.gangseo.seoul.kr/service/openBoard/notice/list?libCode=TOL&pageIndex=1&pageSize=50&searchType=&searchText=", api: {rows: "data.boardData.data", title: bbSubject, id: bbCode, date: bbWdate, detail: "https://lib.gangseo.seoul.kr/NoticeInfoDetail/{id}/TOL"}, note: "화면(NoticeInfo)은 Vue라 링크에 href가 없음 → 화면이 부르는 API를 직접 호출"}
 - {id: sel-gwanak-gfac,      region: 서울, district: 관악구,   name: 관악문화재단,                        parser: spa,      engine: playwright, url: "https://gfac.or.kr/site/main/recruit/list"}
 - {id: sel-gwangjin-fmc,     region: 서울, district: 광진구,   name: 광진구시설관리공단,                  parser: fairyhr,  engine: playwright, url: "https://gwangjin.fairyhr.com/announcement"}
 - {id: sel-guro-cc,          region: 서울, district: 구로구,   name: 구로문화원(구로구립도서관),          parser: gnuboard, engine: httpx,      url: "https://www.gurocc.or.kr/board/board.php?code=notice"}
@@ -73,7 +80,7 @@ sources:
 - {id: sel-jongno-jfac,      region: 서울, district: 종로구,   name: 종로문화재단,                        parser: spa,      engine: playwright, url: "https://www.jfac.or.kr/site/main/archive/post/category/채용정보"}
 - {id: sel-jongno-lib,       region: 서울, district: 종로구,   name: 종로구립도서관 통합(순회·기간제),      parser: gnuboard, engine: httpx,      url: "https://lib.jongno.go.kr/bbs/board.php?bo_table=Notice&sfl=wr_subject&stx=%EC%B1%84%EC%9A%A9"}
 - {id: sel-junggu-caci,      region: 서울, district: 중구,     name: 중구문화재단(충무아트센터),          parser: spa,      engine: playwright, url: "https://www.caci.or.kr/community/notice?q=M2FiYzY0MGNjOWQxNGM4NDlkY2MyNDZmZDFhM2UxOWE%3d"}
-- {id: sel-jungnang-jnfac,   region: 서울, district: 중랑구,   name: 중랑문화재단,                        parser: spa,      engine: playwright, url: "https://www.jnfac.or.kr/board/7"}
+- {id: sel-jungnang-jnfac,   region: 서울, district: 중랑구,   name: 중랑문화재단,                        parser: apijson,  engine: httpx,      url: "https://www.jnfac.or.kr/api/articles/search?searchOptions=%7B%22type%22%3A%22board%22%2C%22isDelete%22%3A%22N%22%2C%22catalogId%22%3A%227%22%7D&page=0&size=30", api: {rows: content, title: title, id: id, date: createdDatetime, detail: "https://www.jnfac.or.kr/board/7/{id}", page_param: page, page_base: 0}, note: "화면이 부르는 API 직접 호출. page 가 0부터 시작"}
 
 # ---------- 서울 전역·통합 ----------
 - {id: sel-seoullib,         region: 서울, district: 전역·통합, name: 서울도서관(서울시립),                parser: egov,     engine: httpx,      scope: mixed, url: "https://culture.seoul.go.kr/culture/bbs/B0000002/list.do?menuNo=200052&searchWrd=%EC%82%AC%EC%84%9C", note: "서울문화포털 사서검색=혼합결과→제목에 도서관/사서 키워드 필수(재단 일반직원 채용 유입 방지)"}
@@ -133,7 +140,7 @@ sources:
 - {id: ggi-bucheon-city, region: 경기, district: 부천시, name: 부천시청 채용공고,                  parser: custom,  engine: httpx,      url: "https://www.bucheon.go.kr/site/program/board/basicboard/list?boardtypeid=26756&menuid=148002004001"}
 - {id: ggi-bucheon-komacon, region: 경기, district: 부천시, name: 한국만화영상진흥원(만화도서관),    parser: asp,     engine: httpx,      url: "https://www.komacon.kr/b_sys/index.asp?b_code=4&s_fld=&s_txt=&s_cate=3"}
 - {id: ggi-bucheon-bcf, region: 경기, district: 부천시,  name: 부천문화재단(예술정보도서관),        parser: incruit, engine: httpx,      url: "https://bcf.incruit.com/hire/hirelist.asp"}
-- {id: ggi-ansan-lib,  region: 경기, district: 안산시,   name: 안산시 도서관(직영),                parser: spa,     engine: playwright, url: "https://lib.ansan.go.kr/NoticeInfo?manageCode=TOL"}
+- {id: ggi-ansan-lib,  region: 경기, district: 안산시,   name: 안산시 도서관(직영),                parser: apijson, engine: httpx,      url: "https://lib.ansan.go.kr/service/openBoard/notice/list?manageCode=TOL&searchText=&searchType=both&pageIndex=1&pageSize=50", api: {rows: "data.boardData.data", title: title, id: recKey, date: inputDate, detail: "https://lib.ansan.go.kr/NoticeInfoDetail/{id}"}, note: "강서와 같은 CMS — 화면이 부르는 API 직접 호출"}
 - {id: ggi-ansan-city, region: 경기, district: 안산시,   name: 안산시청 채용정보,                  parser: egov,    engine: httpx,      url: "https://www.ansan.go.kr/www/common/bbs/selectPageListBbs.do?bbs_code=B0517"}
 - {id: ggi-anyang-lib, region: 경기, district: 안양시,   name: 안양시립도서관(시 직영),            parser: egov,    engine: httpx,      url: "https://lib.anyang.go.kr/intro/menu/10037/bbs/20001/bbsPostList.do?manageCd=ALL&searchCondition=title&searchKeyword=%EC%B1%84%EC%9A%A9"}
 - {id: ggi-namyangju-lib, region: 경기, district: 남양주시, name: 남양주시도서관(정약용도서관),      parser: egov,    engine: httpx,      url: "https://www.nyj.go.kr/www/selectBbsNttList.do?key=2497&bbsNo=67&pageUnit=10&searchCnd=SJ&searchKrwd=%EC%B1%84%EC%9A%A9"}
