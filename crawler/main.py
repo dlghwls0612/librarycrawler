@@ -388,18 +388,19 @@ def crawl(cfg, limit=None, only=None, details=True, out=OUT):
     if fail_names:
         print(f"\n⚠ 수집 실패/구조변경 의심 {len(fail_names)}곳(이전 목록 {reused}건 재사용): " + ", ".join(fail_names))
     if unreadable:
-        print(f"\n🔧 파서 점검 필요 {len(unreadable)}곳 — 목록에 보이는 공고를 제대로 못 읽음:")
+        # 이모지(4바이트)는 NAS 콘솔에서 깨져서 로그를 못 읽는다 → 대괄호 표기로
+        print(f"\n[파서 점검 필요] {len(unreadable)}곳 — 목록에 보이는 공고를 제대로 못 읽음:")
         for u in unreadable:
             print(f"  · {u['name']} ({u['id']}) — 공고 행 {u['rows']}개 중 후보 {u['cands']}건")
             for smp in u["samples"]:
                 print(f"      {smp}")
     if dropped:
-        print(f"\n📉 수집 급감 {len(dropped)}곳 — 어제는 유효 공고가 있었는데 오늘 0건:")
+        print(f"\n[수집 급감] {len(dropped)}곳 — 어제는 유효 공고가 있었는데 오늘 0건:")
         for d in dropped:
             print(f"  · {d['name']} ({d['id']}) — 어제 {d['prev']}건 · 오늘 후보 {d['cands']}건 수집 0")
     nodl = [j for j in uniq if not j.get("deadline")]
     if nodl or capped:
-        print(f"\n📅 마감일 미확인 {len(nodl)}건 / 전체 {len(uniq)}건"
+        print(f"\n[마감일 미확인] {len(nodl)}건 / 전체 {len(uniq)}건"
               + (f" · 상세 진입 상한({DETAIL_CAP}) 도달 소스 {len(capped)}곳" if capped else ""))
         for c in capped:
             print(f"  · {c['name']} (후보 {c['cands']}건)")
@@ -430,7 +431,9 @@ def _report(health, jobcount, results):
     zero = sum(1 for _, s, _ in health if s == "ZERO")
     fail = sum(1 for _, s, _ in health if s == "FETCH_FAIL")
     skipped = sum(1 for _, s, _ in health if s == "SKIPPED")
-    print(f"\n=== 건강검진 ===  소스 {len(health)} · 성공 {ok} · 0건 {zero} · fetch실패 {fail}"
+    # 한 소스가 여러 줄(예: DETAIL_CAP + ZERO)을 남기므로 줄 수가 아니라 소스 id 수로 센다
+    print(f"\n=== 건강검진 ===  소스 {len({sid for sid, _, _ in health})}"
+          f" · 성공 {ok} · 0건 {zero} · fetch실패 {fail}"
           + (f" · 시간초과 건너뜀 {skipped}" if skipped else "")
           + f" · 결과공고제외 {results}")
     for sid, st, msg in health:

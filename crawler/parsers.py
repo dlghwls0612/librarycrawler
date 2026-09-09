@@ -382,12 +382,24 @@ def extract_listings(html, base_url):
             continue
         if has_exclude_word(title):
             continue
-        posted = None
-        row = a.find_parent(["tr", "li", "div", "article"])
-        if row:
-            m = DATE_RE.search(row.get_text(" ", strip=True))
+        # 게시일 — 제목이 <div class="tit"> 같은 껍데기에 싸여 있으면 가장 가까운 부모엔
+        # 날짜가 없다(동작문화재단). 날짜가 나올 때까지 행 컨테이너를 몇 단계 거슬러 올라간다.
+        # 게시일을 못 읽으면 안전만료 기준이 '처음 수집한 날'이 되어, 반년 전 공고가
+        # 오늘 새로 올라온 것처럼 20일간 노출된다.
+        posted, row = None, a.find_parent(["tr", "li", "div", "article"])
+        node = row
+        for _ in range(3):
+            if node is None:
+                break
+            # 목록 전체를 감싼 컨테이너까지 올라가면 '옆 행의 날짜'를 잘못 집는다.
+            # 링크가 여러 개면 더 이상 한 행이 아니라고 보고 멈춘다.
+            if len(node.find_all("a")) > 3:
+                break
+            m = DATE_RE.search(node.get_text(" ", strip=True))
             if m:
                 posted = _to_date(m)
+                break
+            node = node.find_parent(["tr", "li", "div", "article"])
         seen.add(url)
         item = {"title": title, "url": url, "posted": posted}
         dl = _row_deadline(row)
