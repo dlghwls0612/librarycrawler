@@ -120,7 +120,8 @@ def _worth_next_page(html):
     if not dates:
         return True
     # 맨 위 고정공지(성북 '채용관련 일반 자격기준' 2021년 등)가 섞여 있어 최솟값을 쓰면
-    # 매일 갱신되는 게시판도 '몇 년치'로 오인된다 → 오래된 쪽 1/4은 고정공지로 보고 버림
+    # 매일 갱신되는 게시판도 '몇 년치'로 오인된다 → 표시된 고정공지는 listing_dates가 이미 빼고,
+    # 표시 없는 고정공지 대비로 오래된 쪽 1/4을 한 번 더 버림
     oldest = dates[len(dates) // 4]
     cutoff = (_now().date() - timedelta(days=PAGE_LOOKBACK_DAYS)).isoformat()
     return oldest >= cutoff

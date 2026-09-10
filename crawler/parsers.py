@@ -552,13 +552,25 @@ def next_page_url(html, base_url, page):
     return _offset_page_url(base_url, page)   # offset/max 방식(군포 등)
 
 
+def _is_pinned(row):
+    """맨 위 고정공지 행인가 — 번호 칸이 '공지'이거나 공지 아이콘/클래스가 달린 행."""
+    cells = row.find_all(["td", "th"], recursive=False)
+    if cells and cells[0].get_text(strip=True) in ("공지", "필독", "고정", "공지사항"):
+        return True
+    if any("notice" in c.lower() for c in row.get("class", [])):
+        return True
+    return bool(row.select_one("[class*=notice], [class*=Notice], img[alt*=공지]"))
+
+
 def listing_dates(html):
     """목록 행들의 날짜(등록일) 모음 — '다음 쪽까지 볼 가치가 있나' 판단용.
-    링크가 있는 tr/li 만 목록 행으로 본다(푸터·저작권 연도 오인 방지)."""
+    링크가 있는 tr/li 만 목록 행으로 본다(푸터·저작권 연도 오인 방지).
+    고정공지 행은 뺀다 — 부천시립도서관은 한 쪽 15칸 중 9칸이 몇 달~1년 전 고정공지라
+    '오래된 게시판'으로 오판해 2쪽을 안 봤고, 2쪽으로 밀린 채용공고를 놓쳤다(2026-09-10)."""
     soup = BeautifulSoup(html, "lxml")
     out = []
     for row in soup.select("tr, li"):
-        if not row.find("a"):
+        if not row.find("a") or _is_pinned(row):
             continue
         m = DATE_RE.search(row.get_text(" ", strip=True))
         if m:
