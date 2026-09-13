@@ -1,6 +1,8 @@
 __pycache__/
-        *.pyc
-        .venv/
-        venv/
-        .env
-        jobs.partial.json
+*.pyc
+.venv/
+venv/
+.env
+# 수집 결과 jobs.json은 Actions가 커밋하므로 추적함(주석 처리 유지)
+# --limit/--only 부분수집 결과(사이트에 배포 안 됨)
+jobs.partial.json
