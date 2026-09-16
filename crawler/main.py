@@ -313,11 +313,14 @@ def crawl(cfg, limit=None, only=None, details=True, out=OUT):
             # 접수 시작일이 미래면 '접수예정'
             job_status = "upcoming" if (open_start and open_start > _now().date().isoformat()) else "open"
 
+            # 표시용 제목 정제: 접수방식(이메일접수) 및 마감일자/기간 제거 (마감일 메타데이터 추출 후 적용)
+            disp_title = parsers.clean_display_title(title)
+
             jobs.append({
                 "id": _mk_id(s["id"], canon),
                 "sid": s["id"],
                 "region": c.get("region", s["region"]), "district": c.get("district", s["district"]),
-                "source": s["name"], "title": title,
+                "source": s["name"], "title": disp_title,
                 "jobType": classify.tag_jobtype(title, settings),
                 "posted": c["posted"], "deadline": deadline, "url": c["url"],
                 "firstSeen": first_seen, "status": job_status,
@@ -365,6 +368,7 @@ def crawl(cfg, limit=None, only=None, details=True, out=OUT):
             if not _live(j):
                 continue
             j = dict(j); j["stale"] = True   # '이전 수집분 임시표시' 플래그
+            j["title"] = parsers.clean_display_title(j.get("title", ""))
             jobs.append(j); reused += 1
 
     # 중복 제거: ①같은 url ②같은 소스+완전히 동일한 제목(공백무시)의 재게시
