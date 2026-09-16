@@ -168,11 +168,23 @@ var JOBS = [], META = {};
 var JOBLABEL = {정규:"정규", 계약:"계약", 알바:"알바"};
 var NEW_DAYS = 14, SAFE_DAYS = 20;   // sources.yaml 의 safety_expire_days 와 동일하게 유지
 var state = {region:"서울", district:"전체", q:"", sort:"new"};
+var APPLY_METHOD_RE = /\s*[\(\[][^\)\]]*(?:이메일|전자우편|방문|우편|온라인|인터넷|원서|서류)[^\)\]]*접수[^\)\]]*[\)\]]/gi;
+var DATE_RANGE_PAREN_RE = /\s*[\(\[]\s*~?\s*(?:\d{2,4}\s*[.\-/년]\s*)?\d{1,2}\s*[.\-/월]\s*\d{1,2}\s*일?\s*(?:\([월화수목금토일]\))?\s*(?:까지)?\s*[\)\]]|\s*[\(\[]\s*(?:\d{2,4}\s*[.\-/년]\s*)?\d{1,2}\s*[.\-/월]\s*\d{1,2}\s*일?\s*(?:\([월화수목금토일]\))?\s*~\s*(?:\d{2,4}\s*[.\-/년]\s*)?\d{1,2}\s*[.\-/월]\s*\d{1,2}\s*일?\s*(?:\([월화수목금토일]\))?\s*(?:까지)?\s*[\)\]]|\s*[\(\[]\s*~[^\)\]]*\.\.\.\s*$|\s*~\s*(?:\d{2,4}\s*[.\-/년]\s*)?\d{1,2}\s*[.\-/월]\s*\d{1,2}\s*일?\s*(?:까지)?\s*$/g;
+var CANCEL_KEYWORDS = ["채용중단", "채용 중단", "중단 안내", "채용중지", "채용 중지", "중지 안내", "채용보류", "채용 보류", "모집중단", "모집 중단", "모집취소", "모집 취소", "채용과정 공개", "채용과정공개"];
+
+function cleanTitle(t){
+  if(!t)return "";
+  return t.replace(APPLY_METHOD_RE, "").replace(DATE_RANGE_PAREN_RE, "").replace(/\s+/g, " ").trim();
+}
+function isCancelled(j){
+  var t = (j.title || "");
+  return CANCEL_KEYWORDS.some(function(k){ return t.indexOf(k) >= 0; });
+}
 
 function todayMs(){var d=new Date();return new Date(d.getFullYear(),d.getMonth(),d.getDate()).getTime();}
 function ms(s){if(!s)return null;var p=s.split("-");return new Date(+p[0],+p[1]-1,+p[2]).getTime();}
 function isNew(j){return j.isNew===true;}  // 직전 수집 대비 '당일 신규'만
-function isExpired(j){var t=ms(j.deadline);if(t!==null)return t<todayMs();var p=ms(j.posted||j.firstSeen);if(p!==null)return (todayMs()-p)>SAFE_DAYS*864e5;return false;}
+function isExpired(j){if(isCancelled(j))return true;var t=ms(j.deadline);if(t!==null)return t<todayMs();var p=ms(j.posted||j.firstSeen);if(p!==null)return (todayMs()-p)>SAFE_DAYS*864e5;return false;}
 function daysLeft(j){var t=ms(j.deadline);if(t===null)return null;return Math.round((t-todayMs())/864e5);}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
 function fmt(s){if(!s)return null;var p=s.split("-");return p[1]+"."+p[2];}
@@ -219,7 +231,7 @@ function render(){
     var dlSpan=upcoming?'<span class="dl upcoming">접수예정</span>':(dlTxt?'<span class="'+dlCls+'">'+dlTxt+'</span>':"");
     var datePart=(j.posted?("게시 "+fmt(j.posted)+" · "):"")+"마감 "+(j.deadline?fmt(j.deadline):"공고문 확인")+(dlSpan?" "+dlSpan:"");
     el.innerHTML=
-      '<div class="job-top"><h3>'+esc(j.title)+'</h3>'+(isNew(j)?'<span class="badge-new">NEW</span>':'')+'</div>'+
+      '<div class="job-top"><h3>'+esc(cleanTitle(j.title))+'</h3>'+(isNew(j)?'<span class="badge-new">NEW</span>':'')+'</div>'+
       '<div class="job-meta"><span class="src">'+esc(j.source)+'</span><span class="dot-sep">·</span><span class="dist">'+esc(j.district==="전역·통합"?(j.region+" 전역"):j.district)+'</span><span class="jt '+j.jobType+'">'+esc(JOBLABEL[j.jobType]||j.jobType)+'</span></div>'+
       '<div class="job-foot"><span class="dates">'+datePart+'</span>'+
       '<a class="cta" href="'+esc(j.url)+'" target="_blank" rel="noopener">원문 보기<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17 17 7M9 7h8v8"/></svg></a></div>';
