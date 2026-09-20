@@ -1,11 +1,9 @@
 {
   "meta": {
     "project": "서울·경기 도서관 채용 크롤러",
-    "collected_at": "2026-09-20 05:25",
+    "collected_at": "2026-09-21 05:22",
     "job_count": 15,
-    "failures": [
-      "마포구립도서관 통합(구청 직영)"
-    ],
+    "failures": [],
     "unreadable": []
   },
   "jobs": [
@@ -22,7 +20,7 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=55044571",
       "firstSeen": "2026-09-17",
       "status": "open",
-      "scrapedAt": "2026-09-20T05:06:54+09:00",
+      "scrapedAt": "2026-09-21T05:05:13+09:00",
       "isNew": false
     },
     {
@@ -38,7 +36,7 @@
       "url": "https://www.goyang.go.kr/www/user/bbs/BD_selectBbs.do?q_bbsCode=1082&q_bbscttSn=20260916103157475",
       "firstSeen": "2026-09-17",
       "status": "open",
-      "scrapedAt": "2026-09-20T05:16:50+09:00",
+      "scrapedAt": "2026-09-21T05:13:56+09:00",
       "isNew": false
     },
     {
@@ -54,7 +52,7 @@
       "url": "https://www.caci.or.kr/community/notice/144853?q=M2FiYzY0MGNjOWQxNGM4NDlkY2MyNDZmZDFhM2UxOWE=",
       "firstSeen": "2026-09-19",
       "status": "open",
-      "scrapedAt": "2026-09-20T05:06:23+09:00",
+      "scrapedAt": "2026-09-21T05:04:51+09:00",
       "isNew": false
     },
     {
@@ -70,7 +68,7 @@
       "url": "https://www.bcl.go.kr/site/program/board/basicboard/view?menuid=019005001&pagesize=15&boardtypeid=26&boardid=96404",
       "firstSeen": "2026-09-19",
       "status": "open",
-      "scrapedAt": "2026-09-20T05:17:22+09:00",
+      "scrapedAt": "2026-09-21T05:14:24+09:00",
       "isNew": false
     },
     {
@@ -85,8 +83,8 @@
       "deadline": "2026-09-28",
       "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10h20530nv395b5&view=read&field=sub|con&wd=85&bvLib=85",
       "firstSeen": "2026-09-19",
-      "status": "upcoming",
-      "scrapedAt": "2026-09-20T05:19:42+09:00",
+      "status": "open",
+      "scrapedAt": "2026-09-21T05:16:28+09:00",
       "isNew": false
     },
     {
@@ -102,7 +100,7 @@
       "url": "https://www.gp.go.kr/portal/selectGosiData.do?key=2392&not_ancmt_mgt_no=56783&not_ancmt_se_code=05",
       "firstSeen": "2026-09-19",
       "status": "upcoming",
-      "scrapedAt": "2026-09-20T05:24:42+09:00",
+      "scrapedAt": "2026-09-21T05:20:50+09:00",
       "isNew": false
     },
     {
@@ -118,7 +116,7 @@
       "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10h20rb0nn50b54&view=read&field=sub|con&wd=85&bvLib=85",
       "firstSeen": "2026-09-18",
       "status": "open",
-      "scrapedAt": "2026-09-20T05:19:45+09:00",
+      "scrapedAt": "2026-09-21T05:16:31+09:00",
       "isNew": false
     },
     {
@@ -134,7 +132,7 @@
       "url": "https://www.snlib.go.kr/intro/menu/10048/bbs/20001/bbsPostDetail.do?postIdx=210001&manageCd=ALL",
       "firstSeen": "2026-09-17",
       "status": "upcoming",
-      "scrapedAt": "2026-09-20T05:16:18+09:00",
+      "scrapedAt": "2026-09-21T05:13:25+09:00",
       "isNew": false
     },
     {
@@ -150,7 +148,7 @@
       "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10h30an0nj2b94b&view=read&field=sub|con&wd=85&bvLib=85",
       "firstSeen": "2026-09-17",
       "status": "open",
-      "scrapedAt": "2026-09-20T05:19:51+09:00",
+      "scrapedAt": "2026-09-21T05:16:34+09:00",
       "isNew": false
     },
     {
@@ -165,8 +163,8 @@
       "deadline": "2026-09-22",
       "url": "https://www.snlib.go.kr/intro/menu/10048/bbs/20001/bbsPostDetail.do?postIdx=209974&manageCd=ALL",
       "firstSeen": "2026-09-17",
-      "status": "upcoming",
-      "scrapedAt": "2026-09-20T05:16:15+09:00",
+      "status": "open",
+      "scrapedAt": "2026-09-21T05:13:20+09:00",
       "isNew": false
     },
     {
@@ -182,7 +180,7 @@
       "url": "https://www.gurocc.or.kr/board/board.php?code=notice&mode=view&bbs_idx=12369&search_mode=&search_word=&pg=2",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-20T05:02:18+09:00",
+      "scrapedAt": "2026-09-21T05:01:59+09:00",
       "isNew": false
     },
     {
@@ -198,7 +196,7 @@
       "url": "https://www.jnfac.or.kr/board/7/16967",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-20T05:06:40+09:00",
+      "scrapedAt": "2026-09-21T05:05:03+09:00",
       "isNew": false
     },
     {
@@ -214,7 +212,7 @@
       "url": "https://gdlib.sen.go.kr/gdlib/board/view.do?menu_idx=25&board_idx=1709292&manage_idx=52",
       "firstSeen": "2026-09-05",
       "status": "upcoming",
-      "scrapedAt": "2026-09-20T05:08:47+09:00",
+      "scrapedAt": "2026-09-21T05:07:10+09:00",
       "isNew": false
     },
     {
@@ -230,7 +228,7 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54945247",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-20T05:06:54+09:00",
+      "scrapedAt": "2026-09-21T05:05:13+09:00",
       "isNew": false
     },
     {
@@ -246,7 +244,7 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54919477",
       "firstSeen": "2026-09-05",
       "status": "open",
-      "scrapedAt": "2026-09-20T05:06:54+09:00",
+      "scrapedAt": "2026-09-21T05:05:13+09:00",
       "isNew": false
     }
   ]
