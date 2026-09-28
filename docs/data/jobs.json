@@ -1,8 +1,8 @@
 {
   "meta": {
     "project": "서울·경기 도서관 채용 크롤러",
-    "collected_at": "2026-09-28 05:24",
-    "job_count": 16,
+    "collected_at": "2026-09-29 05:25",
+    "job_count": 17,
     "failures": [],
     "unreadable": []
   },
@@ -20,7 +20,7 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=55044571",
       "firstSeen": "2026-09-17",
       "status": "open",
-      "scrapedAt": "2026-09-28T05:06:15+09:00",
+      "scrapedAt": "2026-09-29T05:06:06+09:00",
       "isNew": false
     },
     {
@@ -36,7 +36,7 @@
       "url": "https://www.gangnam.go.kr/office/gfac/board/gfac_staffrec/588/view.do?mid=gfac_staffRec",
       "firstSeen": "2026-09-22",
       "status": "open",
-      "scrapedAt": "2026-09-28T05:00:34+09:00",
+      "scrapedAt": "2026-09-29T05:00:35+09:00",
       "isNew": false
     },
     {
@@ -52,8 +52,56 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54959800",
       "firstSeen": "2026-09-24",
       "status": "open",
-      "scrapedAt": "2026-09-28T05:06:15+09:00",
+      "scrapedAt": "2026-09-29T05:06:06+09:00",
       "isNew": false
+    },
+    {
+      "id": "sel-nowon-arts::d8b2d18d5a",
+      "sid": "sel-nowon-arts",
+      "region": "서울",
+      "district": "노원구",
+      "source": "노원문화재단",
+      "title": "2026년 9차 노원문화재단 노원구립도서관 채용 공고 [기간제]_월계도서관",
+      "jobType": "계약",
+      "posted": "2026-09-28",
+      "deadline": "2026-10-12",
+      "url": "https://recruit.incruit.com/nowonarts/job/2609230009",
+      "firstSeen": "2026-09-29",
+      "status": "open",
+      "scrapedAt": "2026-09-29T05:02:36+09:00",
+      "isNew": true
+    },
+    {
+      "id": "sel-nowon-arts::6141b3742f",
+      "sid": "sel-nowon-arts",
+      "region": "서울",
+      "district": "노원구",
+      "source": "노원문화재단",
+      "title": "2026년 9차 노원문화재단 노원구립도서관 채용 공고 [기간제-장애인전형]_노원어린이도서관",
+      "jobType": "계약",
+      "posted": "2026-09-28",
+      "deadline": "2026-10-12",
+      "url": "https://recruit.incruit.com/nowonarts/job/2609230008",
+      "firstSeen": "2026-09-29",
+      "status": "open",
+      "scrapedAt": "2026-09-29T05:02:36+09:00",
+      "isNew": true
+    },
+    {
+      "id": "ggi-gwangmyeong-lib::0fd2518cf4",
+      "sid": "ggi-gwangmyeong-lib",
+      "region": "경기",
+      "district": "광명시",
+      "source": "광명시립도서관(시 직영)",
+      "title": "광명도서관 메이커스페이스 (주말) 기간제근로자 공개 채용 공고",
+      "jobType": "알바",
+      "posted": "2026-09-28",
+      "deadline": "2026-10-15",
+      "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10gy0df0ow5f112&view=read&field=sub|con&wd=85&bvLib=85",
+      "firstSeen": "2026-09-29",
+      "status": "upcoming",
+      "scrapedAt": "2026-09-29T05:18:37+09:00",
+      "isNew": true
     },
     {
       "id": "sel-nl::a455714e21",
@@ -68,7 +116,7 @@
       "url": "https://www.nl.go.kr/NL/contents/N50602000000.do?schM=view&id=59156",
       "firstSeen": "2026-09-24",
       "status": "open",
-      "scrapedAt": "2026-09-28T05:06:31+09:00",
+      "scrapedAt": "2026-09-29T05:06:21+09:00",
       "isNew": false
     },
     {
@@ -84,7 +132,7 @@
       "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10gz0530op8f093&view=read&field=sub|con&wd=85&bvLib=85",
       "firstSeen": "2026-09-24",
       "status": "open",
-      "scrapedAt": "2026-09-28T05:19:15+09:00",
+      "scrapedAt": "2026-09-29T05:18:28+09:00",
       "isNew": false
     },
     {
@@ -100,7 +148,7 @@
       "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10gz07v0oo07009&view=read&field=sub|con&wd=85&bvLib=85",
       "firstSeen": "2026-09-24",
       "status": "open",
-      "scrapedAt": "2026-09-28T05:19:20+09:00",
+      "scrapedAt": "2026-09-29T05:18:30+09:00",
       "isNew": false
     },
     {
@@ -116,7 +164,7 @@
       "url": "https://www.jnfac.or.kr/board/7/17187",
       "firstSeen": "2026-09-23",
       "status": "open",
-      "scrapedAt": "2026-09-28T05:06:02+09:00",
+      "scrapedAt": "2026-09-29T05:05:56+09:00",
       "isNew": false
     },
     {
@@ -132,7 +180,7 @@
       "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10h00oj0o822fab&view=read&field=sub|con&wd=85&bvLib=85",
       "firstSeen": "2026-09-22",
       "status": "open",
-      "scrapedAt": "2026-09-28T05:19:25+09:00",
+      "scrapedAt": "2026-09-29T05:18:35+09:00",
       "isNew": false
     },
     {
@@ -148,7 +196,7 @@
       "url": "https://www.caci.or.kr/community/notice/144853?q=M2FiYzY0MGNjOWQxNGM4NDlkY2MyNDZmZDFhM2UxOWE=",
       "firstSeen": "2026-09-19",
       "status": "open",
-      "scrapedAt": "2026-09-28T05:05:45+09:00",
+      "scrapedAt": "2026-09-29T05:05:44+09:00",
       "isNew": false
     },
     {
@@ -164,23 +212,7 @@
       "url": "https://www.bcl.go.kr/site/program/board/basicboard/view?currentpage=2&menuid=019005001&pagesize=15&boardtypeid=26&boardid=96404",
       "firstSeen": "2026-09-19",
       "status": "open",
-      "scrapedAt": "2026-09-28T05:16:53+09:00",
-      "isNew": false
-    },
-    {
-      "id": "ggi-gwangmyeong-lib::5204349238",
-      "sid": "ggi-gwangmyeong-lib",
-      "region": "경기",
-      "district": "광명시",
-      "source": "광명시립도서관(시 직영)",
-      "title": "빛마루도서관 자료실 기간제근로자 공개 채용 공고",
-      "jobType": "계약",
-      "posted": "2026-09-18",
-      "deadline": "2026-09-28",
-      "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10h20530nv395b5&view=read&field=sub|con&wd=85&bvLib=85",
-      "firstSeen": "2026-09-19",
-      "status": "open",
-      "scrapedAt": "2026-09-28T05:19:30+09:00",
+      "scrapedAt": "2026-09-29T05:16:16+09:00",
       "isNew": false
     },
     {
@@ -196,7 +228,7 @@
       "url": "https://www.gp.go.kr/portal/selectGosiData.do?key=2392&not_ancmt_mgt_no=56783&not_ancmt_se_code=05",
       "firstSeen": "2026-09-19",
       "status": "open",
-      "scrapedAt": "2026-09-28T05:23:24+09:00",
+      "scrapedAt": "2026-09-29T05:23:57+09:00",
       "isNew": false
     },
     {
@@ -211,8 +243,8 @@
       "deadline": "2026-09-30",
       "url": "https://www.snlib.go.kr/intro/menu/10048/bbs/20001/bbsPostDetail.do?postIdx=210001&manageCd=ALL",
       "firstSeen": "2026-09-17",
-      "status": "upcoming",
-      "scrapedAt": "2026-09-28T05:15:50+09:00",
+      "status": "open",
+      "scrapedAt": "2026-09-29T05:15:07+09:00",
       "isNew": false
     },
     {
@@ -228,7 +260,7 @@
       "url": "https://gdlib.sen.go.kr/gdlib/board/view.do?menu_idx=25&board_idx=1709292&manage_idx=52",
       "firstSeen": "2026-09-05",
       "status": "upcoming",
-      "scrapedAt": "2026-09-28T05:08:28+09:00",
+      "scrapedAt": "2026-09-29T05:08:05+09:00",
       "isNew": false
     },
     {
@@ -244,23 +276,7 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54945247",
       "firstSeen": "2026-09-27",
       "status": "open",
-      "scrapedAt": "2026-09-28T05:06:15+09:00",
-      "isNew": false
-    },
-    {
-      "id": "sel-portal-saramin::3f04043bdd",
-      "sid": "sel-portal-saramin",
-      "region": "경기",
-      "district": "부천시",
-      "source": "통합포털 도서관/사서(사람인)",
-      "title": "[부천세종병원] 연구지원실 사서/사무원 채용공고(계약직)",
-      "jobType": "계약",
-      "posted": null,
-      "deadline": null,
-      "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54919477",
-      "firstSeen": "2026-09-27",
-      "status": "open",
-      "scrapedAt": "2026-09-28T05:06:15+09:00",
+      "scrapedAt": "2026-09-29T05:06:06+09:00",
       "isNew": false
     }
   ]
