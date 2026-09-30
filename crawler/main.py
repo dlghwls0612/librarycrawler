@@ -367,6 +367,11 @@ def crawl(cfg, limit=None, only=None, details=True, out=OUT):
         for j in prev_by_sid.get(fid, []):
             if not _live(j):
                 continue
+            # 결과공고는 재사용 대상에서도 뺀다. 필터를 빠져나가 한 번 들어온 결과공고가
+            # 수집 실패가 이어지는 동안 안전만료(기본 20일)까지 계속 되살아났다
+            # (부천 '채용(서류전형) 결과 알림'이 12일간 열린 공고로 노출된 사례).
+            if classify.is_result_post(j.get("title", ""), settings):
+                continue
             j = dict(j); j["stale"] = True   # '이전 수집분 임시표시' 플래그
             j["title"] = parsers.clean_display_title(j.get("title", ""))
             jobs.append(j); reused += 1

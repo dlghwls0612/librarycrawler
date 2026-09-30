@@ -381,6 +381,12 @@ def extract_listings(html, base_url):
             # href가 js/빈값/#프래그먼트인 전자정부·도서관통합홈: 속성·onclick으로 상세 URL 복원
             url = _egov_detail_url(a, base_url, bbs_ctx)
             if not url and (form_ctx or q_ctx):
+                # 호출식이 onclick 이 아니라 href="javascript:fn(...)" 안에 들어있는 경우
+                # (마포구립도서관 fnDetail) — onclick 과 똑같은 방식으로 복원한다.
+                # 이걸 보지 않으면 목록에 공고가 멀쩡히 있어도 전부 버려진다(후보 0건).
+                if href.lower().startswith("javascript"):
+                    url = (_form_detail_url(href, base_url, form_ctx) if form_ctx else None) \
+                        or (_query_detail_url(href, base_url, q_ctx) if q_ctx else None)
                 # JS 폼전송형·쿼리조작형: onclick 이 행(tr/li)에 달린 경우도 있어 조상까지 훑는다
                 node, hops = a, 0
                 while node is not None and hops < 3 and not url:
