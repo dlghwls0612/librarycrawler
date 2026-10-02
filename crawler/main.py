@@ -316,10 +316,15 @@ def crawl(cfg, limit=None, only=None, details=True, out=OUT):
             # 표시용 제목 정제: 접수방식(이메일접수) 및 마감일자/기간 제거 (마감일 메타데이터 추출 후 적용)
             disp_title = parsers.clean_display_title(title)
 
+            job_region = c.get("region", s["region"])
+            job_district = c.get("district", s["district"])
+            if job_region in ("서울", "경기") and job_district == job_region:
+                job_district = "전역·통합"
+
             jobs.append({
                 "id": _mk_id(s["id"], canon),
                 "sid": s["id"],
-                "region": c.get("region", s["region"]), "district": c.get("district", s["district"]),
+                "region": job_region, "district": job_district,
                 "source": s["name"], "title": disp_title,
                 "jobType": classify.tag_jobtype(title, settings),
                 "posted": c["posted"], "deadline": deadline, "url": c["url"],

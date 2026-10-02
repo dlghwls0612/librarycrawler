@@ -193,13 +193,17 @@ var grid=document.getElementById("list"),empty=document.getElementById("empty"),
 var resultLine=document.getElementById("resultLine"),qIn=document.getElementById("q"),sortSel=document.getElementById("sort");
 
 function open(){return JOBS.filter(function(j){return !isExpired(j);});}
-function districts(region){var o=[];open().forEach(function(j){if(j.region===region&&o.indexOf(j.district)<0)o.push(j.district);});
+function districts(region){var o=[];open().forEach(function(j){
+  var d=((j.region==="경기"||j.region==="서울")&&(j.district===j.region||j.district==="전역"))?"전역·통합":j.district;
+  if(j.region===region&&o.indexOf(d)<0)o.push(d);
+});
   o.sort(function(a,b){if(a==="전역·통합")return 1;if(b==="전역·통합")return -1;return a.localeCompare(b,"ko");});return o;}
 function matches(j){
   if(isExpired(j))return false;
   if(j.region!==state.region)return false;
-  if(state.district!=="전체"&&j.district!==state.district)return false;
-  if(state.q){var h=(j.title+" "+j.source+" "+j.district).toLowerCase();if(h.indexOf(state.q.toLowerCase())<0)return false;}
+  var d=((j.region==="경기"||j.region==="서울")&&(j.district===j.region||j.district==="전역"))?"전역·통합":j.district;
+  if(state.district!=="전체"&&d!==state.district)return false;
+  if(state.q){var h=(j.title+" "+j.source+" "+d).toLowerCase();if(h.indexOf(state.q.toLowerCase())<0)return false;}
   return true;
 }
 function regionDots(){document.querySelectorAll("#regionSeg button").forEach(function(b){
@@ -254,7 +258,15 @@ document.querySelectorAll("#regionSeg button").forEach(function(btn){
 qIn.addEventListener("input",function(){state.q=qIn.value.trim();render();});
 sortSel.addEventListener("change",function(){state.sort=sortSel.value;render();});
 
-function boot(data){JOBS=data.jobs||[];META=data.meta||{};renderCounts();regionDots();renderChips();render();}
+function boot(data){
+  JOBS=(data.jobs||[]).map(function(j){
+    if((j.region==="경기"||j.region==="서울")&&(j.district===j.region||j.district==="전역")){
+      j.district="전역·통합";
+    }
+    return j;
+  });
+  META=data.meta||{};renderCounts();regionDots();renderChips();render();
+}
 fetch("data/jobs.json",{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.json();}).then(boot).catch(function(){boot(EMBEDDED);});
 </script>
 </body>

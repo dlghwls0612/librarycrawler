@@ -123,6 +123,7 @@ sources:
 # ---------- 경기 전역·통합 ----------
 - {id: ggi-ggl,        region: 경기, district: 전역·통합, name: 경기도서관(경기도청 직영),          parser: spa,     engine: playwright, scope: mixed, url: "https://apply.jobaba.net/bsns/bsnsListView.do?tpCd1=04", note: "잡아바=경기도 통합접수(비도서관 포함)→키워드필터"}
 - {id: ggi-ggcf,       region: 경기, district: 전역·통합, name: 경기문화재단,                       parser: spa,     engine: playwright, url: "https://www.ggcf.kr/boards/bulletinBoards/articles?category=03&searchKeyword=%EC%B1%84%EC%9A%A9"}
+- {id: ggi-edu-goe,    region: 경기, district: 전역·통합, name: 경기 교육도서관(교육청),            parser: custom,  engine: playwright, url: "https://lib.goe.go.kr/gg/index.do"}
 # 경기 사람인(ggi-portal-saramin) — 2026-09-06 중단. sel-portal-saramin 과 URL이 완전히 동일하고,
 #   extract_saramin 이 공고마다 지역을 직접 판정(서울·경기 모두 수집)하게 된 뒤로는 같은 목록을 두 번
 #   긁어 중복제거로 절반을 버리는 상태였음(로그 13+13 → 13). 경기 공고는 서울 소스 쪽에서 그대로 들어옴.
@@ -164,7 +165,6 @@ sources:
 - {id: ggi-yp-lib,     region: 경기, district: 양평군,   name: 양평군립도서관(군 직영),            parser: egov,    engine: httpx,      url: "https://www.yp21.go.kr/www/selectBbsNttList.do?bbsNo=5&key=1119"}
 - {id: ggi-gp-lib,     region: 경기, district: 가평군,   name: 가평군립도서관(군 직영),            parser: egov,    engine: httpx,      url: "https://www.gp.go.kr/portal/selectGosiList.do?key=2392&not_ancmt_se_code=05"}
 - {id: ggi-ycheon-lib, region: 경기, district: 연천군,   name: 연천군립도서관(군 직영),            parser: egov,    engine: httpx,      url: "https://www.yeoncheon.go.kr/www/selectGosiList.do?key=4896&not_ancmt_se_code=05"}
-- {id: ggi-edu-goe,    region: 경기, district: 경기,     name: 경기 교육도서관(교육청),            parser: custom,  engine: playwright, url: "https://lib.goe.go.kr/gg/index.do"}
 
 # ---------- 사서교사 (서울·경기 통합) ----------
 - {id: tea-seoul-gijegye, region: 사서교사, district: 서울, name: 기간제 사서교사(서울교육일자리포털), parser: custom, engine: playwright, url: "https://work.sen.go.kr/work/search/recInfo/BD_selectSrchRecInfo.do"}
