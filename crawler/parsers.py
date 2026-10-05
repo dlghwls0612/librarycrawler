@@ -697,16 +697,42 @@ def extract_deadline(html):
                 "모집기간", "모집 기간", "모집마감", "지원기간", "지원 기간", "접수일시", "접수 일시"):
         idx = text.find(ctx)
         if idx != -1:
-            window = text[idx: idx + 90]
-            dates = [d for d in (_to_date(m) for m in DATE_RE.finditer(window)) if d]
-            if dates:
+            # 창을 160자로 둔다(90자이던 시절, 범위 끝이 창 밖으로 밀리면 시작일만 남아
+            # 그것이 마감일로 채택됐다 = 접수 중인 공고가 조기 만료로 사라지는 결함).
+            window = text[idx: idx + 160]
+            ms = [(m, _to_date(m)) for m in DATE_RE.finditer(window)]
+            ms = [(m, d) for (m, d) in ms if d]
+            if not ms:
+                continue
+            start_m, start_d = ms[0]
+            # 시작일 뒤에 범위 표시가 있으면 '그 뒤의 첫 날짜'를 끝(마감)으로 본다.
+            # 창 안의 마지막 날짜를 쓰면 합격발표일·임용일을 마감으로 잡는 반대 결함이 난다.
+            rest = window[start_m.end():]
+            rng = re.search(r"[~∼〜]|부터", rest)
+            if rng:
+                after = rest[rng.end():]
+                m2 = DATE_RE.search(after)
+                if m2:
+                    d2 = _to_date(m2)
+                    if d2 and d2 >= start_d:
+                        return d2
                 # 범위 끝이 연도 없이 '~ 9. 11' 형태면 시작일 연도를 물려받아 보정(하루 일찍 만료 방지)
-                tail = re.search(r"~\s*(\d{1,2})\s*[.\-월]\s*(\d{1,2})\s*일?", window)
+                tail = re.search(r"(\d{1,2})\s*[.\-월]\s*(\d{1,2})\s*일?", after)
                 if tail:
-                    cand = _compose_md(int(tail.group(1)), int(tail.group(2)), int(dates[-1][:4]), None)
-                    if cand and cand > dates[-1]:
+                    mm, dd = int(tail.group(1)), int(tail.group(2))
+                    yy = int(start_d[:4])
+                    cand = _compose_md(mm, dd, yy, None)
+                    # 끝이 시작보다 이르면 해를 넘긴 범위다('12.28 ~ 1.5'). 연도를 하나 올린다.
+                    # (보정 전에는 시작일이 마감으로 채택되어 접수 중인 공고가 조기 만료됐다)
+                    if cand and cand < start_d:
+                        cand = _compose_md(mm, dd, yy + 1, None)
+                    if cand and cand >= start_d:
                         return cand
-                return dates[-1]   # 범위면 뒤(마감), 단일이면 그 날짜
+                # 범위인데 끝 날짜를 못 읽음('별도 공지시까지' 등) → 시작일을 마감으로 단정하지 않는다.
+                # 미확정(None)이면 안전만료에 맡겨지므로, 조용한 누락 대신 노출 연장 쪽으로 틀린다.
+                return None
+            # 범위 표시가 없으면 라벨에 가장 가까운 날짜가 마감일이다('마감일 2026.09.22' 등).
+            return start_d
     return None
 
 
