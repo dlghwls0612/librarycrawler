@@ -123,7 +123,7 @@ sources:
 # ---------- 경기 전역·통합 ----------
 - {id: ggi-ggl,        region: 경기, district: 전역·통합, name: 경기도서관(경기도청 직영),          parser: spa,     engine: playwright, scope: mixed, url: "https://apply.jobaba.net/bsns/bsnsListView.do?tpCd1=04", note: "잡아바=경기도 통합접수(비도서관 포함)→키워드필터"}
 - {id: ggi-ggcf,       region: 경기, district: 전역·통합, name: 경기문화재단,                       parser: spa,     engine: playwright, url: "https://www.ggcf.kr/boards/bulletinBoards/articles?category=03&searchKeyword=%EC%B1%84%EC%9A%A9"}
-- {id: ggi-edu-goe,    region: 경기, district: 전역·통합, name: 경기 교육도서관(교육청),            parser: custom,  engine: playwright, url: "https://lib.goe.go.kr/gg/index.do"}
+- {id: ggi-edu-goe,    region: 경기, district: 전역·통합, name: 경기 교육도서관(교육청),            parser: sen,     engine: httpx,      url: "https://lib.goe.go.kr/lib/board/index.do?search_type=title%2Bcontent&search_text=%EC%B1%84%EC%9A%A9&menu_idx=59&manage_idx=127", note: "경기도교육청통합도서관 도서관별 공지사항 통합게시판 — 경기 전역 교육도서관 채용 일괄 검색"}
 # 경기 사람인(ggi-portal-saramin) — 2026-09-06 중단. sel-portal-saramin 과 URL이 완전히 동일하고,
 #   extract_saramin 이 공고마다 지역을 직접 판정(서울·경기 모두 수집)하게 된 뒤로는 같은 목록을 두 번
 #   긁어 중복제거로 절반을 버리는 상태였음(로그 13+13 → 13). 경기 공고는 서울 소스 쪽에서 그대로 들어옴.

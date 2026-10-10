@@ -468,6 +468,7 @@ CONTEXT_PARAMS = _PAGE_PARAMS_LC | {
     "bvlib", "wd", "where", "what", "field", "sfl", "stx", "sst", "sod", "sop",
     "searchcnd", "searchwrd", "searchgubun", "searchkeyword", "keyword", "srchtxt",
     "listtype", "sortdirection", "view_type", "offset", "max", "limit", "rows",
+    "category", "category1", "category2",
 }
 
 
