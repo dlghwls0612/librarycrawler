@@ -1,11 +1,10 @@
 {
   "meta": {
     "project": "서울·경기 도서관 채용 크롤러",
-    "collected_at": "2026-10-13 05:25",
-    "job_count": 20,
+    "collected_at": "2026-10-14 05:21",
+    "job_count": 24,
     "failures": [
-      "하남시 도서관(하남문화재단 운영)",
-      "한국만화영상진흥원(만화도서관)"
+      "부천시청 채용공고"
     ],
     "unreadable": []
   },
@@ -23,7 +22,7 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=55151877",
       "firstSeen": "2026-09-30",
       "status": "open",
-      "scrapedAt": "2026-10-13T05:05:14+09:00",
+      "scrapedAt": "2026-10-14T05:04:38+09:00",
       "isNew": false
     },
     {
@@ -39,7 +38,23 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=55264863",
       "firstSeen": "2026-10-13",
       "status": "open",
-      "scrapedAt": "2026-10-13T05:05:14+09:00",
+      "scrapedAt": "2026-10-14T05:04:38+09:00",
+      "isNew": false
+    },
+    {
+      "id": "ggi-paju-lib::ab1c768a7f",
+      "sid": "ggi-paju-lib",
+      "region": "경기",
+      "district": "파주시",
+      "source": "파주중앙도서관(시 직영)",
+      "title": "교하도서관(한빛도서관) 기간제근로자 채용 공고 N",
+      "jobType": "계약",
+      "posted": "2026-10-20",
+      "deadline": "2026-10-20",
+      "url": "https://www.paju.go.kr/user/board/BD_board.view.do?bbsCd=1022&q_ctgCd=4064&seq=20261013183234473",
+      "firstSeen": "2026-10-14",
+      "status": "open",
+      "scrapedAt": "2026-10-14T05:20:22+09:00",
       "isNew": true
     },
     {
@@ -55,56 +70,56 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=55236498",
       "firstSeen": "2026-10-09",
       "status": "open",
-      "scrapedAt": "2026-10-13T05:05:14+09:00",
+      "scrapedAt": "2026-10-14T05:04:38+09:00",
       "isNew": false
     },
     {
-      "id": "sel-portal-saramin::0d0b970b67",
-      "sid": "sel-portal-saramin",
+      "id": "sel-eunpyeong-eplib::5385132186",
+      "sid": "sel-eunpyeong-eplib",
       "region": "서울",
-      "district": "강서구",
-      "source": "통합포털 도서관/사서(사람인)",
-      "title": "강서구립마곡열린도서관 사서 채용 공고(이메일 지원)",
+      "district": "은평구",
+      "source": "은평구공공도서관(직영)",
+      "title": "사서(기간제) 채용 공고",
       "jobType": "계약",
-      "posted": null,
-      "deadline": "2026-10-15",
-      "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=55177378",
-      "firstSeen": "2026-10-02",
+      "posted": "2026-10-13",
+      "deadline": "2026-10-23",
+      "url": "https://www.eplib.or.kr/intro/menu/10041/bbs/20002/bbsPostDetail.do?bbsPostIdx=231536&manageCd=ALL",
+      "firstSeen": "2026-10-14",
       "status": "open",
-      "scrapedAt": "2026-10-13T05:05:14+09:00",
-      "isNew": false
+      "scrapedAt": "2026-10-14T05:03:30+09:00",
+      "isNew": true
     },
     {
-      "id": "sel-portal-saramin::5698612bdd",
-      "sid": "sel-portal-saramin",
+      "id": "sel-edu-djlib::3d72f8a170",
+      "sid": "sel-edu-djlib",
       "region": "서울",
-      "district": "강서구",
-      "source": "통합포털 도서관/사서(사람인)",
-      "title": "강서구립마곡열린도서관 개관연장 직원 채용 공고(이메일지원)",
+      "district": "동작구",
+      "source": "동작도서관(교육청)",
+      "title": "[채용안내] 2026년 주말 단시간 근로자(추가) 채용 안내 (~ 10.18.) 새글",
+      "jobType": "알바",
+      "posted": "2026-10-13",
+      "deadline": "2026-10-18",
+      "url": "https://djlib.sen.go.kr/djlib/board/view.do?menu_idx=25&board_idx=1757945&manage_idx=619",
+      "firstSeen": "2026-10-14",
+      "status": "open",
+      "scrapedAt": "2026-10-14T05:08:58+09:00",
+      "isNew": true
+    },
+    {
+      "id": "tea-ggi-imyong::9b2483d80e",
+      "sid": "tea-ggi-imyong",
+      "region": "사서교사",
+      "district": "경기",
+      "source": "정교사 임용(경기도교육청)",
+      "title": "2027학년도 경기도 중등학교교사, 보건ㆍ사서ㆍ전문상담ㆍ영양ㆍ특수(중등)교사 임용후보자 선정경쟁시험 원서접수(1일차)",
       "jobType": "계약",
-      "posted": null,
-      "deadline": "2026-10-15",
-      "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=55180067",
-      "firstSeen": "2026-10-02",
+      "posted": "2026-10-13",
+      "deadline": "2026-10-16",
+      "url": "https://www.goe.go.kr/goe/na/ntt/selectNttInfo.do?mi=11038&bbsId=2583&nttSn=2377054",
+      "firstSeen": "2026-10-14",
       "status": "open",
-      "scrapedAt": "2026-10-13T05:05:14+09:00",
-      "isNew": false
-    },
-    {
-      "id": "sel-portal-saramin::d18440e3ee",
-      "sid": "sel-portal-saramin",
-      "region": "서울",
-      "district": "강서구",
-      "source": "통합포털 도서관/사서(사람인)",
-      "title": "강서구립마곡열린도서관 사서9급 직원 채용 공고(이메일지원)",
-      "jobType": "정규",
-      "posted": null,
-      "deadline": "2026-10-15",
-      "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=55180066",
-      "firstSeen": "2026-10-02",
-      "status": "open",
-      "scrapedAt": "2026-10-13T05:05:14+09:00",
-      "isNew": false
+      "scrapedAt": "2026-10-14T05:21:31+09:00",
+      "isNew": true
     },
     {
       "id": "sel-junggu-caci::5311ee6eef",
@@ -119,8 +134,8 @@
       "url": "https://www.caci.or.kr/community/notice/144917?q=M2FiYzY0MGNjOWQxNGM4NDlkY2MyNDZmZDFhM2UxOWE=",
       "firstSeen": "2026-10-13",
       "status": "open",
-      "scrapedAt": "2026-10-13T05:04:51+09:00",
-      "isNew": true
+      "scrapedAt": "2026-10-14T05:04:15+09:00",
+      "isNew": false
     },
     {
       "id": "ggi-gwangmyeong-lib::7f887919a8",
@@ -135,8 +150,8 @@
       "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10gp0rb0r962b7a&view=read&field=sub|con&wd=85&bvLib=85",
       "firstSeen": "2026-10-13",
       "status": "open",
-      "scrapedAt": "2026-10-13T05:18:48+09:00",
-      "isNew": true
+      "scrapedAt": "2026-10-14T05:16:12+09:00",
+      "isNew": false
     },
     {
       "id": "ggi-gwangmyeong-lib::a6842e4d2c",
@@ -151,8 +166,8 @@
       "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10gq02b0r88cc75&view=read&field=sub|con&wd=85&bvLib=85",
       "firstSeen": "2026-10-13",
       "status": "open",
-      "scrapedAt": "2026-10-13T05:18:51+09:00",
-      "isNew": true
+      "scrapedAt": "2026-10-14T05:16:14+09:00",
+      "isNew": false
     },
     {
       "id": "sel-nowon-arts::d6bcc14ac1",
@@ -167,7 +182,7 @@
       "url": "https://recruit.incruit.com/nowonarts/job/2610060006",
       "firstSeen": "2026-10-09",
       "status": "open",
-      "scrapedAt": "2026-10-13T05:02:22+09:00",
+      "scrapedAt": "2026-10-14T05:01:56+09:00",
       "isNew": false
     },
     {
@@ -183,7 +198,7 @@
       "url": "https://www.nl.go.kr/NL/contents/N50602000000.do?schM=view&id=59408",
       "firstSeen": "2026-10-09",
       "status": "open",
-      "scrapedAt": "2026-10-13T05:05:33+09:00",
+      "scrapedAt": "2026-10-14T05:04:54+09:00",
       "isNew": false
     },
     {
@@ -199,7 +214,7 @@
       "url": "https://www.eplib.or.kr/intro/menu/10041/bbs/20002/bbsPostDetail.do?bbsPostIdx=230576&manageCd=ALL",
       "firstSeen": "2026-10-07",
       "status": "open",
-      "scrapedAt": "2026-10-13T05:04:11+09:00",
+      "scrapedAt": "2026-10-14T05:03:37+09:00",
       "isNew": false
     },
     {
@@ -215,7 +230,7 @@
       "url": "https://www.eplib.or.kr/intro/menu/10041/bbs/20002/bbsPostDetail.do?bbsPostIdx=230446&manageCd=ALL",
       "firstSeen": "2026-10-07",
       "status": "open",
-      "scrapedAt": "2026-10-13T05:04:15+09:00",
+      "scrapedAt": "2026-10-14T05:03:42+09:00",
       "isNew": false
     },
     {
@@ -231,7 +246,7 @@
       "url": "https://www.yangju.go.kr/www/selectBbsNttView.do?key=216&bbsNo=21&nttNo=208609&searchCtgry=&searchCnd=SJ&searchKrwd=도서관&pageIndex=1&integrDeptCode=",
       "firstSeen": "2026-10-01",
       "status": "open",
-      "scrapedAt": "2026-10-13T05:20:44+09:00",
+      "scrapedAt": "2026-10-14T05:18:06+09:00",
       "isNew": false
     },
     {
@@ -247,7 +262,7 @@
       "url": "https://www.sen.go.kr/user/bbs/BD_selectBbs.do?q_bbsSn=1094&q_bbsDocNo=20260930094059044",
       "firstSeen": "2026-10-01",
       "status": "open",
-      "scrapedAt": "2026-10-13T05:24:56+09:00",
+      "scrapedAt": "2026-10-14T05:21:05+09:00",
       "isNew": false
     },
     {
@@ -263,7 +278,7 @@
       "url": "https://www.goe.go.kr/goe/na/ntt/selectNttInfo.do?mi=11038&bbsId=2583&nttSn=2375824",
       "firstSeen": "2026-10-01",
       "status": "open",
-      "scrapedAt": "2026-10-13T05:25:22+09:00",
+      "scrapedAt": "2026-10-14T05:21:36+09:00",
       "isNew": false
     },
     {
@@ -276,10 +291,10 @@
       "jobType": "알바",
       "posted": "2026-09-28",
       "deadline": "2026-10-15",
-      "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10gy0df0ow5f112&view=read&field=sub|con&wd=85&bvLib=85",
+      "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=2&bb_code=10gy0df0ow5f112&view=read&field=sub|con&what=채용&wd=85&bvLib=85",
       "firstSeen": "2026-09-29",
       "status": "open",
-      "scrapedAt": "2026-10-13T05:19:06+09:00",
+      "scrapedAt": "2026-10-14T05:16:28+09:00",
       "isNew": false
     },
     {
@@ -295,7 +310,7 @@
       "url": "https://gdlib.sen.go.kr/gdlib/board/view.do?menu_idx=25&board_idx=1709292&manage_idx=52",
       "firstSeen": "2026-09-05",
       "status": "upcoming",
-      "scrapedAt": "2026-10-13T05:07:08+09:00",
+      "scrapedAt": "2026-10-14T05:06:35+09:00",
       "isNew": false
     },
     {
@@ -311,7 +326,23 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=55238694",
       "firstSeen": "2026-10-09",
       "status": "open",
-      "scrapedAt": "2026-10-13T05:05:14+09:00",
+      "scrapedAt": "2026-10-14T05:04:38+09:00",
+      "isNew": false
+    },
+    {
+      "id": "sel-portal-saramin::0d0b970b67",
+      "sid": "sel-portal-saramin",
+      "region": "서울",
+      "district": "강서구",
+      "source": "통합포털 도서관/사서(사람인)",
+      "title": "강서구립마곡열린도서관 사서 채용 공고(이메일 지원)",
+      "jobType": "계약",
+      "posted": null,
+      "deadline": null,
+      "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=55177378",
+      "firstSeen": "2026-10-02",
+      "status": "open",
+      "scrapedAt": "2026-10-14T05:04:38+09:00",
       "isNew": false
     },
     {
@@ -327,7 +358,39 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54945247",
       "firstSeen": "2026-09-27",
       "status": "open",
-      "scrapedAt": "2026-10-13T05:05:14+09:00",
+      "scrapedAt": "2026-10-14T05:04:38+09:00",
+      "isNew": false
+    },
+    {
+      "id": "sel-portal-saramin::5698612bdd",
+      "sid": "sel-portal-saramin",
+      "region": "서울",
+      "district": "강서구",
+      "source": "통합포털 도서관/사서(사람인)",
+      "title": "강서구립마곡열린도서관 개관연장 직원 채용 공고(이메일지원)",
+      "jobType": "계약",
+      "posted": null,
+      "deadline": null,
+      "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=55180067",
+      "firstSeen": "2026-10-02",
+      "status": "open",
+      "scrapedAt": "2026-10-14T05:04:38+09:00",
+      "isNew": false
+    },
+    {
+      "id": "sel-portal-saramin::d18440e3ee",
+      "sid": "sel-portal-saramin",
+      "region": "서울",
+      "district": "강서구",
+      "source": "통합포털 도서관/사서(사람인)",
+      "title": "강서구립마곡열린도서관 사서9급 직원 채용 공고(이메일지원)",
+      "jobType": "정규",
+      "posted": null,
+      "deadline": null,
+      "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=55180066",
+      "firstSeen": "2026-10-02",
+      "status": "open",
+      "scrapedAt": "2026-10-14T05:04:38+09:00",
       "isNew": false
     }
   ]
