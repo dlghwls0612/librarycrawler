@@ -1,8 +1,8 @@
 {
   "meta": {
     "project": "서울·경기 도서관 채용 크롤러",
-    "collected_at": "2026-10-16 05:21",
-    "job_count": 23,
+    "collected_at": "2026-10-17 05:21",
+    "job_count": 18,
     "failures": [],
     "unreadable": []
   },
@@ -20,7 +20,7 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=55151877",
       "firstSeen": "2026-09-30",
       "status": "open",
-      "scrapedAt": "2026-10-16T05:04:47+09:00",
+      "scrapedAt": "2026-10-17T05:04:22+09:00",
       "isNew": false
     },
     {
@@ -36,7 +36,7 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=55264863",
       "firstSeen": "2026-10-13",
       "status": "open",
-      "scrapedAt": "2026-10-16T05:04:47+09:00",
+      "scrapedAt": "2026-10-17T05:04:22+09:00",
       "isNew": false
     },
     {
@@ -45,31 +45,31 @@
       "region": "경기",
       "district": "파주시",
       "source": "파주중앙도서관(시 직영)",
-      "title": "교하도서관(한빛도서관) 기간제근로자 채용 공고 N",
+      "title": "교하도서관(한빛도서관) 기간제근로자 채용 공고",
       "jobType": "계약",
       "posted": "2026-10-20",
       "deadline": "2026-10-20",
       "url": "https://www.paju.go.kr/user/board/BD_board.view.do?bbsCd=1022&q_ctgCd=4064&seq=20261013183234473",
       "firstSeen": "2026-10-14",
       "status": "open",
-      "scrapedAt": "2026-10-16T05:19:25+09:00",
+      "scrapedAt": "2026-10-17T05:19:40+09:00",
       "isNew": false
     },
     {
-      "id": "sel-portal-saramin::9196a18c94",
-      "sid": "sel-portal-saramin",
+      "id": "ggi-gwangmyeong-lib::a2247e7193",
+      "sid": "ggi-gwangmyeong-lib",
       "region": "경기",
-      "district": "용인시",
-      "source": "통합포털 도서관/사서(사람인)",
-      "title": "2026학년도 2학기 용인대학교 계약직원 채용 안내(사서)",
-      "jobType": "계약",
-      "posted": null,
-      "deadline": "2026-10-18",
-      "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=55236498",
-      "firstSeen": "2026-10-09",
+      "district": "광명시",
+      "source": "광명시립도서관(시 직영)",
+      "title": "광명도서관 메이커스페이스 (주말) 기간제근로자 공개 채용 재 공고",
+      "jobType": "알바",
+      "posted": "2026-10-16",
+      "deadline": "2026-10-20",
+      "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10gm0j000e916d8&view=read&field=sub|con&wd=85&bvLib=85",
+      "firstSeen": "2026-10-17",
       "status": "open",
-      "scrapedAt": "2026-10-16T05:04:47+09:00",
-      "isNew": false
+      "scrapedAt": "2026-10-17T05:15:39+09:00",
+      "isNew": true
     },
     {
       "id": "sel-nowon-arts::acd9581f88",
@@ -84,8 +84,8 @@
       "url": "https://recruit.incruit.com/nowonarts/job/2610140030",
       "firstSeen": "2026-10-16",
       "status": "open",
-      "scrapedAt": "2026-10-16T05:02:15+09:00",
-      "isNew": true
+      "scrapedAt": "2026-10-17T05:02:01+09:00",
+      "isNew": false
     },
     {
       "id": "sel-nowon-arts::6fac026bc4",
@@ -100,8 +100,8 @@
       "url": "https://recruit.incruit.com/nowonarts/job/2610140028",
       "firstSeen": "2026-10-16",
       "status": "open",
-      "scrapedAt": "2026-10-16T05:02:15+09:00",
-      "isNew": true
+      "scrapedAt": "2026-10-17T05:02:01+09:00",
+      "isNew": false
     },
     {
       "id": "sel-nowon-arts::02e6020747",
@@ -116,39 +116,7 @@
       "url": "https://recruit.incruit.com/nowonarts/job/2610140026",
       "firstSeen": "2026-10-16",
       "status": "open",
-      "scrapedAt": "2026-10-16T05:02:15+09:00",
-      "isNew": true
-    },
-    {
-      "id": "tea-ggi-imyong::69eb9cf59f",
-      "sid": "tea-ggi-imyong",
-      "region": "사서교사",
-      "district": "경기",
-      "source": "정교사 임용(경기도교육청)",
-      "title": "2027학년도 경기도 중등학교교사, 보건ㆍ사서ㆍ전문상담ㆍ영양ㆍ특수(중등)교사 임용후보자 선정경쟁시험 원서접수(3일차)",
-      "jobType": "계약",
-      "posted": "2026-10-15",
-      "deadline": "2026-10-16",
-      "url": "https://www.goe.go.kr/goe/na/ntt/selectNttInfo.do?mi=11038&bbsId=2583&nttSn=2377474",
-      "firstSeen": "2026-10-16",
-      "status": "open",
-      "scrapedAt": "2026-10-16T05:20:48+09:00",
-      "isNew": true
-    },
-    {
-      "id": "tea-ggi-imyong::8bb65087ac",
-      "sid": "tea-ggi-imyong",
-      "region": "사서교사",
-      "district": "경기",
-      "source": "정교사 임용(경기도교육청)",
-      "title": "2027학년도 경기도 중등학교교사, 보건ㆍ사서ㆍ전문상담ㆍ영양ㆍ특수(중등)교사 임용후보자 선정경쟁시험 원서접수(2일차)",
-      "jobType": "계약",
-      "posted": "2026-10-14",
-      "deadline": "2026-10-16",
-      "url": "https://www.goe.go.kr/goe/na/ntt/selectNttInfo.do?mi=11038&bbsId=2583&nttSn=2377292",
-      "firstSeen": "2026-10-15",
-      "status": "open",
-      "scrapedAt": "2026-10-16T05:20:53+09:00",
+      "scrapedAt": "2026-10-17T05:02:01+09:00",
       "isNew": false
     },
     {
@@ -164,7 +132,7 @@
       "url": "https://www.eplib.or.kr/intro/menu/10041/bbs/20002/bbsPostDetail.do?bbsPostIdx=231536&manageCd=ALL",
       "firstSeen": "2026-10-14",
       "status": "open",
-      "scrapedAt": "2026-10-16T05:03:41+09:00",
+      "scrapedAt": "2026-10-17T05:03:25+09:00",
       "isNew": false
     },
     {
@@ -180,23 +148,7 @@
       "url": "https://djlib.sen.go.kr/djlib/board/view.do?menu_idx=25&board_idx=1757945&manage_idx=619",
       "firstSeen": "2026-10-14",
       "status": "open",
-      "scrapedAt": "2026-10-16T05:09:06+09:00",
-      "isNew": false
-    },
-    {
-      "id": "tea-ggi-imyong::9b2483d80e",
-      "sid": "tea-ggi-imyong",
-      "region": "사서교사",
-      "district": "경기",
-      "source": "정교사 임용(경기도교육청)",
-      "title": "2027학년도 경기도 중등학교교사, 보건ㆍ사서ㆍ전문상담ㆍ영양ㆍ특수(중등)교사 임용후보자 선정경쟁시험 원서접수(1일차)",
-      "jobType": "계약",
-      "posted": "2026-10-13",
-      "deadline": "2026-10-16",
-      "url": "https://www.goe.go.kr/goe/na/ntt/selectNttInfo.do?mi=11038&bbsId=2583&nttSn=2377054",
-      "firstSeen": "2026-10-14",
-      "status": "open",
-      "scrapedAt": "2026-10-16T05:20:57+09:00",
+      "scrapedAt": "2026-10-17T05:08:29+09:00",
       "isNew": false
     },
     {
@@ -212,7 +164,7 @@
       "url": "https://www.caci.or.kr/community/notice/144917?q=M2FiYzY0MGNjOWQxNGM4NDlkY2MyNDZmZDFhM2UxOWE=",
       "firstSeen": "2026-10-13",
       "status": "open",
-      "scrapedAt": "2026-10-16T05:04:24+09:00",
+      "scrapedAt": "2026-10-17T05:03:59+09:00",
       "isNew": false
     },
     {
@@ -228,7 +180,7 @@
       "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10gp0rb0r962b7a&view=read&field=sub|con&wd=85&bvLib=85",
       "firstSeen": "2026-10-13",
       "status": "open",
-      "scrapedAt": "2026-10-16T05:15:10+09:00",
+      "scrapedAt": "2026-10-17T05:15:33+09:00",
       "isNew": false
     },
     {
@@ -244,7 +196,7 @@
       "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10gq02b0r88cc75&view=read&field=sub|con&wd=85&bvLib=85",
       "firstSeen": "2026-10-13",
       "status": "open",
-      "scrapedAt": "2026-10-16T05:15:12+09:00",
+      "scrapedAt": "2026-10-17T05:15:36+09:00",
       "isNew": false
     },
     {
@@ -260,7 +212,7 @@
       "url": "https://recruit.incruit.com/nowonarts/job/2610060006",
       "firstSeen": "2026-10-09",
       "status": "open",
-      "scrapedAt": "2026-10-16T05:02:15+09:00",
+      "scrapedAt": "2026-10-17T05:02:01+09:00",
       "isNew": false
     },
     {
@@ -276,7 +228,7 @@
       "url": "https://www.nl.go.kr/NL/contents/N50602000000.do?schM=view&id=59408",
       "firstSeen": "2026-10-09",
       "status": "open",
-      "scrapedAt": "2026-10-16T05:05:02+09:00",
+      "scrapedAt": "2026-10-17T05:04:38+09:00",
       "isNew": false
     },
     {
@@ -292,23 +244,7 @@
       "url": "https://www.eplib.or.kr/intro/menu/10041/bbs/20002/bbsPostDetail.do?bbsPostIdx=230576&manageCd=ALL",
       "firstSeen": "2026-10-07",
       "status": "open",
-      "scrapedAt": "2026-10-16T05:03:46+09:00",
-      "isNew": false
-    },
-    {
-      "id": "sel-eunpyeong-eplib::aa95048618",
-      "sid": "sel-eunpyeong-eplib",
-      "region": "서울",
-      "district": "은평구",
-      "source": "은평구공공도서관(직영)",
-      "title": "기간제 직원(육아휴직 대체) 채용 공고",
-      "jobType": "계약",
-      "posted": "2026-10-06",
-      "deadline": "2026-10-16",
-      "url": "https://www.eplib.or.kr/intro/menu/10041/bbs/20002/bbsPostDetail.do?bbsPostIdx=230446&manageCd=ALL",
-      "firstSeen": "2026-10-07",
-      "status": "open",
-      "scrapedAt": "2026-10-16T05:03:50+09:00",
+      "scrapedAt": "2026-10-17T05:03:29+09:00",
       "isNew": false
     },
     {
@@ -324,23 +260,7 @@
       "url": "https://www.sen.go.kr/user/bbs/BD_selectBbs.do?q_bbsSn=1094&q_bbsDocNo=20260930094059044",
       "firstSeen": "2026-10-01",
       "status": "open",
-      "scrapedAt": "2026-10-16T05:20:23+09:00",
-      "isNew": false
-    },
-    {
-      "id": "tea-ggi-imyong::53123ce97b",
-      "sid": "tea-ggi-imyong",
-      "region": "사서교사",
-      "district": "경기",
-      "source": "정교사 임용(경기도교육청)",
-      "title": "2027학년도 경기도 중등학교교사, 보건·사서·전문상담·영양·특수(중등)교사 임용후보자 선정경쟁시험 시행계획 공고",
-      "jobType": "계약",
-      "posted": "2026-09-30",
-      "deadline": "2026-10-16",
-      "url": "https://www.goe.go.kr/goe/na/ntt/selectNttInfo.do?mi=11038&bbsId=2583&nttSn=2375824",
-      "firstSeen": "2026-10-01",
-      "status": "open",
-      "scrapedAt": "2026-10-16T05:21:03+09:00",
+      "scrapedAt": "2026-10-17T05:20:41+09:00",
       "isNew": false
     },
     {
@@ -356,23 +276,23 @@
       "url": "https://gdlib.sen.go.kr/gdlib/board/view.do?menu_idx=25&board_idx=1709292&manage_idx=52",
       "firstSeen": "2026-09-05",
       "status": "upcoming",
-      "scrapedAt": "2026-10-16T05:06:48+09:00",
+      "scrapedAt": "2026-10-17T05:06:10+09:00",
       "isNew": false
     },
     {
-      "id": "sel-portal-saramin::33ed33ee1b",
+      "id": "sel-portal-saramin::9196a18c94",
       "sid": "sel-portal-saramin",
-      "region": "서울",
-      "district": "은평구",
+      "region": "경기",
+      "district": "용인시",
       "source": "통합포털 도서관/사서(사람인)",
-      "title": "호반베르디움 스테이1도서관 사서 채용 공고",
+      "title": "2026학년도 2학기 용인대학교 계약직원 채용 안내(사서)",
       "jobType": "계약",
       "posted": null,
       "deadline": null,
-      "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=54945247",
-      "firstSeen": "2026-09-27",
+      "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=55236498",
+      "firstSeen": "2026-10-09",
       "status": "open",
-      "scrapedAt": "2026-10-16T05:04:47+09:00",
+      "scrapedAt": "2026-10-17T05:04:22+09:00",
       "isNew": false
     }
   ]
