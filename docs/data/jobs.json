@@ -1,7 +1,7 @@
 {
   "meta": {
     "project": "서울·경기 도서관 채용 크롤러",
-    "collected_at": "2026-10-17 05:21",
+    "collected_at": "2026-10-18 05:21",
     "job_count": 18,
     "failures": [],
     "unreadable": []
@@ -20,7 +20,7 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=55151877",
       "firstSeen": "2026-09-30",
       "status": "open",
-      "scrapedAt": "2026-10-17T05:04:22+09:00",
+      "scrapedAt": "2026-10-18T05:04:41+09:00",
       "isNew": false
     },
     {
@@ -36,7 +36,7 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=55264863",
       "firstSeen": "2026-10-13",
       "status": "open",
-      "scrapedAt": "2026-10-17T05:04:22+09:00",
+      "scrapedAt": "2026-10-18T05:04:41+09:00",
       "isNew": false
     },
     {
@@ -52,7 +52,23 @@
       "url": "https://www.paju.go.kr/user/board/BD_board.view.do?bbsCd=1022&q_ctgCd=4064&seq=20261013183234473",
       "firstSeen": "2026-10-14",
       "status": "open",
-      "scrapedAt": "2026-10-17T05:19:40+09:00",
+      "scrapedAt": "2026-10-18T05:19:02+09:00",
+      "isNew": false
+    },
+    {
+      "id": "sel-portal-saramin::9196a18c94",
+      "sid": "sel-portal-saramin",
+      "region": "경기",
+      "district": "용인시",
+      "source": "통합포털 도서관/사서(사람인)",
+      "title": "2026학년도 2학기 용인대학교 계약직원 채용 안내(사서)",
+      "jobType": "계약",
+      "posted": null,
+      "deadline": "2026-10-18",
+      "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=55236498",
+      "firstSeen": "2026-10-09",
+      "status": "open",
+      "scrapedAt": "2026-10-18T05:04:41+09:00",
       "isNew": false
     },
     {
@@ -68,8 +84,8 @@
       "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10gm0j000e916d8&view=read&field=sub|con&wd=85&bvLib=85",
       "firstSeen": "2026-10-17",
       "status": "open",
-      "scrapedAt": "2026-10-17T05:15:39+09:00",
-      "isNew": true
+      "scrapedAt": "2026-10-18T05:15:14+09:00",
+      "isNew": false
     },
     {
       "id": "sel-nowon-arts::acd9581f88",
@@ -84,7 +100,7 @@
       "url": "https://recruit.incruit.com/nowonarts/job/2610140030",
       "firstSeen": "2026-10-16",
       "status": "open",
-      "scrapedAt": "2026-10-17T05:02:01+09:00",
+      "scrapedAt": "2026-10-18T05:02:07+09:00",
       "isNew": false
     },
     {
@@ -100,7 +116,7 @@
       "url": "https://recruit.incruit.com/nowonarts/job/2610140028",
       "firstSeen": "2026-10-16",
       "status": "open",
-      "scrapedAt": "2026-10-17T05:02:01+09:00",
+      "scrapedAt": "2026-10-18T05:02:07+09:00",
       "isNew": false
     },
     {
@@ -116,7 +132,7 @@
       "url": "https://recruit.incruit.com/nowonarts/job/2610140026",
       "firstSeen": "2026-10-16",
       "status": "open",
-      "scrapedAt": "2026-10-17T05:02:01+09:00",
+      "scrapedAt": "2026-10-18T05:02:07+09:00",
       "isNew": false
     },
     {
@@ -132,7 +148,7 @@
       "url": "https://www.eplib.or.kr/intro/menu/10041/bbs/20002/bbsPostDetail.do?bbsPostIdx=231536&manageCd=ALL",
       "firstSeen": "2026-10-14",
       "status": "open",
-      "scrapedAt": "2026-10-17T05:03:25+09:00",
+      "scrapedAt": "2026-10-18T05:03:33+09:00",
       "isNew": false
     },
     {
@@ -148,7 +164,7 @@
       "url": "https://djlib.sen.go.kr/djlib/board/view.do?menu_idx=25&board_idx=1757945&manage_idx=619",
       "firstSeen": "2026-10-14",
       "status": "open",
-      "scrapedAt": "2026-10-17T05:08:29+09:00",
+      "scrapedAt": "2026-10-18T05:08:50+09:00",
       "isNew": false
     },
     {
@@ -164,7 +180,7 @@
       "url": "https://www.caci.or.kr/community/notice/144917?q=M2FiYzY0MGNjOWQxNGM4NDlkY2MyNDZmZDFhM2UxOWE=",
       "firstSeen": "2026-10-13",
       "status": "open",
-      "scrapedAt": "2026-10-17T05:03:59+09:00",
+      "scrapedAt": "2026-10-18T05:04:14+09:00",
       "isNew": false
     },
     {
@@ -180,7 +196,7 @@
       "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10gp0rb0r962b7a&view=read&field=sub|con&wd=85&bvLib=85",
       "firstSeen": "2026-10-13",
       "status": "open",
-      "scrapedAt": "2026-10-17T05:15:33+09:00",
+      "scrapedAt": "2026-10-18T05:15:09+09:00",
       "isNew": false
     },
     {
@@ -196,7 +212,7 @@
       "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10gq02b0r88cc75&view=read&field=sub|con&wd=85&bvLib=85",
       "firstSeen": "2026-10-13",
       "status": "open",
-      "scrapedAt": "2026-10-17T05:15:36+09:00",
+      "scrapedAt": "2026-10-18T05:15:11+09:00",
       "isNew": false
     },
     {
@@ -212,7 +228,7 @@
       "url": "https://recruit.incruit.com/nowonarts/job/2610060006",
       "firstSeen": "2026-10-09",
       "status": "open",
-      "scrapedAt": "2026-10-17T05:02:01+09:00",
+      "scrapedAt": "2026-10-18T05:02:07+09:00",
       "isNew": false
     },
     {
@@ -228,7 +244,7 @@
       "url": "https://www.nl.go.kr/NL/contents/N50602000000.do?schM=view&id=59408",
       "firstSeen": "2026-10-09",
       "status": "open",
-      "scrapedAt": "2026-10-17T05:04:38+09:00",
+      "scrapedAt": "2026-10-18T05:04:57+09:00",
       "isNew": false
     },
     {
@@ -244,7 +260,7 @@
       "url": "https://www.eplib.or.kr/intro/menu/10041/bbs/20002/bbsPostDetail.do?bbsPostIdx=230576&manageCd=ALL",
       "firstSeen": "2026-10-07",
       "status": "open",
-      "scrapedAt": "2026-10-17T05:03:29+09:00",
+      "scrapedAt": "2026-10-18T05:03:37+09:00",
       "isNew": false
     },
     {
@@ -260,7 +276,7 @@
       "url": "https://www.sen.go.kr/user/bbs/BD_selectBbs.do?q_bbsSn=1094&q_bbsDocNo=20260930094059044",
       "firstSeen": "2026-10-01",
       "status": "open",
-      "scrapedAt": "2026-10-17T05:20:41+09:00",
+      "scrapedAt": "2026-10-18T05:20:11+09:00",
       "isNew": false
     },
     {
@@ -276,23 +292,7 @@
       "url": "https://gdlib.sen.go.kr/gdlib/board/view.do?menu_idx=25&board_idx=1709292&manage_idx=52",
       "firstSeen": "2026-09-05",
       "status": "upcoming",
-      "scrapedAt": "2026-10-17T05:06:10+09:00",
-      "isNew": false
-    },
-    {
-      "id": "sel-portal-saramin::9196a18c94",
-      "sid": "sel-portal-saramin",
-      "region": "경기",
-      "district": "용인시",
-      "source": "통합포털 도서관/사서(사람인)",
-      "title": "2026학년도 2학기 용인대학교 계약직원 채용 안내(사서)",
-      "jobType": "계약",
-      "posted": null,
-      "deadline": null,
-      "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=55236498",
-      "firstSeen": "2026-10-09",
-      "status": "open",
-      "scrapedAt": "2026-10-17T05:04:22+09:00",
+      "scrapedAt": "2026-10-18T05:06:30+09:00",
       "isNew": false
     }
   ]
