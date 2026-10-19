@@ -1,8 +1,8 @@
 {
   "meta": {
     "project": "서울·경기 도서관 채용 크롤러",
-    "collected_at": "2026-10-19 05:21",
-    "job_count": 16,
+    "collected_at": "2026-10-20 05:20",
+    "job_count": 19,
     "failures": [],
     "unreadable": []
   },
@@ -20,8 +20,40 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=55151877",
       "firstSeen": "2026-09-30",
       "status": "open",
-      "scrapedAt": "2026-10-19T05:04:17+09:00",
+      "scrapedAt": "2026-10-20T05:04:26+09:00",
       "isNew": false
+    },
+    {
+      "id": "sel-portal-saramin::7c3d88e073",
+      "sid": "sel-portal-saramin",
+      "region": "서울",
+      "district": "성북구",
+      "source": "통합포털 도서관/사서(사람인)",
+      "title": "[성북문화재단](제26-30호)기간직 채용(휴직대체,사서)",
+      "jobType": "계약",
+      "posted": null,
+      "deadline": "2026-11-04",
+      "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=55330845",
+      "firstSeen": "2026-10-20",
+      "status": "open",
+      "scrapedAt": "2026-10-20T05:04:26+09:00",
+      "isNew": true
+    },
+    {
+      "id": "sel-portal-saramin::c21688235a",
+      "sid": "sel-portal-saramin",
+      "region": "서울",
+      "district": "노원구",
+      "source": "통합포털 도서관/사서(사람인)",
+      "title": "광운대학교 기간제 계약직원 채용(중앙도서관 학술정보팀)",
+      "jobType": "계약",
+      "posted": null,
+      "deadline": "2026-10-26",
+      "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=55324019",
+      "firstSeen": "2026-10-20",
+      "status": "open",
+      "scrapedAt": "2026-10-20T05:04:26+09:00",
+      "isNew": true
     },
     {
       "id": "sel-portal-saramin::3dff34b750",
@@ -36,7 +68,7 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=55264863",
       "firstSeen": "2026-10-13",
       "status": "open",
-      "scrapedAt": "2026-10-19T05:04:17+09:00",
+      "scrapedAt": "2026-10-20T05:04:26+09:00",
       "isNew": false
     },
     {
@@ -52,8 +84,56 @@
       "url": "https://www.paju.go.kr/user/board/BD_board.view.do?bbsCd=1022&q_ctgCd=4064&seq=20261013183234473",
       "firstSeen": "2026-10-14",
       "status": "open",
-      "scrapedAt": "2026-10-19T05:19:04+09:00",
+      "scrapedAt": "2026-10-20T05:18:38+09:00",
       "isNew": false
+    },
+    {
+      "id": "sel-seongbuk-sbc::d73a30335a",
+      "sid": "sel-seongbuk-sbc",
+      "region": "서울",
+      "district": "성북구",
+      "source": "성북문화재단",
+      "title": "(제26-31호)성북문화재단 기간직 채용 공고(기간직(보조금_개관시간연장), 다급상당, 사서)",
+      "jobType": "계약",
+      "posted": "2026-10-19",
+      "deadline": "2026-11-04",
+      "url": "https://www.sbculture.or.kr/culture/bbs/BMSR00034/view.do?boardId=35752&menuNo=500348&searchCnd=1&searchWrd=%EC%B1%84%EC%9A%A9",
+      "firstSeen": "2026-10-20",
+      "status": "upcoming",
+      "scrapedAt": "2026-10-20T05:02:38+09:00",
+      "isNew": true
+    },
+    {
+      "id": "sel-seongbuk-sbc::8f5ed8d75b",
+      "sid": "sel-seongbuk-sbc",
+      "region": "서울",
+      "district": "성북구",
+      "source": "성북문화재단",
+      "title": "(제26-30호)성북문화재단 기간직 채용 공고(기간직, 휴직대체, 나급, 사서)",
+      "jobType": "계약",
+      "posted": "2026-10-19",
+      "deadline": "2026-11-04",
+      "url": "https://www.sbculture.or.kr/culture/bbs/BMSR00034/view.do?boardId=35751&menuNo=500348&searchCnd=1&searchWrd=%EC%B1%84%EC%9A%A9",
+      "firstSeen": "2026-10-20",
+      "status": "upcoming",
+      "scrapedAt": "2026-10-20T05:02:40+09:00",
+      "isNew": true
+    },
+    {
+      "id": "ggi-seongnam-lib::f37247bc93",
+      "sid": "ggi-seongnam-lib",
+      "region": "경기",
+      "district": "성남시",
+      "source": "성남시도서관사업소",
+      "title": "운중 2026년 운중도서관 초단시간근로자 결원 채용 공고",
+      "jobType": "알바",
+      "posted": "2026-10-19",
+      "deadline": "2026-10-23",
+      "url": "https://www.snlib.go.kr/intro/menu/10048/bbs/20001/bbsPostDetail.do?postIdx=210715&manageCd=ALL",
+      "firstSeen": "2026-10-20",
+      "status": "upcoming",
+      "scrapedAt": "2026-10-20T05:12:11+09:00",
+      "isNew": true
     },
     {
       "id": "ggi-gwangmyeong-lib::a2247e7193",
@@ -68,7 +148,7 @@
       "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10gm0j000e916d8&view=read&field=sub|con&wd=85&bvLib=85",
       "firstSeen": "2026-10-17",
       "status": "open",
-      "scrapedAt": "2026-10-19T05:14:55+09:00",
+      "scrapedAt": "2026-10-20T05:14:51+09:00",
       "isNew": false
     },
     {
@@ -84,7 +164,7 @@
       "url": "https://recruit.incruit.com/nowonarts/job/2610140030",
       "firstSeen": "2026-10-16",
       "status": "open",
-      "scrapedAt": "2026-10-19T05:01:59+09:00",
+      "scrapedAt": "2026-10-20T05:01:57+09:00",
       "isNew": false
     },
     {
@@ -100,7 +180,7 @@
       "url": "https://recruit.incruit.com/nowonarts/job/2610140028",
       "firstSeen": "2026-10-16",
       "status": "open",
-      "scrapedAt": "2026-10-19T05:01:59+09:00",
+      "scrapedAt": "2026-10-20T05:01:57+09:00",
       "isNew": false
     },
     {
@@ -116,7 +196,7 @@
       "url": "https://recruit.incruit.com/nowonarts/job/2610140026",
       "firstSeen": "2026-10-16",
       "status": "open",
-      "scrapedAt": "2026-10-19T05:01:59+09:00",
+      "scrapedAt": "2026-10-20T05:01:57+09:00",
       "isNew": false
     },
     {
@@ -132,7 +212,7 @@
       "url": "https://www.eplib.or.kr/intro/menu/10041/bbs/20002/bbsPostDetail.do?bbsPostIdx=231536&manageCd=ALL",
       "firstSeen": "2026-10-14",
       "status": "open",
-      "scrapedAt": "2026-10-19T05:03:19+09:00",
+      "scrapedAt": "2026-10-20T05:03:26+09:00",
       "isNew": false
     },
     {
@@ -148,7 +228,7 @@
       "url": "https://www.caci.or.kr/community/notice/144917?q=M2FiYzY0MGNjOWQxNGM4NDlkY2MyNDZmZDFhM2UxOWE=",
       "firstSeen": "2026-10-13",
       "status": "open",
-      "scrapedAt": "2026-10-19T05:03:55+09:00",
+      "scrapedAt": "2026-10-20T05:04:02+09:00",
       "isNew": false
     },
     {
@@ -164,7 +244,7 @@
       "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10gp0rb0r962b7a&view=read&field=sub|con&wd=85&bvLib=85",
       "firstSeen": "2026-10-13",
       "status": "open",
-      "scrapedAt": "2026-10-19T05:14:57+09:00",
+      "scrapedAt": "2026-10-20T05:14:53+09:00",
       "isNew": false
     },
     {
@@ -180,23 +260,7 @@
       "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10gq02b0r88cc75&view=read&field=sub|con&wd=85&bvLib=85",
       "firstSeen": "2026-10-13",
       "status": "open",
-      "scrapedAt": "2026-10-19T05:15:00+09:00",
-      "isNew": false
-    },
-    {
-      "id": "sel-nowon-arts::d6bcc14ac1",
-      "sid": "sel-nowon-arts",
-      "region": "서울",
-      "district": "노원구",
-      "source": "노원문화재단",
-      "title": "2026년 10차 노원문화재단 도서관기획실 채용 공고 [기간제]_불암도서관",
-      "jobType": "계약",
-      "posted": "2026-10-08",
-      "deadline": "2026-10-19",
-      "url": "https://recruit.incruit.com/nowonarts/job/2610060006",
-      "firstSeen": "2026-10-09",
-      "status": "open",
-      "scrapedAt": "2026-10-19T05:01:59+09:00",
+      "scrapedAt": "2026-10-20T05:14:56+09:00",
       "isNew": false
     },
     {
@@ -212,23 +276,7 @@
       "url": "https://www.nl.go.kr/NL/contents/N50602000000.do?schM=view&id=59408",
       "firstSeen": "2026-10-09",
       "status": "open",
-      "scrapedAt": "2026-10-19T05:04:34+09:00",
-      "isNew": false
-    },
-    {
-      "id": "sel-eunpyeong-eplib::53d8f76e2a",
-      "sid": "sel-eunpyeong-eplib",
-      "region": "서울",
-      "district": "은평구",
-      "source": "은평구공공도서관(직영)",
-      "title": "2026년 정규직 사서 채용 공고(~19일 17시)",
-      "jobType": "정규",
-      "posted": "2026-10-06",
-      "deadline": "2026-10-19",
-      "url": "https://www.eplib.or.kr/intro/menu/10041/bbs/20002/bbsPostDetail.do?bbsPostIdx=230576&manageCd=ALL",
-      "firstSeen": "2026-10-07",
-      "status": "open",
-      "scrapedAt": "2026-10-19T05:03:23+09:00",
+      "scrapedAt": "2026-10-20T05:04:42+09:00",
       "isNew": false
     },
     {
@@ -244,7 +292,7 @@
       "url": "https://www.sen.go.kr/user/bbs/BD_selectBbs.do?q_bbsSn=1094&q_bbsDocNo=20260930094059044",
       "firstSeen": "2026-10-01",
       "status": "open",
-      "scrapedAt": "2026-10-19T05:20:14+09:00",
+      "scrapedAt": "2026-10-20T05:19:43+09:00",
       "isNew": false
     },
     {
@@ -260,7 +308,7 @@
       "url": "https://gdlib.sen.go.kr/gdlib/board/view.do?menu_idx=25&board_idx=1709292&manage_idx=52",
       "firstSeen": "2026-09-05",
       "status": "upcoming",
-      "scrapedAt": "2026-10-19T05:06:15+09:00",
+      "scrapedAt": "2026-10-20T05:06:16+09:00",
       "isNew": false
     }
   ]
