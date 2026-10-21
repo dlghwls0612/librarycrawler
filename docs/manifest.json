@@ -1,0 +1,20 @@
+{
+  "name": "서울·경기 도서관 채용공고",
+  "short_name": "도서관",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#FBFCFC",
+  "theme_color": "#0E7C6B",
+  "icons": [
+    {
+      "src": "apple-touch-icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
