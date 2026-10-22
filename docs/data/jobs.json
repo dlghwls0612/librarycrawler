@@ -2,7 +2,7 @@
   "meta": {
     "project": "서울·경기 도서관 채용 크롤러",
     "collected_at": "2026-10-22 05:21",
-    "job_count": 18,
+    "job_count": 17,
     "failures": [],
     "unreadable": []
   },
@@ -24,20 +24,26 @@
       "isNew": false
     },
     {
-      "id": "sel-portal-saramin::7c3d88e073",
-      "sid": "sel-portal-saramin",
+      "id": "sel-seongbuk-sbc::8f5ed8d75b",
+      "sid": "sel-seongbuk-sbc",
       "region": "서울",
       "district": "성북구",
-      "source": "통합포털 도서관/사서(사람인)",
-      "title": "[성북문화재단](제26-30호)기간직 채용(휴직대체,사서)",
+      "source": "성북문화재단",
+      "title": "성북문화재단 기간직 채용 공고(기간직, 휴직대체, 나급, 사서)",
       "jobType": "계약",
-      "posted": null,
+      "posted": "2026-10-19",
       "deadline": "2026-11-04",
-      "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=55330845",
+      "url": "https://www.sbculture.or.kr/culture/bbs/BMSR00034/view.do?boardId=35751&menuNo=500348&searchCnd=1&searchWrd=%EC%B1%84%EC%9A%A9",
       "firstSeen": "2026-10-20",
       "status": "open",
       "scrapedAt": "2026-10-22T05:04:30+09:00",
-      "isNew": false
+      "isNew": false,
+      "aliases": [
+        {
+          "source": "통합포털 도서관/사서(사람인)",
+          "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=55330845"
+        }
+      ]
     },
     {
       "id": "sel-portal-saramin::c21688235a",
@@ -77,7 +83,7 @@
       "region": "서울",
       "district": "강서구",
       "source": "강서구립도서관 통합(민간위탁)",
-      "title": "강서구립가양도서관 개관연장 사서 채용 공고(~11. 02.(월) 15:00까지)",
+      "title": "강서구립가양도서관 개관연장 사서 채용 공고",
       "jobType": "계약",
       "posted": "2026-10-21",
       "deadline": "2026-11-02",
@@ -93,7 +99,7 @@
       "region": "서울",
       "district": "성북구",
       "source": "성북문화재단",
-      "title": "(제26-31호)성북문화재단 기간직 채용 공고(기간직(보조금_개관시간연장), 다급상당, 사서)",
+      "title": "성북문화재단 기간직 채용 공고(기간직(보조금_개관시간연장), 다급상당, 사서)",
       "jobType": "계약",
       "posted": "2026-10-19",
       "deadline": "2026-11-04",
@@ -101,22 +107,6 @@
       "firstSeen": "2026-10-20",
       "status": "upcoming",
       "scrapedAt": "2026-10-22T05:02:41+09:00",
-      "isNew": false
-    },
-    {
-      "id": "sel-seongbuk-sbc::8f5ed8d75b",
-      "sid": "sel-seongbuk-sbc",
-      "region": "서울",
-      "district": "성북구",
-      "source": "성북문화재단",
-      "title": "(제26-30호)성북문화재단 기간직 채용 공고(기간직, 휴직대체, 나급, 사서)",
-      "jobType": "계약",
-      "posted": "2026-10-19",
-      "deadline": "2026-11-04",
-      "url": "https://www.sbculture.or.kr/culture/bbs/BMSR00034/view.do?boardId=35751&menuNo=500348&searchCnd=1&searchWrd=%EC%B1%84%EC%9A%A9",
-      "firstSeen": "2026-10-20",
-      "status": "upcoming",
-      "scrapedAt": "2026-10-22T05:02:44+09:00",
       "isNew": false
     },
     {
@@ -253,7 +243,7 @@
       "region": "서울",
       "district": "전역·통합",
       "source": "국립중앙도서관",
-      "title": "2026년도 사서직 공무원 경력경쟁채용시험 면접시험 일정·장소 및 응시자 준수사항 공고 운영지원과 2026-10-08",
+      "title": "2026년도 사서직 공무원 경력경쟁채용시험 면접시험 일정·장소 및 응시자 준수사항 공고 운영지원과",
       "jobType": "정규",
       "posted": "2026-10-08",
       "deadline": null,

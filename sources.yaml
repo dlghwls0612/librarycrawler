@@ -165,9 +165,18 @@ sources:
 - {id: ggi-yp-lib,     region: 경기, district: 양평군,   name: 양평군립도서관(군 직영),            parser: egov,    engine: httpx,      url: "https://www.yp21.go.kr/www/selectBbsNttList.do?bbsNo=5&key=1119"}
 - {id: ggi-gp-lib,     region: 경기, district: 가평군,   name: 가평군립도서관(군 직영),            parser: egov,    engine: httpx,      url: "https://www.gp.go.kr/portal/selectGosiList.do?key=2392&not_ancmt_se_code=05"}
 - {id: ggi-ycheon-lib, region: 경기, district: 연천군,   name: 연천군립도서관(군 직영),            parser: egov,    engine: httpx,      url: "https://www.yeoncheon.go.kr/www/selectGosiList.do?key=4896&not_ancmt_se_code=05"}
+- {id: ggi-gimpo-lib,   region: 경기, district: 김포시,   name: 김포시립도서관(장기도서관 등),        parser: egov,    engine: httpx,      url: "https://www.gimpo.go.kr/janggi/selectBbsNttList.do?bbsNo=32&key=2801"}
+- {id: ggi-gimpo-city,  region: 경기, district: 김포시,   name: 김포시청 채용공고,                  parser: egov,    engine: httpx,      url: "https://www.gimpo.go.kr/portal/selectBbsNttList.do?bbsNo=288&key=1007"}
+- {id: ggi-gimpo-gcf,   region: 경기, district: 김포시,   name: 김포문화재단 직원채용,              parser: egov,    engine: httpx,      url: "https://www.gcf.or.kr/main/pst/list.do?pst_id=recruit"}
+- {id: ggi-gjcity-lib,  region: 경기, district: 광주시,   name: 광주시립도서관(중앙도서관 등),        parser: egov,    engine: httpx,      url: "https://lib.gjcity.go.kr/lay1/bbs/S1T82C3521/H/1/list.do"}
+- {id: ggi-gjcity-city, region: 경기, district: 광주시,   name: 광주시청 채용시험정보,              parser: egov,    engine: httpx,      url: "https://www.gjcity.go.kr/portal/contents.do?mId=0202050000"}
+- {id: ggi-gjcity-nsart,region: 경기, district: 광주시,   name: 광주시문화재단(남한산성아트홀),      parser: custom,  engine: httpx,      url: "https://www.nsart.or.kr/board/recruit.do"}
+- {id: ggi-yeoju-lib,   region: 경기, district: 여주시,   name: 여주시립도서관(여주도서관 등),        parser: egov,    engine: httpx,      url: "https://www.yjlib.go.kr/web/menu/10085/bbs/20001/bbsPostList.do"}
+- {id: ggi-yeoju-city,  region: 경기, district: 여주시,   name: 여주시청 시험정보,                  parser: egov,    engine: httpx,      url: "https://www.yeoju.go.kr/www/selectBbsNttList.do?bbsNo=46&key=411"}
 
 # ---------- 사서교사 (서울·경기 통합) ----------
 - {id: tea-seoul-gijegye, region: 사서교사, district: 서울, name: 기간제 사서교사(서울교육일자리포털), parser: custom, engine: playwright, url: "https://work.sen.go.kr/work/search/recInfo/BD_selectSrchRecInfo.do"}
 - {id: tea-seoul-imyong,  region: 사서교사, district: 서울, name: 정교사 임용(서울시교육청),          parser: egov,    engine: playwright, url: "https://www.sen.go.kr/user/bbs/BD_selectBbsList.do?q_bbsSn=1094"}
 - {id: tea-ggi-gijegye,   region: 사서교사, district: 경기, name: 기간제 사서교사(경기도교육청 구인구직), parser: egov, engine: playwright, url: "https://www.goe.go.kr/recruit/ad/func/pb/hnfpPbancList.do?mi=10502"}
 - {id: tea-ggi-imyong,    region: 사서교사, district: 경기, name: 정교사 임용(경기도교육청),          parser: egov,    engine: playwright, url: "https://www.goe.go.kr/goe/na/ntt/selectNttList.do?mi=11038&bbsId=2583"}
+- {id: tea-seoul-gongmujik, region: 사서교사, district: 서울, name: 교육공무직 사서실무사(서울시교육청), parser: sen, engine: httpx, url: "https://www.sen.go.kr/user/bbs/BD_selectBbsList.do?q_bbsSn=1092&q_searchKeyTy=ttl___1002&q_searchVal=%EC%82%AC%EC%84%9C", note: "서울 각급 학교 교육공무직(사서실무사) 공개경쟁채용 및 수시채용 — 사서 키워드 사전필터"}
