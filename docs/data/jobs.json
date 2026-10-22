@@ -1,8 +1,8 @@
 {
   "meta": {
     "project": "서울·경기 도서관 채용 크롤러",
-    "collected_at": "2026-10-22 05:21",
-    "job_count": 17,
+    "collected_at": "2026-10-23 05:22",
+    "job_count": 19,
     "failures": [],
     "unreadable": []
   },
@@ -20,7 +20,7 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=55151877",
       "firstSeen": "2026-09-30",
       "status": "open",
-      "scrapedAt": "2026-10-22T05:04:30+09:00",
+      "scrapedAt": "2026-10-23T05:04:35+09:00",
       "isNew": false
     },
     {
@@ -34,16 +34,16 @@
       "posted": "2026-10-19",
       "deadline": "2026-11-04",
       "url": "https://www.sbculture.or.kr/culture/bbs/BMSR00034/view.do?boardId=35751&menuNo=500348&searchCnd=1&searchWrd=%EC%B1%84%EC%9A%A9",
-      "firstSeen": "2026-10-20",
+      "firstSeen": "2026-10-23",
       "status": "open",
-      "scrapedAt": "2026-10-22T05:04:30+09:00",
-      "isNew": false,
+      "scrapedAt": "2026-10-23T05:04:35+09:00",
       "aliases": [
         {
           "source": "통합포털 도서관/사서(사람인)",
           "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=55330845"
         }
-      ]
+      ],
+      "isNew": false
     },
     {
       "id": "sel-portal-saramin::c21688235a",
@@ -58,7 +58,7 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=55324019",
       "firstSeen": "2026-10-20",
       "status": "open",
-      "scrapedAt": "2026-10-22T05:04:30+09:00",
+      "scrapedAt": "2026-10-23T05:04:35+09:00",
       "isNew": false
     },
     {
@@ -74,8 +74,40 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=55264863",
       "firstSeen": "2026-10-13",
       "status": "open",
-      "scrapedAt": "2026-10-22T05:04:30+09:00",
+      "scrapedAt": "2026-10-23T05:04:35+09:00",
       "isNew": false
+    },
+    {
+      "id": "sel-gangbuk-gbcmc::08976d5028",
+      "sid": "sel-gangbuk-gbcmc",
+      "region": "서울",
+      "district": "강북구",
+      "source": "강북구도시관리공단",
+      "title": "강북구립도서관 자료실 주말 보조인력 채용 공고",
+      "jobType": "알바",
+      "posted": "2026-10-22",
+      "deadline": null,
+      "url": "https://www.gbcmc.or.kr/fmcs/138?action=read&action-value=8945df2fdeeec1db1fd1f24e0c968995",
+      "firstSeen": "2026-10-23",
+      "status": "open",
+      "scrapedAt": "2026-10-23T05:01:00+09:00",
+      "isNew": true
+    },
+    {
+      "id": "sel-eunpyeong-eplib::dbd5fb1744",
+      "sid": "sel-eunpyeong-eplib",
+      "region": "서울",
+      "district": "은평구",
+      "source": "은평구공공도서관(직영)",
+      "title": "구립응암도서관 기간제근로자(육아휴직대체) 공개채용 공고",
+      "jobType": "계약",
+      "posted": "2026-10-22",
+      "deadline": null,
+      "url": "https://www.eplib.or.kr/intro/menu/10041/bbs/20002/bbsPostDetail.do?bbsPostIdx=233013&manageCd=ALL",
+      "firstSeen": "2026-10-23",
+      "status": "open",
+      "scrapedAt": "2026-10-23T05:03:33+09:00",
+      "isNew": true
     },
     {
       "id": "sel-gangseo-lib::3cce2c0fa6",
@@ -90,8 +122,8 @@
       "url": "https://lib.gangseo.seoul.kr/NoticeInfoDetail/34310/TOL",
       "firstSeen": "2026-10-22",
       "status": "open",
-      "scrapedAt": "2026-10-22T05:01:03+09:00",
-      "isNew": true
+      "scrapedAt": "2026-10-23T05:01:13+09:00",
+      "isNew": false
     },
     {
       "id": "sel-seongbuk-sbc::d73a30335a",
@@ -106,7 +138,7 @@
       "url": "https://www.sbculture.or.kr/culture/bbs/BMSR00034/view.do?boardId=35752&menuNo=500348&searchCnd=1&searchWrd=%EC%B1%84%EC%9A%A9",
       "firstSeen": "2026-10-20",
       "status": "upcoming",
-      "scrapedAt": "2026-10-22T05:02:41+09:00",
+      "scrapedAt": "2026-10-23T05:02:49+09:00",
       "isNew": false
     },
     {
@@ -122,7 +154,7 @@
       "url": "https://www.snlib.go.kr/intro/menu/10048/bbs/20001/bbsPostDetail.do?postIdx=210715&manageCd=ALL",
       "firstSeen": "2026-10-20",
       "status": "open",
-      "scrapedAt": "2026-10-22T05:12:39+09:00",
+      "scrapedAt": "2026-10-23T05:12:12+09:00",
       "isNew": false
     },
     {
@@ -138,7 +170,7 @@
       "url": "https://recruit.incruit.com/nowonarts/job/2610140030",
       "firstSeen": "2026-10-16",
       "status": "open",
-      "scrapedAt": "2026-10-22T05:01:56+09:00",
+      "scrapedAt": "2026-10-23T05:02:03+09:00",
       "isNew": false
     },
     {
@@ -154,7 +186,7 @@
       "url": "https://recruit.incruit.com/nowonarts/job/2610140028",
       "firstSeen": "2026-10-16",
       "status": "open",
-      "scrapedAt": "2026-10-22T05:01:56+09:00",
+      "scrapedAt": "2026-10-23T05:02:03+09:00",
       "isNew": false
     },
     {
@@ -170,7 +202,7 @@
       "url": "https://recruit.incruit.com/nowonarts/job/2610140026",
       "firstSeen": "2026-10-16",
       "status": "open",
-      "scrapedAt": "2026-10-22T05:01:56+09:00",
+      "scrapedAt": "2026-10-23T05:02:03+09:00",
       "isNew": false
     },
     {
@@ -186,7 +218,7 @@
       "url": "https://www.eplib.or.kr/intro/menu/10041/bbs/20002/bbsPostDetail.do?bbsPostIdx=231536&manageCd=ALL",
       "firstSeen": "2026-10-14",
       "status": "open",
-      "scrapedAt": "2026-10-22T05:03:29+09:00",
+      "scrapedAt": "2026-10-23T05:03:38+09:00",
       "isNew": false
     },
     {
@@ -202,7 +234,7 @@
       "url": "https://www.caci.or.kr/community/notice/144917?q=M2FiYzY0MGNjOWQxNGM4NDlkY2MyNDZmZDFhM2UxOWE=",
       "firstSeen": "2026-10-13",
       "status": "open",
-      "scrapedAt": "2026-10-22T05:04:07+09:00",
+      "scrapedAt": "2026-10-23T05:04:12+09:00",
       "isNew": false
     },
     {
@@ -218,7 +250,7 @@
       "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10gp0rb0r962b7a&view=read&field=sub|con&wd=85&bvLib=85",
       "firstSeen": "2026-10-13",
       "status": "open",
-      "scrapedAt": "2026-10-22T05:15:25+09:00",
+      "scrapedAt": "2026-10-23T05:14:52+09:00",
       "isNew": false
     },
     {
@@ -231,10 +263,10 @@
       "jobType": "계약",
       "posted": "2026-10-12",
       "deadline": null,
-      "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=1&bb_code=10gq02b0r88cc75&view=read&field=sub|con&wd=85&bvLib=85",
+      "url": "https://gmlib.gm.go.kr/front/index.php?g_page=open&m_page=open01&page=2&bb_code=10gq02b0r88cc75&view=read&field=sub|con&what=채용&wd=85&bvLib=85",
       "firstSeen": "2026-10-13",
       "status": "open",
-      "scrapedAt": "2026-10-22T05:15:30+09:00",
+      "scrapedAt": "2026-10-23T05:14:56+09:00",
       "isNew": false
     },
     {
@@ -250,7 +282,7 @@
       "url": "https://www.nl.go.kr/NL/contents/N50602000000.do?schM=view&id=59408",
       "firstSeen": "2026-10-09",
       "status": "open",
-      "scrapedAt": "2026-10-22T05:04:44+09:00",
+      "scrapedAt": "2026-10-23T05:04:52+09:00",
       "isNew": false
     },
     {
@@ -266,7 +298,7 @@
       "url": "https://gdlib.sen.go.kr/gdlib/board/view.do?menu_idx=25&board_idx=1709292&manage_idx=52",
       "firstSeen": "2026-09-05",
       "status": "upcoming",
-      "scrapedAt": "2026-10-22T05:06:15+09:00",
+      "scrapedAt": "2026-10-23T05:06:29+09:00",
       "isNew": false
     },
     {
@@ -282,8 +314,8 @@
       "url": "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=list&rec_idx=55350246",
       "firstSeen": "2026-10-22",
       "status": "open",
-      "scrapedAt": "2026-10-22T05:04:30+09:00",
-      "isNew": true
+      "scrapedAt": "2026-10-23T05:04:35+09:00",
+      "isNew": false
     }
   ]
 }
