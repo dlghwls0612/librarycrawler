@@ -1,0 +1,181 @@
+meta:
+  project: 서울·경기 기록관리 채용 레이더 (Records Job Radar)
+  description: 서울·경기 공공기관, 지자체(기록연구사), 대학, 연구원, 민간 아카이브 채용공고 자동 수집
+  target_regions:
+    - 서울
+    - 경기
+  updated_at: null
+
+settings:
+  # 직무 유효 키워드 (제목 또는 본문에 하나 이상 포함되어야 함)
+  keywords_include:
+    - 기록연구사
+    - 기록연구
+    - 기록물관리전문요원
+    - 기록물관리
+    - 기록관리
+    - 아키비스트
+    - 아카비스트
+    - 아카이브
+    - 기록관
+    - 민간기록
+    - 특수기록
+
+  # 오탐 제외 키워드 (해당 단어가 포함되면 기록관리 직무가 아니므로 제외)
+  keywords_exclude:
+    - 의무기록사
+    - 보건의료정보관리사
+    - 생활기록부
+    - 기록경기
+    - 단순입력
+    - 단순 입력
+    - 녹취
+    - 속기록
+    - 베이커리
+    - 제과
+    - 제빵
+    - 바리스타
+    - 식음료
+    - 카페
+    - 조리
+
+  # 지역 판별 키워드 (전국 공고 중 서울/경기만 선별)
+  regions_include:
+    서울:
+      - 서울
+      - 강남
+      - 강동
+      - 강북
+      - 강서
+      - 관악
+      - 광진
+      - 구로
+      - 금천
+      - 노원
+      - 도봉
+      - 동대문
+      - 동작
+      - 마포
+      - 서대문
+      - 서초
+      - 성동
+      - 성북
+      - 송파
+      - 양천
+      - 영등포
+      - 용산
+      - 은평
+      - 종로
+      - 중구
+      - 중랑
+    경기:
+      - 경기
+      - 수원
+      - 성남
+      - 고양
+      - 용인
+      - 부천
+      - 안산
+      - 안양
+      - 남양주
+      - 화성
+      - 평택
+      - 의정부
+      - 시흥
+      - 파주
+      - 광명
+      - 김포
+      - 군포
+      - 광주
+      - 이천
+      - 양주
+      - 오산
+      - 구리
+      - 안성
+      - 포천
+      - 의왕
+      - 하남
+      - 여주
+      - 양평
+      - 동두천
+      - 과천
+      - 가평
+      - 연천
+
+  # 채용 형태 분류 규칙
+  jobtype_rules:
+    정규:
+      - 정규직
+      - 공채
+      - 일반직
+      - 전임
+    임기제:
+      - 임기제
+      - 지방기록연구사
+      - 국가기록연구사
+      - 전문경력관
+      - 개방형
+    계약:
+      - 계약직
+      - 기간제
+      - 무기계약
+      - 공무직
+      - 대체인력
+      - 육아휴직대체
+    인턴:
+      - 인턴
+      - 청년인턴
+      - 체험형
+
+  # 자격 요건 태깅 규칙
+  credential_rules:
+    specialist_required: # 기록물관리전문요원 필수
+      - 기록물관리전문요원
+      - 전문요원
+      - 기록물관리 전문요원
+      - 기록관리학 석사
+
+  closure:
+    result_keywords:
+      - 서류전형 합격자
+      - 1차 합격자
+      - 최종 합격자
+      - 면접전형 결과
+      - 채용결과
+      - 전형결과
+      - 합격자 공고
+    safety_expire_days: 25
+
+sources:
+  - id: karma-notice
+    name: 사단법인 한국기록전문가협회(KARMA)
+    type: hub_board
+    category: 협회·전문커뮤니티
+    url: https://www.archivists.or.kr/category/NOTICE/%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0
+    engine: httpx
+    enabled: true
+
+  - id: alio-records
+    name: 잡알리오 공공기관 채용정보
+    type: public_api_or_search
+    category: 공공기관·공기업
+    url: https://job.alio.go.kr/recruit.do
+    keywords:
+      - 기록물
+      - 기록연구
+      - 아키비스트
+      - 기록관리
+    engine: httpx
+    enabled: true
+
+  - id: gojobs-records
+    name: 인사혁신처 나라일터
+    type: public_api_or_search
+    category: 지자체·국가기관(기록연구사)
+    url: https://www.gojobs.go.kr/apmList.do
+    keywords:
+      - 기록연구
+      - 기록관리
+      - 아키비스트
+    engine: playwright
+    enabled: true

@@ -5,6 +5,7 @@
 --crawl    : 실제 수집 → data/jobs.json
   옵션: --limit N (앞 N개 소스만) · --only <문자열> (id/region/district/이름 부분일치)
         --no-details (상세페이지 진입 생략=마감일 미추출, 빠름)
+        --only 기록관리 = 기록관리 탭(crawler/records, 옛 archivescrawler)만 수집
         ※ --limit/--only 부분수집은 jobs.partial.json 에만 쓴다(사이트용 jobs.json 보호).
           정말 덮어쓰려면 --write 를 함께.
 """
@@ -33,6 +34,7 @@ from . import fetch as fetchmod
 from . import parsers
 from . import classify
 from . import dedup
+from . import records
 
 ROOT = Path(__file__).resolve().parent.parent
 SOURCES = ROOT / "sources.yaml"
@@ -147,7 +149,11 @@ def _expand_url(url):
 def crawl(cfg, limit=None, only=None, details=True, out=OUT):
     settings = cfg["settings"]
     sources = cfg["sources"]
-    if only:
+    # 기록관리 탭은 전체 수집 때, 또는 --only 기록관리 로 그것만 돌릴 때 수집한다
+    do_records = not limit and (not only or only == records.REGION)
+    if only == records.REGION:
+        sources = []
+    elif only:
         sources = [s for s in sources if only in s["id"] or only in s["region"]
                    or only in s["district"] or only in s["name"]]
     if limit:
@@ -169,7 +175,11 @@ def crawl(cfg, limit=None, only=None, details=True, out=OUT):
     # 비교는 모두 '정규 URL'(목록·검색 문맥 파라미터 제거) 기준 —
     # 게시판이 링크에 붙이는 문맥값이 바뀌어도 같은 공고로 인식된다(광명 bvLib 사례).
     prev_by_sid = {}
-    prev_urls = {parsers.canon_url(j.get("url") or "") for j in prev_jobs}
+    # isNew 비교는 탭 묶음별로 — 도서관 탭에 있던 사람인 공고가 기록관리 탭에 처음 들어오면 NEW 여야 한다
+    prev_urls = {parsers.canon_url(j.get("url") or "") for j in prev_jobs
+                 if j.get("region") != records.REGION}
+    prev_rec_urls = {parsers.canon_url(j.get("url") or "") for j in prev_jobs
+                     if j.get("region") == records.REGION}
     for j in prev_jobs:
         prev_by_sid.setdefault(j.get("sid"), []).append(j)
     # 게시일을 못 얻은 공고의 안전만료 기준일 = '처음 수집한 날'.
@@ -366,6 +376,33 @@ def crawl(cfg, limit=None, only=None, details=True, out=OUT):
                             "prev": prev_live, "cands": len(cands)})
         time.sleep(delay)
 
+    # ── 기록관리 탭(옛 archivescrawler). 세 곳 모두 httpx 라 1분 안팎 —
+    # 도서관 쪽이 시간상한에 걸렸더라도 돌린다(기록관리 공고가 그날 통째로 비지 않게)
+    rec_count = None
+    if do_records:
+        print("\n=== 기록관리 수집 ===")
+        for sid, name, got in records.collect(records.load_settings()):
+            if got is None:
+                health.append((sid, "FETCH_FAIL", "수집 중 예외"))
+                failures.append({"id": sid, "name": name, "reason": "fetch"})
+                continue
+            kept = 0
+            for j in got:
+                canon = parsers.canon_url(j["url"])
+                first_seen = prev_first.get(canon) or today_str
+                if j["deadline"] is None and classify.is_safety_expired(j["posted"] or first_seen, settings):
+                    continue
+                j.update(id=_mk_id(sid, canon), firstSeen=first_seen,
+                         scrapedAt=_now().isoformat(timespec="seconds"))
+                jobs.append(j)
+                kept += 1
+            health.append((sid, "OK" if kept else "ZERO", f"kept={kept}"))
+            print(f"  {'✓' if kept else '·'} [기록관리] {name}: {kept}건")
+            # 어제는 있었는데 오늘 0건 = 접속 실패(수집기가 오류를 삼키고 빈 목록을 돌려줌)로 본다.
+            # 옛 archivescrawler 는 이때 공고가 그대로 증발했다(사람인 실패일 = 대부분 소실).
+            if kept == 0 and any(_live(p) for p in prev_by_sid.get(sid, [])):
+                failures.append({"id": sid, "name": name, "reason": "empty"})
+
     # 수집 실패/구조변경 의심 소스: 직전 수집분(아직 유효한 것)을 임시로 그대로 재사용
     failed_ids = {f["id"] for f in failures}
     reused = 0
@@ -382,14 +419,20 @@ def crawl(cfg, limit=None, only=None, details=True, out=OUT):
             j["title"] = parsers.clean_display_title(j.get("title", ""))
             jobs.append(j); reused += 1
 
-    # 지능형 3단계 중복 필터링 및 마스터-미러(aliases) 병합 수행
-    uniq = dedup.deduplicate_jobs(jobs)
+    # 지능형 3단계 중복 필터링 및 마스터-미러(aliases) 병합 수행.
+    # 기록관리 공고는 따로 — 섞으면 같은 사람인 공고가 도서관 탭 쪽에 흡수돼 기록관리 탭에서 빠진다
+    rec_jobs = [j for j in jobs if j.get("region") == records.REGION]
+    uniq = (dedup.deduplicate_jobs([j for j in jobs if j.get("region") != records.REGION])
+            + records.deduplicate(rec_jobs))
+    if do_records:
+        rec_count = sum(1 for j in uniq if j.get("region") == records.REGION)
 
     fetchmod.close()
 
     # 직전 수집분과 비교해 '당일 신규'(isNew) 표시 — 어제 없던 URL만(재사용분은 자동 False)
     for j in uniq:
-        j["isNew"] = bool(prev_urls) and (parsers.canon_url(j["url"]) not in prev_urls)
+        base = prev_rec_urls if j.get("region") == records.REGION else prev_urls
+        j["isNew"] = bool(base) and (parsers.canon_url(j["url"]) not in base)
 
     fail_names = sorted({f["name"] for f in failures})
     if fail_names:
@@ -411,11 +454,11 @@ def crawl(cfg, limit=None, only=None, details=True, out=OUT):
               + (f" · 상세 진입 상한({DETAIL_CAP}) 도달 소스 {len(capped)}곳" if capped else ""))
         for c in capped:
             print(f"  · {c['name']} (후보 {c['cands']}건)")
-    write(cfg, uniq, fail_names, out=out, unreadable=unreadable)
+    write(cfg, uniq, fail_names, out=out, unreadable=unreadable, rec_count=rec_count)
     _report(health, len(uniq), results)
 
 
-def write(cfg, jobs, failures=None, out=OUT, unreadable=None):
+def write(cfg, jobs, failures=None, out=OUT, unreadable=None, rec_count=None):
     out.parent.mkdir(parents=True, exist_ok=True)
     payload = {
         "meta": {
@@ -428,6 +471,9 @@ def write(cfg, jobs, failures=None, out=OUT, unreadable=None):
         },
         "jobs": jobs,
     }
+    # 이 표시가 있어야 사이트가 기록관리 탭을 이 파일에서 읽는다(없으면 옛 archivescrawler 주소로)
+    if rec_count is not None:
+        payload["meta"]["records"] = {"job_count": rec_count}
     with open(out, "w", encoding="utf-8") as f:
         json.dump(payload, f, ensure_ascii=False, indent=2)
     print(f"\n{out.name} 작성: {out} (공고 {len(jobs)}건)")

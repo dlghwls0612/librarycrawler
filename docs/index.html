@@ -141,7 +141,7 @@
   <footer><div class="container">
     <h4>안내</h4>
     매일 새벽 크롤러가 서울·경기 도서관 채용게시판을 돌며 <b>현재 접수 중인 공고만</b> 모아 이 목록을 자동 갱신합니다. 공고를 누르면 원문으로 바로 이동해요.
-    <b>기록관리</b> 탭은 별도 수집기(기록관리 채용 레이더: 한국기록전문가협회·잡알리오·사람인)의 결과를 함께 보여줍니다.
+    <b>기록관리</b> 탭은 한국기록전문가협회·잡알리오·사람인에서 기록연구사·기록물관리전문요원·아키비스트 공고를 함께 모아 보여줍니다.
     <p class="disc" id="disc"></p>
   </div></footer>
 </div>
@@ -260,7 +260,7 @@ function renderCounts(){
   var o=open().filter(function(j){return j.region!=="기록관리";});
   var na=open().length-o.length;
   document.getElementById("counts").innerHTML="현재 열린 공고 <b>"+o.length+"</b>건 · 오늘 새로 <b style='color:var(--new)'>"+o.filter(isNew).length+"</b>건 <span style='color:var(--faint)'>· "+(META.collected_at||"")+" 수집</span>"+
-    (ARCH.length?" · 기록관리 <b>"+na+"</b>건 <span style='color:var(--faint)'>· "+esc(ARCH_META.collected_at||"")+" 수집</span>":"");
+    (na?" · 기록관리 <b>"+na+"</b>건"+(ARCH_META===META?"":" <span style='color:var(--faint)'>· "+esc(ARCH_META.collected_at||"")+" 수집</span>"):"");
   var fn=document.getElementById("failnote"),fa=(META.failures||[]);
   if(fa.length){fn.hidden=false;fn.innerHTML="⚠ 수집 실패(이전 목록 임시 표시): "+fa.map(esc).join(", ");}
   else fn.hidden=true;
@@ -274,10 +274,16 @@ document.querySelectorAll("#regionSeg button").forEach(function(btn){
 qIn.addEventListener("input",function(){state.q=qIn.value.trim();render();});
 sortSel.addEventListener("change",function(){state.sort=sortSel.value;render();});
 
-// 기록관리 탭: 별도 저장소(archivescrawler)가 매일 만드는 jobs.json 을 그대로 읽어 이 화면의 형식으로 바꾼다
+// 기록관리 탭: 이제 이 사이트의 수집기가 함께 모아 data/jobs.json 에 region:"기록관리" 로 넣는다.
+// 그 결과가 아직 없는 파일(meta.records 없음 = 통합 수집기가 돌기 전)이면 옛 별도 저장소(archivescrawler)에서 받는다.
 var ARCHIVES_URL = "https://dlghwls0612.github.io/archivescrawler/data/jobs.json";
 var LIB = [], ARCH = [], ARCH_META = {}, ARCH_FAIL = false, ARCH_LOADED = false;
 function refresh(){JOBS=LIB.concat(ARCH);renderCounts();regionDots();renderChips();render();}
+function fetchArchives(){
+  fetch(ARCHIVES_URL,{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.json();})
+    .then(function(d){ARCH=(d.jobs||[]).map(fromArchives);ARCH_META=d.meta||{};ARCH_LOADED=true;refresh();})
+    .catch(function(){ARCH_FAIL=true;render();});
+}
 function fromArchives(a){
   return {region:"기록관리", district:a.region||"지역 미상", source:a.organization||a.source, via:a.source,
     title:a.title, jobType:a.jobtype||"계약", posted:a.start_date||null, deadline:a.deadline||null,
@@ -290,12 +296,11 @@ function boot(data){
     }
     return j;
   });
-  META=data.meta||{};refresh();
+  META=data.meta||{};
+  if(META.records){ARCH_META=META;ARCH_LOADED=true;}else fetchArchives();
+  refresh();
 }
 fetch("data/jobs.json",{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.json();}).then(boot).catch(function(){boot(EMBEDDED);});
-fetch(ARCHIVES_URL,{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.json();})
-  .then(function(d){ARCH=(d.jobs||[]).map(fromArchives);ARCH_META=d.meta||{};ARCH_LOADED=true;refresh();})
-  .catch(function(){ARCH_FAIL=true;render();});
 </script>
 </body>
 </html>
