@@ -1,5 +1,5 @@
 """
-서울·경기 도서관 채용 크롤러 — 진입점
+lis-jobs (서울·경기 사서·기록관리 채용 수집기) — 진입점
 
 --validate : sources.yaml 검증 + 요약 (+ jobs.json 뼈대)
 --crawl    : 실제 수집 → data/jobs.json
@@ -505,7 +505,7 @@ def write_skeleton(cfg):
 
 
 def main():
-    ap = argparse.ArgumentParser(description="도서관 채용 크롤러")
+    ap = argparse.ArgumentParser(description="lis-jobs 사서·기록관리 채용 수집기")
     ap.add_argument("--validate", action="store_true")
     ap.add_argument("--crawl", action="store_true")
     ap.add_argument("--limit", type=int)

@@ -16,8 +16,8 @@
 > Private로 하면 자동수집 시간이 제한되고 Pages가 유료라 꼭 Public.
 
 ## 2) 파일 올리기
-`library-crawler` 폴더 안의 **모든 파일/폴더**를 올립니다.
-- 방법 A (쉬움): 레포 첫 화면 → **uploading an existing file** → `library-crawler` 안의 내용물을 통째로 드래그 → **Commit changes**
+`lis-jobs` 폴더 안의 **모든 파일/폴더**를 올립니다.
+- 방법 A (쉬움): 레포 첫 화면 → **uploading an existing file** → `lis-jobs` 안의 내용물을 통째로 드래그 → **Commit changes**
   - 폴더 구조가 유지되도록 **폴더째** 끌어다 놓으세요. 특히 숨은 폴더 `.github/workflows/crawl.yml` 가 꼭 포함돼야 합니다.
 - 방법 B (git 익숙하면): `git init && git add . && git commit -m init && git remote add origin ... && git push`
 

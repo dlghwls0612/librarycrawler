@@ -1,21 +1,26 @@
-# 서울·경기 도서관 채용 크롤러
+# lis-jobs — 서울·경기 사서·기록관리 채용 수집기
 
-서울·경기 공공/구립/전문/교육청 공공도서관과 사서교사 채용공고를 매일 자동 수집해
-하나의 `jobs.json`으로 합치고, 정적 웹사이트에서 지역별로 보여준다.
+LIS = Library and Information Science(문헌정보학). 도서관에만 묶이지 않도록 붙인 이름.
+
+서울·경기 공공/구립/전문/교육청 공공도서관과 사서교사 채용공고, 그리고 기록관리(기록연구사·
+기록물관리전문요원·아키비스트) 채용공고를 매일 자동 수집해 하나의 `jobs.json`으로 합치고,
+정적 웹사이트에서 탭별로 보여준다.
 
 ## 구조
 ```
-library-crawler/
-├─ sources.yaml          # 수집 대상 채널 설정 (파서=코드가 아니라 데이터)
+lis-jobs/
+├─ sources.yaml          # 도서관 수집 대상 채널 설정 (파서=코드가 아니라 데이터)
+├─ records.yaml          # 기록관리 수집 설정 (옛 archivescrawler/sources.yaml)
 ├─ requirements.txt
 ├─ SETUP.md              # GitHub 셋업 가이드(비개발자용)
 ├─ crawler/
 │  ├─ main.py            # 진입점: sources.yaml 로드 → 수집 → docs/data/jobs.json
 │  ├─ fetch.py           # httpx / playwright 봇우회 fetch
 │  ├─ parsers.py         # 범용 목록·상세 파서(키워드+날짜 휴리스틱)
-│  └─ classify.py        # 키워드 필터 · 고용형태 태깅 · 마감판정
+│  ├─ classify.py        # 키워드 필터 · 고용형태 태깅 · 마감판정
+│  └─ records/           # 기록관리 탭 수집(협회·잡알리오·사람인, 옛 archivescrawler 코드)
 ├─ docs/                 # ← GitHub Pages(/docs)가 서빙하는 폴더
-│  ├─ index.html         # 최종 사이트(서울/경기/사서교사 3탭)
+│  ├─ index.html         # 최종 사이트(서울/경기/사서교사/기록관리 4탭)
 │  └─ data/jobs.json     # 수집 결과 (사이트가 읽음, Actions가 매일 갱신)
 ├─ site/index.html       # ⚠ 구버전 사본(수집실패 배너·접수예정 배지 없음). 원본은 docs/index.html
 │                        #    사이트 수정은 docs/index.html 에서만 — 여기서 복사하면 기능이 되돌아감
