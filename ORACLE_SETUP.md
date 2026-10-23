@@ -15,7 +15,7 @@
 
 ## 2. 우분투 VM(무료서버) 만들기
 1. 콘솔 좌상단 ☰ → **Compute → Instances → Create instance**
-2. Name: `librarycrawler`
+2. Name: `lis-jobs`
 3. **Image and shape → Edit**:
    - Image: **Canonical Ubuntu 22.04**
    - Shape: **Ampere (VM.Standard.A1.Flex)** → OCPU **1**, Memory **6 GB** (무료범위)
@@ -43,8 +43,8 @@ curl -sk --max-time 15 "https://www.sbculture.or.kr/culture/bbs/BMSR00034/list.d
 ## 5. 크롤러 설치
 ```bash
 sudo apt-get update && sudo apt-get install -y python3-pip python3-venv git
-git clone https://github.com/dlghwls0612/librarycrawler.git ~/librarycrawler
-cd ~/librarycrawler
+git clone https://github.com/dlghwls0612/lis-jobs.git ~/lis-jobs
+cd ~/lis-jobs
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 python -m playwright install --with-deps chromium
@@ -54,23 +54,23 @@ python -m playwright install --with-deps chromium
 ## 6. GitHub 푸시 인증 (토큰)
 서버가 결과를 GitHub에 올리려면 토큰이 필요해요.
 1. GitHub → 우상단 프로필 → **Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token**
-2. Repository access: **Only select repositories → librarycrawler**
+2. Repository access: **Only select repositories → lis-jobs**
 3. Permissions → **Contents: Read and write**
 4. Generate → **토큰 문자열 복사**(한 번만 보임!)
 5. 서버에서(토큰을 붙여넣어 실행):
 ```bash
-cd ~/librarycrawler
-git remote set-url origin https://<토큰>@github.com/dlghwls0612/librarycrawler.git
+cd ~/lis-jobs
+git remote set-url origin https://<토큰>@github.com/dlghwls0612/lis-jobs.git
 git config user.name "oracle-bot"
 git config user.email "oracle-bot@users.noreply.github.com"
 ```
 
 ## 7. 실행 스크립트 만들고 첫 테스트
 ```bash
-cat > ~/librarycrawler/run_and_push.sh <<'EOF'
+cat > ~/lis-jobs/run_and_push.sh <<'EOF'
 #!/usr/bin/env bash
 set -e
-cd ~/librarycrawler
+cd ~/lis-jobs
 source .venv/bin/activate
 git pull --rebase --autostash || true
 python -m crawler.main --crawl
@@ -78,15 +78,15 @@ git add docs/data/jobs.json
 git commit -m "auto: jobs.json 갱신 ($(date +%F))" || echo "변경 없음"
 git push
 EOF
-chmod +x ~/librarycrawler/run_and_push.sh
-bash ~/librarycrawler/run_and_push.sh
+chmod +x ~/lis-jobs/run_and_push.sh
+bash ~/lis-jobs/run_and_push.sh
 ```
 - 끝에 공고 수(예: "공고 35건")가 뜨고 push되면 성공! 사이트가 몇 분 뒤 갱신돼요.
 - 성북이 목록에 들어왔는지 사이트에서 확인.
 
 ## 8. 매일 자동 실행 (cron)
 ```bash
-( crontab -l 2>/dev/null; echo "0 20 * * * /bin/bash ~/librarycrawler/run_and_push.sh >> ~/crawl.log 2>&1" ) | crontab -
+( crontab -l 2>/dev/null; echo "0 20 * * * /bin/bash ~/lis-jobs/run_and_push.sh >> ~/crawl.log 2>&1" ) | crontab -
 ```
 - 매일 **UTC 20:00 = 한국시간 새벽 5시** 자동 실행. 로그는 `~/crawl.log`.
 
@@ -103,5 +103,5 @@ bash ~/librarycrawler/run_and_push.sh
 
 ## 유지보수
 - 서버 로그 보기: `tail -n 50 ~/crawl.log`
-- 수동 즉시 실행: `bash ~/librarycrawler/run_and_push.sh`
-- 크롤러 코드 고치면(내가 업데이트) 서버에서: `cd ~/librarycrawler && git pull` (run_and_push가 매번 pull하므로 자동 반영됨)
+- 수동 즉시 실행: `bash ~/lis-jobs/run_and_push.sh`
+- 크롤러 코드 고치면(내가 업데이트) 서버에서: `cd ~/lis-jobs && git pull` (run_and_push가 매번 pull하므로 자동 반영됨)
