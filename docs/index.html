@@ -48,6 +48,8 @@
   .label{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);font-weight:700;min-width:44px}
   .seg{display:inline-flex;background:var(--surface-2);border:1px solid var(--border);border-radius:999px;padding:4px;gap:4px}
   .seg button{position:relative;border:0;background:transparent;color:var(--muted);font-family:inherit;font-size:1rem;font-weight:700;padding:8px 22px;border-radius:999px;cursor:pointer;transition:all .15s}
+  .seg button{white-space:nowrap}
+  @media (max-width:480px){.seg button{padding:8px 12px;font-size:.95rem}.seg .ndot{top:3px;right:3px;width:7px;height:7px}.label{min-width:0}}
   .seg button:hover{color:var(--ink)}
   .seg button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
   .seg .ndot{position:absolute;top:6px;right:10px;width:8px;height:8px;border-radius:50%;background:var(--new)}
@@ -79,6 +81,10 @@
   :root[data-theme="dark"] .jt.정규{color:#8FE0D1;background:#173029}
   :root[data-theme="dark"] .jt.계약{color:#E8C77E;background:#2A2210}
   :root[data-theme="dark"] .jt.알바{color:#DDA9E4;background:#291A2C}
+  .jt.임기제{color:#2F4F9E;background:#E2E9F8;border-color:#C5D2EE}
+  .jt.spec{color:var(--accent-ink);background:transparent;border-color:var(--accent)}
+  @media (prefers-color-scheme:dark){.jt.임기제{color:#A9BEF0;background:#1A2238;border-color:#2C3A5E}}
+  :root[data-theme="dark"] .jt.임기제{color:#A9BEF0;background:#1A2238}
   .job-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
   .dates{font-size:.8rem;color:var(--muted);font-variant-numeric:tabular-nums}
   .dates .dl{color:var(--new);font-weight:700}
@@ -115,9 +121,10 @@
           <button type="button" data-region="서울" aria-pressed="true">서울<span class="ndot" hidden></span></button>
           <button type="button" data-region="경기" aria-pressed="false">경기<span class="ndot" hidden></span></button>
           <button type="button" data-region="사서교사" aria-pressed="false">사서교사<span class="ndot" hidden></span></button>
+          <button type="button" data-region="기록관리" aria-pressed="false">기록관리<span class="ndot" hidden></span></button>
         </div>
       </div>
-      <div class="row" role="group" aria-label="시·구 선택"><span class="label">시·구</span><div class="chips" id="districtChips"></div></div>
+      <div class="row" role="group" aria-label="시·구 선택"><span class="label" id="subLabel">시·구</span><div class="chips" id="districtChips"></div></div>
       <div class="toolbar">
         <div class="search" role="search">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
@@ -134,6 +141,7 @@
   <footer><div class="container">
     <h4>안내</h4>
     매일 새벽 크롤러가 서울·경기 도서관 채용게시판을 돌며 <b>현재 접수 중인 공고만</b> 모아 이 목록을 자동 갱신합니다. 공고를 누르면 원문으로 바로 이동해요.
+    <b>기록관리</b> 탭은 별도 수집기(기록관리 채용 레이더: 한국기록전문가협회·잡알리오·사람인)의 결과를 함께 보여줍니다.
     <p class="disc" id="disc"></p>
   </div></footer>
 </div>
@@ -188,7 +196,7 @@ function isCancelled(j){
 function todayMs(){var d=new Date();return new Date(d.getFullYear(),d.getMonth(),d.getDate()).getTime();}
 function ms(s){if(!s)return null;var p=s.split("-");return new Date(+p[0],+p[1]-1,+p[2]).getTime();}
 function isNew(j){return j.isNew===true;}  // 직전 수집 대비 '당일 신규'만
-function isExpired(j){if(isCancelled(j))return true;var t=ms(j.deadline);if(t!==null)return t<todayMs();var p=ms(j.posted||j.firstSeen);if(p!==null)return (todayMs()-p)>SAFE_DAYS*864e5;return false;}
+function isExpired(j){if(j.expired||isCancelled(j))return true;var t=ms(j.deadline);if(t!==null)return t<todayMs();var p=ms(j.posted||j.firstSeen);if(p!==null)return (todayMs()-p)>SAFE_DAYS*864e5;return false;}
 function daysLeft(j){var t=ms(j.deadline);if(t===null)return null;return Math.round((t-todayMs())/864e5);}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
 function fmt(s){if(!s)return null;var p=s.split("-");return p[1]+"."+p[2];}
@@ -214,6 +222,7 @@ function regionDots(){document.querySelectorAll("#regionSeg button").forEach(fun
   var reg=b.getAttribute("data-region");var has=open().some(function(j){return j.region===reg&&isNew(j);});
   b.querySelector(".ndot").hidden=!has;});}
 function renderChips(){
+  document.getElementById("subLabel").textContent=state.region==="기록관리"?"지역":"시·구";
   chips.innerHTML="";
   ["전체"].concat(districts(state.region)).forEach(function(d){
     var b=document.createElement("button");b.className="chip";b.type="button";
@@ -229,7 +238,8 @@ function render(){
   items.sort(function(a,b){if(state.sort==="deadline"){var da=ms(a.deadline)||8e15,db=ms(b.deadline)||8e15;return da-db;}return (ms(b.posted)||0)-(ms(a.posted)||0);});
   grid.innerHTML="";
   empty.hidden=items.length>0;
-  if(!items.length)empty.textContent=state.region==="사서교사"?"현재 열린 사서교사 공고가 없어요. (전체 자동수집 가동 시 표시)":"조건에 맞는 공고가 없어요. 시·구를 바꿔보세요.";
+  if(!items.length)empty.textContent=state.region==="사서교사"?"현재 열린 사서교사 공고가 없어요. (전체 자동수집 가동 시 표시)":
+    state.region==="기록관리"?(ARCH_FAIL?"기록관리 공고를 불러오지 못했어요. 잠시 후 새로고침해 보세요.":(ARCH_LOADED?"현재 열린 기록관리 공고가 없어요.":"기록관리 공고를 불러오는 중이에요...")):"조건에 맞는 공고가 없어요. 시·구를 바꿔보세요.";
   resultLine.textContent=state.region+" · "+(state.district==="전체"?"전체":(state.district==="전역·통합"?"전역":state.district))+" · "+items.length+"건";
   items.forEach(function(j){
     var el=document.createElement("article");el.className="job";
@@ -240,15 +250,17 @@ function render(){
     var datePart=(j.posted?("게시 "+fmt(j.posted)+" · "):"")+"마감 "+(j.deadline?fmt(j.deadline):"공고문 확인")+(dlSpan?" "+dlSpan:"");
     el.innerHTML=
       '<div class="job-top"><h3>'+esc(cleanTitle(j.title))+'</h3>'+(isNew(j)?'<span class="badge-new">NEW</span>':'')+'</div>'+
-      '<div class="job-meta"><span class="src">'+esc(j.source)+'</span><span class="dot-sep">·</span><span class="dist">'+esc(j.district==="전역·통합"?(j.region+" 전역"):j.district)+'</span><span class="jt '+j.jobType+'">'+esc(JOBLABEL[j.jobType]||j.jobType)+'</span></div>'+
+      '<div class="job-meta"><span class="src">'+esc(j.source)+'</span><span class="dot-sep">·</span><span class="dist">'+esc(j.district==="전역·통합"?(j.region+" 전역"):j.district)+'</span><span class="jt '+j.jobType+'">'+esc(JOBLABEL[j.jobType]||j.jobType)+'</span>'+(j.spec?'<span class="jt spec">전문요원 필수</span>':'')+(j.via?'<span class="dot-sep">·</span><span>'+esc(j.via)+'</span>':'')+'</div>'+
       '<div class="job-foot"><span class="dates">'+datePart+'</span>'+
       '<a class="cta" href="'+esc(j.url)+'" target="_blank" rel="noopener">원문 보기<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17 17 7M9 7h8v8"/></svg></a></div>';
     grid.appendChild(el);
   });
 }
 function renderCounts(){
-  var o=open();
-  document.getElementById("counts").innerHTML="현재 열린 공고 <b>"+o.length+"</b>건 · 오늘 새로 <b style='color:var(--new)'>"+o.filter(isNew).length+"</b>건 <span style='color:var(--faint)'>· "+(META.collected_at||"")+" 수집</span>";
+  var o=open().filter(function(j){return j.region!=="기록관리";});
+  var na=open().length-o.length;
+  document.getElementById("counts").innerHTML="현재 열린 공고 <b>"+o.length+"</b>건 · 오늘 새로 <b style='color:var(--new)'>"+o.filter(isNew).length+"</b>건 <span style='color:var(--faint)'>· "+(META.collected_at||"")+" 수집</span>"+
+    (ARCH.length?" · 기록관리 <b>"+na+"</b>건 <span style='color:var(--faint)'>· "+esc(ARCH_META.collected_at||"")+" 수집</span>":"");
   var fn=document.getElementById("failnote"),fa=(META.failures||[]);
   if(fa.length){fn.hidden=false;fn.innerHTML="⚠ 수집 실패(이전 목록 임시 표시): "+fa.map(esc).join(", ");}
   else fn.hidden=true;
@@ -262,16 +274,28 @@ document.querySelectorAll("#regionSeg button").forEach(function(btn){
 qIn.addEventListener("input",function(){state.q=qIn.value.trim();render();});
 sortSel.addEventListener("change",function(){state.sort=sortSel.value;render();});
 
+// 기록관리 탭: 별도 저장소(archivescrawler)가 매일 만드는 jobs.json 을 그대로 읽어 이 화면의 형식으로 바꾼다
+var ARCHIVES_URL = "https://dlghwls0612.github.io/archivescrawler/data/jobs.json";
+var LIB = [], ARCH = [], ARCH_META = {}, ARCH_FAIL = false, ARCH_LOADED = false;
+function refresh(){JOBS=LIB.concat(ARCH);renderCounts();regionDots();renderChips();render();}
+function fromArchives(a){
+  return {region:"기록관리", district:a.region||"지역 미상", source:a.organization||a.source, via:a.source,
+    title:a.title, jobType:a.jobtype||"계약", posted:a.start_date||null, deadline:a.deadline||null,
+    status:a.status==="접수예정"?"upcoming":"", expired:a.status==="마감", spec:!!a.is_specialist, url:a.url};
+}
 function boot(data){
-  JOBS=(data.jobs||[]).map(function(j){
+  LIB=(data.jobs||[]).map(function(j){
     if((j.region==="경기"||j.region==="서울")&&(j.district===j.region||j.district==="전역")){
       j.district="전역·통합";
     }
     return j;
   });
-  META=data.meta||{};renderCounts();regionDots();renderChips();render();
+  META=data.meta||{};refresh();
 }
 fetch("data/jobs.json",{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.json();}).then(boot).catch(function(){boot(EMBEDDED);});
+fetch(ARCHIVES_URL,{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.json();})
+  .then(function(d){ARCH=(d.jobs||[]).map(fromArchives);ARCH_META=d.meta||{};ARCH_LOADED=true;refresh();})
+  .catch(function(){ARCH_FAIL=true;render();});
 </script>
 </body>
 </html>
