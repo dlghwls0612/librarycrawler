@@ -18,7 +18,7 @@ lis-jobs/
 │  ├─ fetch.py           # httpx / playwright 봇우회 fetch
 │  ├─ parsers.py         # 범용 목록·상세 파서(키워드+날짜 휴리스틱)
 │  ├─ classify.py        # 키워드 필터 · 고용형태 태깅 · 마감판정
-│  └─ records/           # 기록관리 탭 수집(협회·잡알리오·사람인, 옛 archivescrawler 코드)
+│  └─ records/           # 기록관리 탭 수집(협회·잡알리오·나라일터·사람인, 옛 archivescrawler 코드)
 ├─ docs/                 # ← GitHub Pages(/docs)가 서빙하는 폴더
 │  ├─ index.html         # 최종 사이트(서울/경기/사서교사/기록관리 4탭)
 │  └─ data/jobs.json     # 수집 결과 (사이트가 읽음, Actions가 매일 갱신)

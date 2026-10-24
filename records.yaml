@@ -173,9 +173,9 @@ sources:
     type: public_api_or_search
     category: 지자체·국가기관(기록연구사)
     url: https://www.gojobs.go.kr/apmList.do
-    keywords:
+    keywords:            # 실제 검색어는 crawler/records/gojobs.py 의 기본값
       - 기록연구
-      - 기록관리
+      - 기록물
       - 아키비스트
-    engine: playwright
+    engine: httpx        # 목록이 서버에서 그려져 httpx 로 충분(2026-10-24 실측)
     enabled: true

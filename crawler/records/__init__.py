@@ -11,7 +11,7 @@ from pathlib import Path
 
 import yaml
 
-from . import karma, alio, saramin
+from . import karma, alio, saramin, gojobs
 from . import classify as rclassify
 
 ROOT = Path(__file__).resolve().parent.parent.parent
@@ -22,10 +22,11 @@ REGION = "기록관리"   # 사이트 탭 이름이자 jobs.json 의 region 값
 STEPS = (
     ("records-karma", "기록관리·한국기록전문가협회", lambda st: karma.crawl_karma(st, max_pages=3)),
     ("records-alio", "기록관리·잡알리오", lambda st: alio.crawl_alio(st)),
+    ("records-gojobs", "기록관리·나라일터", lambda st: gojobs.crawl_gojobs(st)),
     ("records-saramin", "기록관리·사람인", lambda st: saramin.crawl_saramin(st)),
 )
-# 같은 공고가 여러 곳에 올라오면 남길 쪽: 협회 공식 > 공공기관 > 사람인 (archivescrawler 와 동일)
-_PRIORITY = {"한국기록전문가협회": 1, "잡알리오": 2, "사람인": 3}
+# 같은 공고가 여러 곳에 올라오면 남길 쪽: 협회 공식 > 공공기관·나라일터 > 사람인
+_PRIORITY = {"한국기록전문가협회": 1, "잡알리오": 2, "나라일터": 2, "사람인": 3}
 
 
 def load_settings():
