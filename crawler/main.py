@@ -273,6 +273,20 @@ def crawl(cfg, limit=None, only=None, details=True, out=OUT):
         kept = 0
         details_used = 0
         for c in cands:
+            # 목록이 말줄임(…)으로 자른 제목은 상세에서 전체 제목을 먼저 회수한다 —
+            # 결과공고 판정어('합격자')가 잘려 나가면 필터를 빠져나간다(광명 '서류전형 합…').
+            # 잘린 제목만으로 이미 결과공고면 열지 않는다(상세 진입 상한을 아낌)
+            dhtml = None
+            if parsers.is_truncated(c["title"]) and details and not is_saramin and not api \
+                    and details_used < DETAIL_CAP \
+                    and not classify.is_result_post(c["title"], settings):
+                try:
+                    dhtml = fetchmod.fetch(c["url"], s["engine"], settings)
+                    c["title"] = parsers.full_title_from_detail(dhtml, c["title"]) or c["title"]
+                except Exception:
+                    pass
+                details_used += 1
+                time.sleep(delay)
             title = c["title"]
             if classify.is_result_post(title, settings):
                 results += 1
@@ -296,17 +310,20 @@ def crawl(cfg, limit=None, only=None, details=True, out=OUT):
             open_start = None
             # API 소스의 상세 화면은 Vue 껍데기라 httpx로 열어도 본문이 없다 → 상세 진입 생략
             if deadline is None and details and not is_saramin and not api \
-                    and details_used < DETAIL_CAP:
+                    and (dhtml is not None or details_used < DETAIL_CAP):
+                fresh = dhtml is None   # 제목 회수 때 이미 열었으면 재사용
                 try:
-                    dhtml = fetchmod.fetch(c["url"], s["engine"], settings)
+                    if fresh:
+                        dhtml = fetchmod.fetch(c["url"], s["engine"], settings)
                     deadline = parsers.extract_deadline(dhtml)
                     open_start = parsers.extract_apply_start(dhtml)
                     if c["posted"] is None:   # 목록에서 게시일 못 얻었으면 상세에서 보조
                         c["posted"] = parsers.extract_posted(dhtml)
                 except Exception:
                     pass
-                details_used += 1
-                time.sleep(delay)
+                if fresh:
+                    details_used += 1
+                    time.sleep(delay)
 
             # 상세에서 마감일을 못 읽었으면 제목에 박힌 마감일('~8/28까지', '(~8.17)')로 보조 판정
             if deadline is None:

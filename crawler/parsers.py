@@ -89,6 +89,31 @@ def clean_display_title(title):
     return re.sub(r"\s+", " ", t).strip()
 
 
+TRUNC_RE = re.compile(r"\s*(?:…|\.{3,})\s*$")
+
+
+def is_truncated(title):
+    """게시판 목록이 제목을 말줄임(…)으로 자른 경우(광명시립도서관 등)."""
+    return bool(TRUNC_RE.search(title or ""))
+
+
+def full_title_from_detail(dhtml, title):
+    """잘린 목록 제목 → 상세 화면에서 전체 제목 회수. 잘린 앞부분(말머리 태그 제외)을 포함하는
+    가장 짧은 글 덩어리를 고른다(제목 칸 h2 등). 못 찾으면 None.
+    잘린 채로 두면 '서류전형 합…'처럼 결과공고 판정어까지 잘려 필터를 빠져나간다."""
+    core = TRUNC_RE.sub("", PREFIX_TAG_RE.sub("", title))
+    core = re.sub(r"^\s*\[[^\]]{1,15}\]\s*", "", core).strip()
+    if len(core) < 8:
+        return None
+    soup = BeautifulSoup(dhtml, "lxml")
+    best = None
+    for el in soup.find_all(["h1", "h2", "h3", "h4", "th", "td", "strong", "p", "div", "span", "title"]):
+        t = re.sub(r"\s+", " ", el.get_text(" ", strip=True))
+        if core in t and len(core) < len(t) <= 200 and (best is None or len(t) < len(best)):
+            best = t
+    return best
+
+
 
 def _to_date(m):
     y, mo, d = int(m.group(1)), int(m.group(2)), int(m.group(3))
@@ -386,6 +411,13 @@ def extract_listings(html, base_url):
     items, seen = [], set()
     for a in soup.find_all("a"):
         title = _clean_title(a.get_text(" ", strip=True))
+        # 링크 안 제목 칸에 title 속성으로 원문 제목이 따로 있으면 그것을 쓴다 —
+        # 링크가 행 전체를 감싸 담당부서가 제목 뒤에 붙는 경우(국립중앙도서관 '… 공고 운영지원과')
+        inner = a.find(attrs={"title": True})
+        if inner is not None:
+            t_attr = _clean_title(str(inner.get("title", "")))
+            if len(t_attr) >= 5 and title.startswith(t_attr):
+                title = t_attr
         href = (a.get("href") or "").strip()
         if _norm(title) in BUTTON_TEXTS:      # '자세히 보기' 링크 → 행에서 제목 회수
             title = _row_title(a) or title
